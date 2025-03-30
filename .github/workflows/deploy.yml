@@ -9,7 +9,7 @@ on:
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
-  contents: read
+  contents: write # Changed to write to allow pushing to gh-pages branch
   pages: write
   id-token: write
 
@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper version info
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -44,11 +46,16 @@ jobs:
           # Make sure Astro uses the correct base path
           BASE_URL: '/t128n'
       
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: ./dist
+          folder: dist
+          branch: gh-pages
+          clean: true
+          single-commit: true
 
+  # Optional: keep this separate deploy job if you still want to use GitHub Pages deployment
+  # or remove if you're using the JamesIves action exclusively
   deploy:
     needs: build
     runs-on: ubuntu-latest
