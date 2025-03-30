@@ -1,6 +1,6 @@
 ---
 // Header.astro
-import { UserRound, BookText, Mail } from "lucide-react";
+import { UserRound, Mail } from "lucide-react";
 
 // Get the current path to determine which nav item is active
 const { pathname } = Astro.url;
@@ -52,15 +52,6 @@ const getPath = (path: string) => {
                         title="Profile"
                     >
                         <UserRound className="w-5 h-5" />
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href={getPath("/blog")}
-                        class={getLinkClass("/blog")}
-                        title="Blog"
-                    >
-                        <BookText className="w-5 h-5" />
                     </a>
                 </li>
             </ul>
