@@ -46,23 +46,17 @@ jobs:
           # Make sure Astro uses the correct base path
           BASE_URL: '/t128n'
       
-      - name: Deploy to GitHub Pages branch
-        uses: JamesIves/github-pages-deploy-action@v4
+      # Using GitHub Pages deployment action - this eliminates needing the second job
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4  # Updated to v4 to match deploy-pages
         with:
-          folder: dist
-          branch: gh-pages
-          clean: true
-          single-commit: true
-
-  # Optional: keep this separate deploy job if you still want to use GitHub Pages deployment
-  # or remove if you're using the JamesIves action exclusively
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+          path: ./dist
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          token: ${{ github.token }}
