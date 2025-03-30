@@ -1,7 +1,16 @@
 # GitHub Pages Configuration
-# Set build directory
+
+# Set build directory to match the output of your Astro build
 baseDirectory: dist
-# Specify branch to deploy from
+
+# Use the GitHub Actions automated deployment
+# This will be used by github-pages environment in your workflow
 branch: gh-pages
-# Enable single-page app routing
+
+# Enable single-page app routing for client-side routing
+# Important for Astro applications with dynamic routes
 singlePageApp: true
+
+# Configure 404 handling for SPA routing
+errorPages:
+  404: /404.html

@@ -51,10 +51,12 @@ const ogImageUrl = getAbsoluteImageUrl(image);
 <meta name="author" content={author} />
 
 <!-- Favicons -->
+<link rel="icon" href={import.meta.env.BASE_URL + "/favicon.ico"} />
 <link
     rel="icon"
     type="image/png"
-    href={import.meta.env.BASE_URL + "/favicon.png"}
+    href={import.meta.env.BASE_URL + "/favicon-96x96.png"}
+    sizes="96x96"
 />
 <link
     rel="icon"
