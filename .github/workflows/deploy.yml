@@ -7,11 +7,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub
   workflow_dispatch:
 
-# Allow this job to clone the repo and create a page deployment
-permissions:
-  contents: write # Changed to write to allow pushing to gh-pages branch
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -51,7 +46,7 @@ jobs:
         uses: actions/configure-pages@v4
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4  # Updated to v4 to match deploy-pages
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
           
