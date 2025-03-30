@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Import blog typography styles */
-@import "./blog-typography.css";
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
