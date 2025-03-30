@@ -7,10 +7,19 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub
   workflow_dispatch:
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Allow this job to clone the repo and create a page deployment
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
@@ -41,7 +50,7 @@ jobs:
           # Make sure Astro uses the correct base path
           BASE_URL: '/t128n'
       
-      # Using GitHub Pages deployment action - this eliminates needing the second job
+      # Using GitHub Pages deployment action
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
@@ -53,5 +62,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ github.token }}
