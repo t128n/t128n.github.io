@@ -1,0 +1,7 @@
+# GitHub Pages Configuration
+# Set build directory
+baseDirectory: dist
+# Specify branch to deploy from
+branch: gh-pages
+# Enable single-page app routing
+singlePageApp: true

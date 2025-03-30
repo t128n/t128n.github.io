@@ -1,0 +1,21 @@
+---
+// SkillList.astro
+interface Props {
+  category: string;
+  skills: string[];
+}
+
+const { category, skills } = Astro.props;
+---
+
+<div>
+    <h3 class="font-mono text-base mb-4 text-neutral-100 pb-1 border-b border-[#23262d]">{category}</h3>
+    <ul class="space-y-2 mt-3">
+        {skills.map(skill => (
+            <li class="flex items-center">
+                <span class="inline-block w-1 h-1 bg-blue-500 rounded-full mr-2"></span>
+                <span>{skill}</span>
+            </li>
+        ))}
+    </ul>
+</div>

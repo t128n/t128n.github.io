@@ -1,0 +1,81 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths() {
+    const blogEntries = await getCollection("blog");
+    return blogEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+interface Props {
+    entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const basePath = import.meta.env.BASE_URL || "/t128n";
+
+const formatDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+---
+
+<MainLayout
+    title={`${entry.data.title} | t128n`}
+    description={entry.data.description}
+    type="article"
+    publishDate={entry.data.publishDate}
+    canonicalURL={new URL(Astro.url.pathname, Astro.site)}
+>
+    <main class="w-full max-w-[900px] mx-auto px-6 py-10 font-mono">
+        <article class="w-full">
+            <header class="mb-8">
+                <a
+                    href={`${basePath}/blog`}
+                    class="text-sm text-neutral-500 dark:text-neutral-400 hover:text-blue-500 dark:hover:text-blue-400 mb-2 inline-block"
+                >
+                    ← Back to all posts
+                </a>
+                <h1
+                    class="text-2xl font-medium mt-4 mb-2 text-neutral-900 dark:text-neutral-100"
+                >
+                    {entry.data.title}
+                </h1>
+                <div class="text-sm text-neutral-500 dark:text-neutral-400">
+                    Published on {formatDate(entry.data.publishDate)}
+                    {
+                        entry.data.updatedDate && (
+                            <span>
+                                {" "}
+                                · Updated on{" "}
+                                {formatDate(entry.data.updatedDate)}
+                            </span>
+                        )
+                    }
+                </div>
+                {
+                    entry.data.tags.length > 0 && (
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            {entry.data.tags.map((tag: string) => (
+                                <span class="px-2 py-1 bg-neutral-100 dark:bg-neutral-800 text-xs rounded-md">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )
+                }
+            </header>
+
+            <div class="blog-content">
+                <Content />
+            </div>
+        </article>
+    </main>
+</MainLayout>

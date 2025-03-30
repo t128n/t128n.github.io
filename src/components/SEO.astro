@@ -1,0 +1,91 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+    image?: string;
+    canonicalURL?: URL | string;
+    type?: "website" | "article";
+    publishDate?: Date;
+    author?: string;
+}
+
+const {
+    title,
+    description = "IT Solution Architect and Software Engineer specializing in practical, robust software solutions with a minimalist approach.",
+    image = "/og-image.png", // Default OG image
+    canonicalURL = Astro.url,
+    type = "website",
+    publishDate,
+    author = "Torben Haack",
+} = Astro.props;
+
+// Format the canonical URL
+const canonicalURLString =
+    canonicalURL instanceof URL ? canonicalURL.href : canonicalURL;
+
+// Format publish date for articles
+const publishDateISO = publishDate ? publishDate.toISOString() : undefined;
+
+// Helper to ensure image URLs have the correct base
+const getAbsoluteImageUrl = (path: string) => {
+    const baseUrl = import.meta.env.SITE || "https://t128n.github.io";
+    const basePath = import.meta.env.BASE_URL || "/t128n";
+
+    // If it's already an absolute URL, return it as is
+    if (path.startsWith("http")) return path;
+
+    // Ensure path starts with a single slash
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    return `${baseUrl}${basePath}${normalizedPath}`;
+};
+
+const ogImageUrl = getAbsoluteImageUrl(image);
+---
+
+<!-- Basic Meta Tags -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURLString} />
+<meta name="author" content={author} />
+
+<!-- Favicons -->
+<link
+    rel="icon"
+    type="image/png"
+    href={import.meta.env.BASE_URL + "/favicon.png"}
+/>
+<link
+    rel="icon"
+    type="image/svg+xml"
+    href={import.meta.env.BASE_URL + "/favicon.svg"}
+/>
+<link
+    rel="apple-touch-icon"
+    href={import.meta.env.BASE_URL + "/apple-touch-icon.png"}
+/>
+<link rel="manifest" href={import.meta.env.BASE_URL + "/site.webmanifest"} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURLString} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+{
+    publishDateISO && (
+        <meta property="article:published_time" content={publishDateISO} />
+    )
+}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURLString} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageUrl} />
+
+<!-- Color Theme -->
+<meta name="theme-color" content="#1e1e2e" />
+<meta name="color-scheme" content="dark" />

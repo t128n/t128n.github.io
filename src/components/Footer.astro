@@ -1,0 +1,47 @@
+---
+// Footer.astro
+const currentDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+---
+
+<footer class="py-10 border-t border-[#23262d] mt-12">
+    <div class="max-w-[900px] mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Contact & Links -->
+            <div>
+                <h3 class="font-mono text-sm uppercase mb-4 text-neutral-400">
+                    Connect
+                </h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="mailto:t128n@ipv4.8shield.net"
+                            class="text-blue-400 hover:text-blue-300 transition-colors"
+                            >t128n@ipv4.8shield.net</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/t128n"
+                            class="text-blue-400 hover:text-blue-300 transition-colors"
+                            >github.com/t128n</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Site Information -->
+            <div class="text-right">
+                <div class="font-mono text-xs text-neutral-500">
+                    <p>Always building. Always learning.</p>
+                    <p class="mt-1">Last updated: {currentDate}</p>
+                    <p class="mt-1">
+                        Visit: <a
+                            href="https://t128n.github.io/t128n/"
+                            class="text-blue-400 hover:text-blue-300 transition-colors"
+                            >t128n.github.io/t128n</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

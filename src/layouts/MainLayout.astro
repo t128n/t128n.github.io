@@ -1,0 +1,51 @@
+---
+import Header from "@/components/Header.astro";
+import SEO from "@/components/SEO.astro";
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	canonicalURL?: URL | string;
+	type?: "website" | "article";
+	publishDate?: Date;
+	author?: string;
+	content?: {
+		title: string;
+		[key: string]: any;
+	};
+}
+
+const {
+	title,
+	description,
+	image,
+	canonicalURL,
+	type = "website",
+	publishDate,
+	author,
+	content,
+} = Astro.props;
+
+const pageTitle = title ?? content?.title;
+---
+
+<html lang="en">
+	<head>
+		<SEO
+			title={pageTitle || "t128n"}
+			description={description}
+			image={image}
+			canonicalURL={canonicalURL}
+			type={type}
+			publishDate={publishDate}
+			author={author}
+		/>
+	</head>
+	<body class="dark bg-background text-foreground">
+		<Header />
+
+		<slot />
+	</body>
+</html>

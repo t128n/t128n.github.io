@@ -1,0 +1,191 @@
+---
+// index.astro
+import MainLayout from "@/layouts/MainLayout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
+import Timeline from "@/components/Timeline.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import SkillList from "@/components/SkillList.astro";
+
+const engineeringSkills = [
+	"JavaScript/TypeScript",
+	"Python",
+	"CI/CD Pipelines",
+	"Test Automation",
+];
+
+const architectureSkills = [
+	"Microservices Design",
+	"System Integration",
+	"Cloud Infrastructure",
+	"Scalable Systems",
+];
+
+const projects = [
+	{
+		title: "Data Product Quality Automation",
+		description:
+			"Automated quality assurance pipeline built with Node-RED and static code analysis, enabling efficient and consistent product development.",
+		tags: ["Node-RED", "QA", "Static Analysis"],
+	},
+	{
+		title: "MYP – Resource Reservation Platform",
+		description:
+			"A web-based reservation platform using Next.js, created to simplify resource management. Successfully handed off and actively maintained by new developers.",
+		tags: ["Next.js", "React", "Web Development"],
+	},
+	{
+		title: "Warp Themes",
+		description:
+			"Developer-focused theming tool built with Next.js, designed to simplify customization and theme distribution for terminal applications.",
+		tags: ["Next.js", "Theming", "Developer Tools"],
+	},
+	{
+		title: "Windows Image Validation Framework",
+		description:
+			"Python-based testing framework for validating Windows images intended for production systems. Ensures proper configuration, installation, and system requirements with Jira Xray integration for test reporting and traceability.",
+		tags: ["Python", "Jira Xray", "Windows", "Test Automation"],
+	},
+];
+---
+
+<MainLayout
+	title="Torben Haack - IT Solution Architect and Software Engineer"
+	description="Solution architect and software engineer specializing in practical, robust software solutions with a minimalist approach. Experience in microservices, system integration, and cloud infrastructure."
+	canonicalURL={new URL("/", Astro.site)}
+>
+	<main class="max-w-[900px] mx-auto px-6 py-12">
+		<!-- Hero section -->
+		<section class="py-16 flex flex-col items-center text-center">
+			<h1
+				class="font-mono text-5xl font-semibold tracking-tight text-neutral-50"
+			>
+				Torben Haack
+			</h1>
+			<h2 class="text-blue-400 text-xl mt-4 font-medium">
+				IT Solution Architect and Software Engineer
+			</h2>
+			<p class="text-neutral-300 max-w-2xl mx-auto leading-relaxed mt-8">
+				I architect and engineer <span class="text-blue-400 font-medium"
+					>practical, robust software solutions</span
+				>. My approach is rooted in <span
+					class="text-blue-400 font-medium"
+					>minimalism, simplicity, and proven methodologies</span
+				>.
+			</p>
+		</section>
+
+		<!-- About section -->
+		<section class="mb-12">
+			<SectionHeader title="About" />
+
+			<div
+				class="bg-card-bg/50 border border-card-border rounded-md p-6 shadow-sm"
+			>
+				<p class="text-neutral-300 leading-relaxed">
+					At Mercedes-Benz's Digital Factory Campus in Berlin, I serve
+					as an IT specialist, contributing across software
+					engineering, quality assurance, and data engineering. This
+					role allows me to integrate diverse technological
+					disciplines to drive innovation and efficiency within the
+					organization.
+				</p>
+			</div>
+		</section>
+
+		<!-- Philosophy section -->
+		<section class="mb-12">
+			<SectionHeader title="Philosophy" />
+
+			<div
+				class="bg-card-bg/50 border border-card-border rounded-md p-6 shadow-sm"
+			>
+				<p class="text-neutral-300 leading-relaxed">
+					I build software guided by a clear philosophy: identify the
+					right problems, solve them effectively, and <span
+						class="font-medium text-neutral-50"
+						>avoid unnecessary complexity</span
+					>. My minimalist approach ensures I deliver exactly what's
+					needed, then continuously refine and enhance it. I rely on
+					proven, stable technologies—tools that offer predictability,
+					reliability, and efficiency. While innovation is valuable, I
+					prioritize <span class="font-medium text-neutral-50"
+						>trustworthiness and durability</span
+					> in my solutions. Simple, clear code isn't just better; it's
+					essential. I emphasize
+					<span class="font-medium text-neutral-50"
+						>readability, maintainability, and reliability</span
+					> above all else. Principles like KISS (Keep It Simple, Stupid)
+					and DRY (Don't Repeat Yourself) are fundamental to my practice,
+					forming the bedrock of scalable and maintainable systems. If
+					it isn't clear, concise, and trustworthy, the work isn't finished.
+				</p>
+			</div>
+		</section>
+
+		<!-- Skills section -->
+		<section class="mb-12">
+			<SectionHeader title="Skills" />
+
+			<div
+				class="bg-card-bg/50 border border-card-border rounded-md p-6 shadow-sm"
+			>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					<SkillList
+						category="Engineering"
+						skills={engineeringSkills}
+					/>
+					<SkillList
+						category="Architecture"
+						skills={architectureSkills}
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- Experience section -->
+		<section class="mb-12">
+			<SectionHeader title="Experience" />
+
+			<div
+				class="bg-card-bg/50 border border-card-border rounded-md p-6 shadow-sm"
+			>
+				<div>
+					<Timeline
+						date="2025 — Present"
+						title="IT Specialist — DFC"
+						subtitle="Mercedes-Benz, Berlin"
+						description="Developing and maintaining factory systems. Implementing test automation, introducing CI/CD pipelines, standardizing workflows, integrating manufacturing data pipelines, and optimizing development processes."
+					/>
+
+					<Timeline
+						date="2022 — 2025"
+						title="Apprenticeship: Computer Science Expert — IHK Berlin"
+						subtitle="Mercedes-Benz, Berlin, Germany"
+						description="Certified by IHK Berlin with specialization in data and process analysis, passed with a grade of 1.4. Focused on planning and executing data analysis projects, process modeling, and ensuring data quality. Developed enterprise-grade backend systems and contributed to IT-supported workplace design."
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- Projects section -->
+		<section class="mb-12">
+			<SectionHeader title="Projects" />
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				{
+					projects.map((project) => (
+						<ProjectCard
+							title={project.title}
+							description={project.description}
+							tags={project.tags}
+						/>
+					))
+				}
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+</MainLayout>
