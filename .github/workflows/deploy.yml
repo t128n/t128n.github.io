@@ -24,7 +24,7 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for proper version info
+          fetch-depth: 0
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -47,10 +47,8 @@ jobs:
       - name: Build with Astro
         run: bun run build
         env:
-          # Use root path instead of /t128n
           BASE_URL: '/'
       
-      # Using GitHub Pages deployment action
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
