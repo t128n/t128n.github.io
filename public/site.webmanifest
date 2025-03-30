@@ -2,20 +2,20 @@
     "name": "Torben Haack | IT Solution Architect",
     "short_name": "t128n",
     "description": "IT Solution Architect and Software Engineer specializing in practical, robust solutions",
-    "start_url": "/t128n/",
+    "start_url": "/",
     "icons": [
         {
-            "src": "/t128n/web-app-manifest-192x192.png",
+            "src": "/web-app-manifest-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/t128n/web-app-manifest-512x512.png",
+            "src": "/web-app-manifest-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "/t128n/apple-touch-icon.png",
+            "src": "/apple-touch-icon.png",
             "sizes": "180x180",
             "type": "image/png"
         }

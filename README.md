@@ -4,7 +4,7 @@
 I architect and engineer **practical, robust software solutions** with a minimalist approach.
 
 [![GitHub](https://img.shields.io/badge/GitHub-t128n-blue?style=flat-square&logo=github)](https://github.com/t128n)
-[![Website](https://img.shields.io/badge/Website-t128n.github.io/t128n-blue?style=flat-square&logo=astro)](https://t128n.github.io/t128n/)
+[![Website](https://img.shields.io/badge/Website-t128n.github.io-blue?style=flat-square&logo=astro)](https://t128n.github.io/)
 
 ## About
 IT specialist at Mercedes-Benz's Digital Factory Campus in Berlin, contributing across software engineering, quality assurance, and data engineering.
@@ -43,7 +43,7 @@ Python-based testing framework for Windows images with Jira Xray integration.
 <div align="center">
   
   <a href="mailto:t128n@ipv4.8shield.net">Email</a> •
-  <a href="https://t128n.github.io/t128n/">Website</a> •
+  <a href="https://t128n.github.io/">Website</a> •
   <a href="https://github.com/t128n">GitHub</a>
   
   <p>Always building. Always learning.</p>

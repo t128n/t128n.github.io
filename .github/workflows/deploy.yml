@@ -47,8 +47,8 @@ jobs:
       - name: Build with Astro
         run: bun run build
         env:
-          # Make sure Astro uses the correct base path
-          BASE_URL: '/t128n'
+          # Use root path instead of /t128n
+          BASE_URL: '/'
       
       # Using GitHub Pages deployment action
       - name: Setup Pages
