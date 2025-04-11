@@ -1,0 +1,42 @@
+---
+import "@/styles/global.css";
+import Header from "@/components/header.astro";
+
+const {
+  title = "Torben Haack",
+  description = "Engineer of scalable, high-reliability software systems.",
+  ogUrl = "https://t128n.github.io",
+  showHeader = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} [t128n]</title>
+
+    <meta name="description" content={description} />
+    <meta name="author" content="Torben Haack" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={ogUrl} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+
+  <body
+    class="flex flex-col min-h-dvh min-w-xl max-w-3xl py-8 mx-auto gap-8 font-mono selection:bg-black selection:text-white"
+  >
+    {showHeader && <Header />}
+    <slot />
+  </body>
+</html>

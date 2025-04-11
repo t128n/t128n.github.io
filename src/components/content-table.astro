@@ -1,0 +1,30 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const writings: CollectionEntry<"writings">[] = await getCollection("writings");
+---
+
+<div class="w-full">
+    <div class="text-left text-sm text-black/50 border-b border-black/5 flex">
+        <div class="font-normal lowercase py-2 px-2 w-1/4">Date</div>
+        <div class="font-normal lowercase py-2 w-3/4">Title</div>
+    </div>
+    {
+        writings.map((writing) => (
+            <a
+                href={`/writings/${writing.id}`}
+                class="group flex hover:bg-black/10"
+                draggable="false"
+            >
+                <div class="py-2 px-2 w-1/4 group-focus:outline-none">
+                    {new Date(writing.data.published)
+                        .toISOString()
+                        .slice(0, 10)}
+                </div>
+                <div class="py-2 w-3/4 group-focus:outline-none">
+                    {writing.data.title}
+                </div>
+            </a>
+        ))
+    }
+</div>

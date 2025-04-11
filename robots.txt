@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://t128n.github.io/sitemap.xml
