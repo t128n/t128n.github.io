@@ -4,39 +4,47 @@ import Avatar from "@/assets/avatar.svg";
 import Image from "astro/components/Image.astro";
 
 interface SocialLink {
-    name: string;
-    url: string;
-    icon?: string;
-    target?: string;
+	name: string;
+	url: string;
+	icon?: string;
+	target?: string;
 }
 
 const socialLinks: SocialLink[] = [
-    {
-        name: "CV",
-        url: "/cv",
-        icon: "journal-page",
-        target: "_self",
-    },
-    {
-        name: "GitHub",
-        url: "https://github.com/t128n",
-    },
-    {
-        name: "Mail",
-        url: "mailto:t128n@ipv4.8shield.net",
-    },
-    {
-        name: "LinkedIn",
-        url: "https://www.linkedin.com/in/torben-haack/",
-    },
+	{
+		name: "CV",
+		url: "/cv",
+		icon: "journal-page",
+		target: "_self",
+	},
+	{
+		name: "GitHub",
+		url: "https://github.com/t128n",
+	},
+	{
+		name: "Mail",
+		url: "mailto:t128n@ipv4.8shield.net",
+	},
+	{
+		name: "LinkedIn",
+		url: "https://www.linkedin.com/in/torben-haack/",
+	},
 ];
 
 const externalLinks = ["http", "mailto"];
 ---
 
-<header class="flex flex-row justify-between items-center">
+<header
+    class="flex flex-row justify-between items-center"
+    transition:name="header"
+>
     <a href="/" class="flex items-center gap-2 hover:font-bold p-2">
-        <Image src={Avatar} alt="Torben Haack" class="w-12 h-12 rounded-full" />
+        <Image
+            loading="eager"
+            src={Avatar}
+            alt="Torben Haack"
+            class="w-12 h-12 rounded-full"
+        />
         <div class="flex flex-col">
             <h1>Torben Haack</h1>
             <span class="text-xs">[t128n]</span>
