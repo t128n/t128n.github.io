@@ -1,0 +1,89 @@
+---
+import "@/styles/global.css";
+import Header from "@/components/header.astro";
+import { ClientRouter } from "astro:transitions";
+
+const {
+  title = "Torben Haack",
+  description = "Engineer of scalable, high-reliability software systems.",
+  ogUrl = "https://t128n.github.io",
+  showHeader = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} [t128n]</title>
+
+    <meta name="description" content={description} />
+    <meta name="author" content="Torben Haack" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={ogUrl} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <ClientRouter />
+  </head>
+
+  <body
+    class="flex flex-col min-h-dvh font-mono selection:bg-black selection:text-white"
+  >
+    <div class="w-full max-w-[210mm] mx-auto px-4 py-8 flex flex-col gap-8">
+      {showHeader && <Header />}
+      <main class="flex flex-col gap-8 w-full">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  /* Make the scrollbar overlay content instead of taking up space */
+  html {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    margin-right: 0 !important;
+  }
+
+  /* Modern Chrome, Edge, Safari */
+  ::-webkit-scrollbar {
+    width: 8px;
+    position: absolute;
+    right: 0;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    scrollbar-gutter: stable;
+  }
+
+  /* Ensure content doesn't shift when scrollbar appears */
+  body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100vw;
+    position: relative;
+  }
+</style>

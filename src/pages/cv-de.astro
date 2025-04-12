@@ -1,0 +1,302 @@
+---
+import BaseLayout from "@/layouts/base.astro";
+import Avatar from "@/assets/avatar.svg";
+import Image from "astro/components/Image.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<BaseLayout>
+  <div class="flex justify-between border-b border-black/30 text-xs text-black/50 ">
+    <a href="/cv">
+      🇪🇺 English version
+    </a>
+    <a href="/cv-de.pdf" class="hover:font-semibold cursor-pointer">
+      <span>Als PDF herunterladen</span>
+    </a>
+  </div>
+  <div
+    id="resume"
+    class="h-[297mm] flex flex-col gap-8 print:m-0 print:p-0 print:shadow-none"
+  >
+    <!-- Profile Header -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <Image
+          loading="eager"
+          src={Avatar}
+          alt="Avatar"
+          class="rounded-full w-16 h-16"
+        />
+        <div class="flex flex-col">
+          <h1 class="text-2xl font-bold">
+            Torben Haack
+          </h1>
+          <div class="flex items-center gap-2 text-black/50 text-sm">
+            <span>[t128n]</span>
+            <span>&middot;</span>
+            <span>Berlin, Deutschland</span>
+          </div>
+        </div>
+      </div>
+      <ul class="flex flex-col text-right justify-end items-end">
+        <li>
+          <a
+            href="https://github.com/t128n"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1 text-black/70 text-xs"
+          >
+            <span>github.com/@t128n </span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://linkedin.com/in/torben-haack"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1 text-black/70 text-xs"
+          >
+            <span>linkedin.com/in/torben-haack</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="mailto:t128n@ipv4.8shield.net"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1 text-black/70 text-xs"
+          >
+            <span>t128n@ipv4.8shield.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="text-sm leading-relaxed">
+      Ich entwickle minimalistische, skalierbare Software mit Fokus auf Automation, CI/CD
+      und Developer Tooling. Bei Mercedes-Benz entwickle ich interne Plattformen,
+      die Engineering- und Industrieprozesse optimieren.
+    </p>
+
+    <!-- Experience -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">Berufserfahrung</h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">Start</th>
+            <th class="py-2 px-1">Ende</th>
+            <th class="py-2 px-1">Unternehmen</th>
+            <th class="py-2 px-1">Position</th>
+            <th class="py-2 px-1">Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2025-01</td>
+            <td class="py-2 px-1">Heute</td>
+            <td class="py-2 px-1">Mercedes-Benz AG</td>
+            <td class="py-2 px-1">IT Architect, Software & Automation Engineer</td>
+            <td class="py-2 px-1">
+              Entwicklung interner Datenplattformen, CI/CD-Systeme, Test Frameworks
+              und reproduzierbarer Dokumentations-Pipelines.
+            </td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2022-09</td>
+            <td class="py-2 px-1">2025-01</td>
+            <td class="py-2 px-1">Mercedes-Benz AG</td>
+            <td class="py-2 px-1">Auszubildender (Fachinformatiker für Daten- und Prozessanalyse)</td>
+            <td class="py-2 px-1">
+              Leitung von Automatisierungsinitiativen, Dashboards und Mentoring;
+              Standardisierung von Workflows und GitHub-Schulungen.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Skills -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">Fähigkeiten</h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">Kategorie</th>
+            <th class="py-2 px-1">Fähigkeiten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">Architecture & Tooling</td>
+            <td class="py-2 px-1">Software Architecture, Developer Tooling, Test Automation</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">DevOps</td>
+            <td class="py-2 px-1">CI/CD Automation, GitHub Workflows, Containerization</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">WebDev</td>
+            <td class="py-2 px-1">Next.js, Tailwind CSS, shadcn/ui, Streamlit</td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">Programmiersprachen</td>
+            <td class="py-2 px-1">Python, TypeScript</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-4 text-xs print:hidden text-black/50">
+        <a
+          href="https://www.linkedin.com/in/torben-haack/details/skills/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:underline flex items-center gap-1"
+        >
+          &rarr; Weitere Fähigkeiten auf LinkedIn.
+        </a>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">Projekte</h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">Jahr</th>
+            <th class="py-2 px-1">Name</th>
+            <th class="py-2 px-1">Rolle</th>
+            <th class="py-2 px-1">Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2025</td>
+            <td class="py-2 px-1">MYP</td>
+            <td class="py-2 px-1">(Abschlussprojekt)</td>
+            <td class="py-2 px-1">
+              Enterprise-grade Druckermanagement-System mit SSO, RBAC,
+              Regressions-Analytik, Podman-Deployment. Entwickelt mit Next.js +
+              TypeScript.
+            </td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2024</td>
+            <td class="py-2 px-1">PromptLab</td>
+            <td class="py-2 px-1">Prototype Engineer</td>
+            <td class="py-2 px-1">
+              Modulares Prompt-Engineering-Tool mit Live-Vorschau, dynamischen
+              Eingaben und eigenem Interpreter. Entwickelt mit React, Radix UI und
+              Tailwind CSS.
+            </td>
+          </tr>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2024</td>
+            <td class="py-2 px-1">Korrektor</td>
+            <td class="py-2 px-1">Prototype Engineer</td>
+            <td class="py-2 px-1">
+              GenAI Refactoring-Assistent entwickelt mit Streamlit und Ollama. Schneller
+              POC für schnelle Iteration im AI Developer Tooling.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-4 text-xs print:hidden text-black/50">
+        <a
+          href="https://www.linkedin.com/in/torben-haack/details/projects/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:underline flex items-center gap-1"
+        >
+          &rarr; Weitere Projekte auf LinkedIn.
+        </a>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">Ausbildung</h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">Start</th>
+            <th class="py-2 px-1">Ende</th>
+            <th class="py-2 px-1">Institution</th>
+            <th class="py-2 px-1">Abschluss</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-1">2022</td>
+            <td class="py-2 px-1">2024</td>
+            <td class="py-2 px-1">OSZ IMT Berlin-Neukölln</td>
+            <td class="py-2 px-1">Fachinformatiker für Daten- und Prozessanalyse (Note 1,4)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const downloadButton = document.getElementById('download-resume-button');
+  const resume = document.getElementById('resume');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if(!downloadButton || !resume) {
+      console.error('Download button or resume element not found.');
+      return;
+    }
+    downloadButton.addEventListener('click', () => {
+
+    });
+
+  });
+</script>
+
+<style is:global>
+  @media print {
+    /* Reset scroll behavior for print */
+    html,
+    body {
+      overflow: visible !important;
+      width: auto !important;
+      height: auto !important;
+      position: static !important;
+    }
+
+    /* Hide scrollbars in print */
+    ::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* First hide everything */
+    * {
+      visibility: hidden;
+    }
+
+    /* Then show resume and all its children */
+    #resume {
+      padding: 2rem !important; /* .p-8 */
+    }
+
+    #resume,
+    #resume * {
+      visibility: visible;
+    }
+
+    /* Position the resume at the top */
+    #resume {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 !important;
+      padding: 2rem !important;
+      box-shadow: none !important;
+    }
+  }
+</style>

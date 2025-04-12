@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/base.astro";
+import { render } from "astro:content";
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+	const writings = await getCollection("writings");
+	return writings.map((writing) => ({
+		params: { slug: writing.id.replace(/\.[^/.]+$/, "") }, // Remove file extension
+		props: { writing },
+	}));
+}
+
+// 2. For your template, you can get the entry directly from the prop
+const { writing } = Astro.props;
+const { Content } = await render(writing);
+---
+
+<BaseLayout title={writing.data.title}>
+    <article class="font-sans">
+        <header>
+            <time class="font-mono text-sm text-black/50" datetime={writing.data.published.toISOString()}>
+                {writing.data.published.toLocaleDateString()}
+            </time>
+            <h2 class="font-bold text-2xl">{writing.data.title}</h2>
+        </header>
+        <div class="prose py-4">
+            <hr />
+            <Content />
+        </div>
+    </article>
+</BaseLayout>
