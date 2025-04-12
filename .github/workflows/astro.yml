@@ -1,0 +1,76 @@
+name: Deploy Astro site to Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/**"                # Only trigger when source files change
+      - "astro.config.mjs"       # Astro configuration file
+      - "package.json"           # Manifest if added (optional if not used by Bun)
+      - "bun.lockb"              # Bun’s lockfile for dependency version tracking
+      - ".github/workflows/**"   # In case workflow changes affect the build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  BUILD_PATH: "."   # Default value; adjust if your build is in a subfolder
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10   # Prevent runaway builds
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "latest"  # Optionally pin to a specific version for consistency
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.bun
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies using Bun
+        run: bun install
+        working-directory: ${{ env.BUILD_PATH }}
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Astro using Bun
+        run: bun run astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+        working-directory: ${{ env.BUILD_PATH }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.BUILD_PATH }}/dist
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 5   # Avoid long-hanging deploy jobs
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
