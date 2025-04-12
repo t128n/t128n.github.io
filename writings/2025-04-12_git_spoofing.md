@@ -1,121 +1,62 @@
 ---
-title: "The Invisible Threat: A Story of Git Spoofing and Trust"
+title: "Git’s Trust Model is Broken - Here’s How to Fix It"
 published: 2025-04-12
-draft: true
 ---
 
+Git is one of the most widely used distributed version control systems in the world, relied on daily by millions of developers, especially within the open-source community. Yet, despite its immense popularity, Git's fundamental trust model is surprisingly flawed.
 
+## The Infamous `git config`
 
----
+You've likely encountered that classic Git message when committing on a fresh machine:
 
+> Please configure your 'user.email' and 'user.name' in git.
 
-## The Invisible Threat: A Story of Git Spoofing and Trust
+Without thinking, you probably entered these commands and moved on. But have you ever wondered why Git needs your email and name even after you've already authenticated with your Git provider?
 
-In the bustling office of a cybersecurity firm, Alex, a seasoned developer, was wrapping up a routine code review when something unusual caught his eye. A commit had been made to the critical authentication module—one that he didn't recall authorizing. The commit message was standard, the code changes subtle, but the author was listed as... Alex himself.
+## The Problem Explained
 
-### The Unseen Intrusion
+The core issue here is that Git itself simply doesn't care about your identity. GitHub cares. GitLab cares. But Git itself? Not at all. If you tell Git your email is `tim@apple.com` and your name is `Tim Cook`, Git will happily accept and record it—no questions asked.
 
-Confused, Alex double-checked his Git history. The commit was there, bearing his name and email. Yet, he had no memory of making it. Digging deeper, he realized the commit was a forgery—a case of Git spoofing.
+To demonstrate just how easily Git allows impersonation, I created a commit using the name and email address of a prominent individual, the CEO of the $3.25 billion company Vercel, and successfully pushed it to GitHub without any verification ([check it out here](https://github.com/t128n/git-spoofing)). Pretty great customer service, right?
 
-Git, by default, trusts the `user.name` and `user.email` provided by the user, without verification. This trust model, while convenient, opens the door to identity spoofing. Anyone can configure Git to use someone else's name and email, making it appear as though they authored a commit:
+This highlights how incredibly simple—and dangerous—it is to impersonate someone using Git.
 
+## The Simple Solution
 
+Fortunately, there's a straightforward fix: **signing your commits**.
+
+Most developers already have SSH or GPG keys set up for server authentication or Git provider interactions. These same keys can also secure your commits.
+
+Here's how easy it is:
+
+1. Generate an SSH or GPG Key:
 ```bash
-git config user.name "Alex Developer"
-git config user.email "alex@cyberfirm.com"
-git commit -m "Update authentication module"
-```
-
-
-This realization sent a chill down Alex's spine. If someone could impersonate him, they could inject malicious code into the system, bypassing audits and reviews.
-
-### The Quest for Authenticity
-
-Determined to prevent such breaches, Alex embarked on a mission to secure the commit history. He discovered that Git supports GPG-signed commits, allowing authors to cryptographically sign their work:
-
-
-```bash
-git commit -S -m "Secure commit"
-```
-
-
-These signatures could then be verified by anyone with the author's public key, ensuring the commit's authenticity.
-
-Furthermore, Alex enabled Git's vigilant mode to display signature verification statuses prominently in logs:
-
-
-```bash
-git config --global log.showSignature true
-```
-
-
-He also advocated for platform-level enforcement. Services like GitHub and GitLab offer settings to require signed commits, rejecting any that aren't properly authenticated.
-
-### Restoring Trust
-
-With these measures in place, Alex felt a renewed sense of security. The commit history was now a reliable ledger, each entry verifiable and tamper-proof. The team could trust that the codebase reflected genuine contributions from verified authors.
-
-### Conclusion
-
-Git spoofing is a subtle yet serious threat to code integrity. By implementing GPG-signed commits, enabling vigilant mode, and enforcing signature requirements at the platform level, teams can safeguard their repositories against impersonation and unauthorized changes. In the realm of software development, trust is paramount—and with the right tools, it's attainable.
-
----
-
-This narrative approach not only informs readers about Git spoofing but also engages them through a relatable story, illustrating the importance of commit authenticity in a compelling manner. 
-
----
-
-### Understanding Git Spoofing and Ensuring Commit Authenticity
-
-In distributed version control systems like Git, commits inherently rely on trust. Git identifies commit authors simply by the user-configured `user.name` and `user.email` fields. However, these fields can easily be spoofed, allowing malicious actors to impersonate someone else's identity. This practice, known as Git spoofing, poses significant risks, especially in critical systems or environments with stringent compliance requirements.
-
-#### What is Git Spoofing?
-
-Git spoofing refers to intentionally falsifying the commit author details (name and email address) in Git commits. Since Git doesn't verify these details by default, anyone with repository access can easily impersonate another developer. For example:
-
-```bash
-git config user.name "Fake Name"
-git config user.email "fake@example.com"
-git commit -m "Malicious commit"
+ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-This spoofed commit appears legitimate at first glance, potentially misleading teams, auditors, or automated systems.
+2. Add your public key to your Git provider.
 
-#### Risks Associated with Git Spoofing
+3. Configure Git to sign all your commits automatically:
+```bash
+git config --global commit.gpgsign true
+```
 
-- **Accountability Loss:** Difficulty in tracking the actual source of malicious or erroneous changes.
-- **Compliance Violations:** Industries with regulatory requirements (finance, healthcare, automotive, etc.) can face severe compliance issues.
-- **Security Compromise:** Facilitates injection of malicious code or unauthorized changes unnoticed.
+4. Specify the key to use:
+```bash
+git config --global user.signingkey <your-signing-key>
+```
 
-#### Securing Your Git Repositories
+That's it—your commits are now verifiable and secure.
 
-To mitigate risks associated with Git spoofing, critical systems require robust commit verification practices:
+## Real-World Scenario
 
-1. **Signed Commits with GPG:**
+Imagine you're part of a 10-person team responsible for your application's authentication system, conveniently managed within a monorepo. Your CI/CD pipeline auto-deploys to production whenever you commit to the main branch, trusting your verified credentials implicitly. But what if your "friendly" coworker decides to impersonate you, injecting a malicious backdoor directly into production under your name?
 
-   - Implement mandatory GPG signing for commits to cryptographically validate authenticity.
+This isn't a far-fetched scenario - it can happen without commit signing.
 
-   ```bash
-   git commit -S -m "Verified commit"
-   ```
+## Closing Thoughts
 
-2. **GitHub Vigilant Mode:**
+Yes, Git is fundamentally flawed, but it's not Git's fault. When Git was created, the internet was a vastly different place. If we look back 50 years from now, we'll probably laugh at our current implementations, asking ourselves, "Why did we think that was okay?".
 
-   - Enable Git's vigilant mode to display signatures and verification statuses prominently:
-
-   ```bash
-   git config --global log.showSignature true
-   ```
-
-3. **Platform-Level Enforcement:**
-
-   - Services like GitHub or GitLab offer built-in commit verification that can enforce signed commits, rejecting unsigned ones.
-
-4. **Automated Monitoring and Alerts:**
-
-   - Integrate automated verification checks into CI/CD pipelines to flag suspicious commits immediately.
-
-#### Conclusion
-
-Git spoofing poses real risks to system integrity and accountability. Adopting stringent verification practices, such as GPG-signed commits and vigilant commit validation, ensures trustworthiness and transparency. By implementing these safeguards, organizations significantly enhance their security posture, accountability, and compliance readiness.
+Despite this flaw, Git remains the best tool available—fast, reliable, and supported by a vast ecosystem. Rather than ditching Git for some obscure alternative, we should focus on improving it. Commit signing is a simple step toward making Git safer and more trustworthy for everyone.
 
