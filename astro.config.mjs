@@ -11,5 +11,11 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [icon()]
+  integrations: [icon()],
+
+  markdown: {
+    shikiConfig: {
+      theme: 'vesper'
+    }
+  }
 });

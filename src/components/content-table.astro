@@ -2,6 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const writings: CollectionEntry<"writings">[] = await getCollection("writings");
+
+const filteredWritings = writings.filter((writing) => {
+	const isDraft = writing.data.draft ?? false;
+	return !isDraft;
+});
 ---
 
 <div class="w-full">
@@ -10,7 +15,7 @@ const writings: CollectionEntry<"writings">[] = await getCollection("writings");
         <div class="font-normal lowercase py-2 w-3/4">Title</div>
     </div>
     {
-        writings.map((writing) => (
+        filteredWritings.map((writing) => (
             <a
                 href={`/writings/${writing.id}`}
                 class="group flex hover:bg-black/10"
@@ -27,4 +32,9 @@ const writings: CollectionEntry<"writings">[] = await getCollection("writings");
             </a>
         ))
     }
+    {filteredWritings.length === 0 && (
+        <div class="py-2 px-2 w-full text-center text-black/50">
+            No writings found.
+        </div>
+    )}
 </div>

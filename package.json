@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@iconify-json/iconoir": "^1.2.7"
+    "@iconify-json/iconoir": "^1.2.7",
+    "@tailwindcss/typography": "^0.5.16"
   }
 }

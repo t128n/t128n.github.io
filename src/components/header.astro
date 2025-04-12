@@ -56,6 +56,7 @@ const externalLinks = ["http", "mailto"];
                 <li class="-m-2">
                     <a
                         href={link.url}
+                        aria-label={link.name}
                         target={link.target ?? "_blank"}
                         rel="noopener noreferrer"
                         class="group block h-full w-full relative hover:bg-black/10 p-2"
