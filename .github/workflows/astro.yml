@@ -4,11 +4,12 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "src/**"                # Only trigger when source files change
-      - "astro.config.mjs"       # Astro configuration file
-      - "package.json"           # Manifest if added (optional if not used by Bun)
-      - "bun.lockb"              # Bun’s lockfile for dependency version tracking
-      - ".github/workflows/**"   # In case workflow changes affect the build
+      - "src/**"                  # Only trigger when source files change
+      - "writings/**"             # or articles are added
+      - "astro.config.mjs"        # Astro configuration file
+      - "package.json"            # Manifest
+      - "bun.lockb"               # Bun’s lockfile for dependency version tracking
+      - ".github/workflows/**"    # In case workflow changes affect the build
   workflow_dispatch:
 
 permissions:
@@ -21,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "."   # Default value; adjust if your build is in a subfolder
+  BUILD_PATH: "."
 
 jobs:
   build:
@@ -35,7 +36,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: "latest"  # Optionally pin to a specific version for consistency
+          bun-version: "latest"
 
       - name: Cache Bun dependencies
         uses: actions/cache@v3
