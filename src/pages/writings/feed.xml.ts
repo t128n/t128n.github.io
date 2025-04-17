@@ -1,4 +1,4 @@
-import rss, { pagesGlobToRssItems } from '@astrojs/rss';
+import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 
@@ -9,6 +9,8 @@ export async function GET(context: APIContext) {
         description: writing.data.description ?? `${writing.body?.slice(0, 200)}...`,
         pubDate: writing.data.published,
         link: `${context.site}writings/${writing.id}`,
+        content: writing.body,
+        categories: writing.data.tags
     }))
 
     return rss({
