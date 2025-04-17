@@ -7,6 +7,12 @@ const filteredWritings = writings.filter((writing) => {
 	const isDraft = writing.data.draft ?? false;
 	return !isDraft;
 });
+
+const sortedWritings = filteredWritings.sort((a, b) => {
+	const dateA = new Date(a.data.published);
+	const dateB = new Date(b.data.published);
+	return dateB.getTime() - dateA.getTime();
+});
 ---
 
 <div class="w-full">
@@ -15,7 +21,7 @@ const filteredWritings = writings.filter((writing) => {
         <div class="font-normal lowercase py-2 w-3/4">Title</div>
     </div>
     {
-        filteredWritings.map((writing) => (
+        sortedWritings.map((writing) => (
             <a
                 href={`/writings/${writing.id}`}
                 class="group flex hover:bg-black/10"
