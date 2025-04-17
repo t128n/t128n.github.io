@@ -25,7 +25,7 @@ export function ScratchpadApp() {
 	return (
 		<div className="w-dvw h-dvh flex flex-col items-center font-mono">
 			<textarea
-				className="w-[90ch] flex-1 text-base py-16 resize-none focus:outline-none"
+				className="max-w-[90ch] flex-1 text-base py-16 resize-none focus:outline-none"
 				value={text}
 				onChange={(e) => setText(e.target.value)}
 				placeholder="Just start typing. No formatting, no distractions. Content is saved automatically."
