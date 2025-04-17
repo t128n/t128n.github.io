@@ -5,6 +5,7 @@ const writings = defineCollection({
     loader: glob({ pattern: '**/*.md', base: './writings' }),
     schema: z.object({
         title: z.string(),
+        description: z.string().optional(),
         published: z.date(),
         updated: z.date().optional(),
         draft: z.boolean().optional(),

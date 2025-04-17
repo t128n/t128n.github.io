@@ -1,5 +1,7 @@
 ---
 title: "Prompting the Right Way as a Software Engineer"
+description: "How to effectively prompt LLMs for better results"
+tags: ["AI", "LLM", "Prompt Engineering"]
 published: 2025-04-15
 ---
 

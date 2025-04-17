@@ -1,5 +1,7 @@
 ---
 title: "Git’s Trust Model is Broken - Here’s How to Fix It"
+description: "Git's trust model is flawed, but there's a simple solution to secure your commits."
+tags: ["Git", "Security", "Version Control"]
 published: 2025-04-12
 ---
 
