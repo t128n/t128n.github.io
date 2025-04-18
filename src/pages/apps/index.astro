@@ -1,0 +1,39 @@
+---
+import ContentTable from "@/components/content-table.astro";
+import PageLayout from "@/layouts/base.astro";
+---
+
+<PageLayout>
+    <p>
+        These are some minimal, micro web applications I built for personal use. They are
+        designed to be simple and effective, focusing on the core functionality without any
+        unnecessary features. You can use them directly in your browser, and they will
+        work offline. I hope you find them useful!
+    </p>
+    <ul class="flex flex-col gap-4">
+        <li class="flex flex-col gap-2">
+            <span class="font-bold">Scratchpad</span>
+            <div class="flex gap-2 justify-between">
+                <p>
+                    A minimal scratchpad for focused writing.
+                </p>
+                <a
+                    href="/apps/scratchpad"
+                    class="hover:underline"
+                    >Open</a
+                >
+            </div>
+        </li>
+        <li class="flex flex-col gap-2">
+            <span class="font-bold">Snippets</span>
+            <div class="flex gap-2 justify-between">
+                <p>A simple snippets manager.</p>
+                <a
+                    href="/apps/snippets"
+                    class="hover:underline"
+                    >Open</a
+                >
+            </div>
+        </li>
+    </ul>
+</PageLayout>
