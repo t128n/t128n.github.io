@@ -1,0 +1,86 @@
+{
+    "basics": {
+      "name": "Torben Haack",
+      "label": "IT-Architekt, Software- & Automatisierungsingenieur",
+      "nickname": "t128n",
+      "location": {
+        "city": "Berlin",
+        "country": "Deutschland"
+      },
+      "profiles": [
+        {
+          "network": "GitHub",
+          "url": "https://github.com/t128n"
+        },
+        {
+          "network": "LinkedIn",
+          "url": "https://linkedin.com/in/torben-haack"
+        }
+      ],
+      "email": "t128n@ipv4.8shield.net"
+    },
+    "summary": "Softwareentwickler bei Mercedes-Benz Digital Factory. Ich entwickle skalierbare CI/CD-Systeme, Datenplattformen und Automatisierungstools für effiziente, wartbare Workflows.",
+    "experience": [
+      {
+        "startDate": "2025-01",
+        "endDate": "Heute",
+        "company": "Mercedes‑Benz AG",
+        "position": "IT-Architekt, Software- & Automatisierungsingenieur",
+        "summary": "Architektur von Datenplattformen, CI/CD und Test-Frameworks."
+      },
+      {
+        "startDate": "2022-09",
+        "endDate": "2025-01",
+        "company": "Mercedes‑Benz AG",
+        "position": "Auszubildender (Fachinformatik – Daten- & Prozessanalyse)",
+        "summary": "Automatisierung, Dashboards, Mentoring und Workflow-Standards."
+      }
+    ],
+    "skills": [
+      {
+        "category": "Architektur & Tooling",
+        "items": ["Softwarearchitektur", "Entwicklertools", "Testautomatisierung"]
+      },
+      {
+        "category": "DevOps",
+        "items": ["CI/CD-Automatisierung", "GitHub Workflows", "Containerisierung"]
+      },
+      {
+        "category": "Webentwicklung",
+        "items": ["Next.js", "Tailwind CSS", "shadcn/ui", "Streamlit"]
+      },
+      {
+        "category": "Programmiersprachen",
+        "items": ["Python", "TypeScript"]
+      }
+    ],
+    "projects": [
+      {
+        "year": "2025",
+        "name": "MYP",
+        "role": "Abschlussprojekt",
+        "summary": "Enterprise-taugliches Druckerverwaltungssystem mit SSO, RBAC, Regressionsanalytik und Podman-Deployment. Entwickelt mit Next.js + TypeScript."
+      },
+      {
+        "year": "2024",
+        "name": "PromptLab",
+        "role": "Prototype Engineer",
+        "summary": "Modulares Prompt-Engineering-Tool mit Live-Vorschau, dynamischen Eingaben und eigenem Interpreter. Entwickelt mit React, Radix UI und Tailwind CSS."
+      },
+      {
+        "year": "2024",
+        "name": "Korrektor",
+        "role": "Prototype Engineer",
+        "summary": "GenAI-Refactoring-Assistent mit Streamlit und Ollama. Schneller POC für schnelle Iteration im Bereich AI Developer Tooling."
+      }
+    ],
+    "education": [
+      {
+        "startYear": "2022",
+        "endYear": "2024",
+        "institution": "OSZ IMT Berlin‑Neukölln",
+        "degree": "Ausbildung Fachinformatiker für Daten- und Prozessanalyse (Note 1,4)"
+      }
+    ]
+  }
+  

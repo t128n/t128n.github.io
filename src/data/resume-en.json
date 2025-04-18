@@ -1,0 +1,86 @@
+{
+    "basics": {
+      "name": "Torben Haack",
+      "label": "IT Architect, Software & Automation Engineer",
+      "nickname": "t128n",
+      "location": {
+        "city": "Berlin",
+        "country": "Germany"
+      },
+      "profiles": [
+        {
+          "network": "GitHub",
+          "url": "https://github.com/t128n"
+        },
+        {
+          "network": "LinkedIn",
+          "url": "https://linkedin.com/in/torben-haack"
+        }
+      ],
+      "email": "t128n@ipv4.8shield.net"
+    },
+    "summary": "Engineer of scalable, minimalist software at Mercedes-Benz Digital Factory. I design CI/CD, data platforms, and automation tooling to streamline workflows and ensure long-term maintainability.",
+    "experience": [
+      {
+        "startDate": "2025-01",
+        "endDate": "Present",
+        "company": "Mercedes‑Benz AG",
+        "position": "IT Architect, Software & Automation Engineer",
+        "summary": "Architected data platforms, CI/CD, and test frameworks."
+      },
+      {
+        "startDate": "2022-09",
+        "endDate": "2025-01",
+        "company": "Mercedes‑Benz AG",
+        "position": "Apprentice (Computer Science – Data & Process Analysis)",
+        "summary": "Drove automation, built dashboards, mentored peers, and standardized GitHub workflows."      
+      }
+    ],
+    "skills": [
+      {
+        "category": "Architecture & Tooling",
+        "items": ["Software Architecture", "Developer Tooling", "Test Automation"]
+      },
+      {
+        "category": "DevOps",
+        "items": ["CI/CD Automation", "GitHub Workflows", "Containerization"]
+      },
+      {
+        "category": "WebDev",
+        "items": ["Next.js", "Tailwind CSS", "shadcn/ui", "Streamlit"]
+      },
+      {
+        "category": "Languages",
+        "items": ["Python", "TypeScript"]
+      }
+    ],
+    "projects": [
+      {
+        "year": "2025",
+        "name": "MYP",
+        "role": "Capstone Project",
+        "summary": "Enterprise‑grade printer management system with SSO, RBAC, regression analytics, Podman deployment. Built with Next.js + TypeScript."
+      },
+      {
+        "year": "2024",
+        "name": "PromptLab",
+        "role": "Prototype Engineer",
+        "summary": "Modular prompt engineering tool with live previews, dynamic inputs, and a custom interpreter. Built with React, Radix UI, and Tailwind CSS."
+      },
+      {
+        "year": "2024",
+        "name": "Korrektor",
+        "role": "Prototype Engineer",
+        "summary": "GenAI refactoring assistant built with Streamlit and Ollama. Fast POC for rapid iteration in AI developer tooling."
+      }
+    ],
+    "education": [
+      {
+        "startYear": "2022",
+        "endYear": "2024",
+        "institution": "OSZ IMT Berlin‑Neukölln",
+        "degree": "Vocational Qualification in Computer Science (Grade 1.4)"
+      }
+    ]
+  }
+  

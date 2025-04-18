@@ -1,0 +1,252 @@
+---
+import BaseLayout from "@/layouts/base.astro";
+import Avatar from "@/assets/avatar.svg";
+import { Image } from "astro:assets";
+import resumeEn from "@/data/resume-en.json";
+import resumeDe from "@/data/resume-de.json";
+
+export function getStaticPaths() {
+	return [
+		{ params: { slug: "" } }, // matches /cv/
+		{ params: { slug: "en" } }, // matches /cv/en
+		{ params: { slug: "de" } }, // matches /cv/de
+	];
+}
+
+const rawSlug = Astro.params.slug;
+const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug;
+const lang = !slug || slug === "en" ? "en" : slug === "de" ? "de" : "en";
+const resume = lang === "de" ? resumeDe : resumeEn;
+const oppositeLang =
+	lang === "de"
+		? { code: "en", label: "🇬🇧 English version", href: "/cv" }
+		: { code: "de", label: "🇩🇪 German version", href: "/cv/de" };
+const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
+---
+
+<BaseLayout>
+  <div
+    class="flex justify-between border-b border-black/30 text-xs text-black/50"
+  >
+    <a href={oppositeLang.href} class="hover:font-semibold">
+      {oppositeLang.label}
+    </a>
+    <a
+      href={pdfHref}
+      class="hover:font-semibold cursor-pointer"
+      target="_blank"
+      rel="noopener"
+    >
+      <span>{lang === "en" ? "Save as PDF" : "Als PDF speichern"}</span>
+    </a>
+  </div>
+
+  <div
+    id="resume"
+    class="flex flex-col gap-8 print:m-0 print:p-0 print:shadow-none"
+  >
+    <!-- Profile Header -->
+    <div
+      class="flex items-start sm:items-center flex-col sm:flex-row justify-between"
+    >
+      <div class="flex items-center gap-4">
+        <Image
+          loading="eager"
+          src={Avatar}
+          alt="Avatar"
+          class="rounded-full w-16 h-16"
+        />
+        <div class="flex flex-col">
+          <h1 class="text-2xl font-bold">{resume.basics.name}</h1>
+          <div class="flex items-center gap-2 text-black/50 text-sm">
+            <span>[{resume.basics.nickname}]</span>
+            <span>·</span>
+            <span
+              >{resume.basics.location.city}, {
+                resume.basics.location.country
+              }</span
+            >
+          </div>
+        </div>
+      </div>
+      <ul
+        class="flex flex-col justify-end items-start pt-8 sm:pt-0 sm:items-end"
+      >
+        {
+          resume.basics.profiles.map((p) => (
+            <li>
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-1 text-black/70 text-xs"
+              >
+                <span>{p.url.replace(/^https?:\/\//, "")}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href={`mailto:${resume.basics.email}`}
+            class="flex items-center gap-1 text-black/70 text-xs"
+          >
+            <span>{resume.basics.email}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="text-sm leading-relaxed">{resume.summary}</p>
+
+    <!-- Experience -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+        {lang === "de" ? "Erfahrung" : "Experience"}
+      </h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">{lang === "de" ? "start" : "start_date"}</th>
+            <th class="py-2 px-1">{lang === "de" ? "ende" : "end_date"}</th>
+            <th class="py-2 px-1"
+              >{lang === "de" ? "unternehmen" : "company"}</th
+            >
+            <th class="py-2 px-1">{lang === "de" ? "rolle" : "role"}</th>
+            <th class="py-2 px-1"
+              >{lang === "de" ? "beschreibung" : "description"}</th
+            >
+          </tr>
+        </thead>
+        <tbody>
+          {
+            resume.experience.map((item) => (
+              <tr class="border-b border-gray-200">
+                <td class="py-2 px-1">{item.startDate}</td>
+                <td class="py-2 px-1">{item.endDate}</td>
+                <td class="py-2 px-1">{item.company}</td>
+                <td class="py-2 px-1">{item.position}</td>
+                <td class="py-2 px-1">{item.summary}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Skills -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+        {lang === "de" ? "Fähigkeiten" : "Skills"}
+      </h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">category</th>
+            <th class="py-2 px-1">skills</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            resume.skills.map((s) => (
+              <tr class="border-b border-gray-200">
+                <td class="py-2 px-1">{s.category}</td>
+                <td class="py-2 px-1">{s.items.join(", ")}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Projects -->
+    <div>
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+        {lang === "de" ? "Projekte" : "Projects"}
+      </h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">year</th>
+            <th class="py-2 px-1">name</th>
+            <th class="py-2 px-1">role</th>
+            <th class="py-2 px-1">description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            resume.projects.map((p) => (
+              <tr class="border-b border-gray-200">
+                <td class="py-2 px-1">{p.year}</td>
+                <td class="py-2 px-1">{p.name}</td>
+                <td class="py-2 px-1">{p.role}</td>
+                <td class="py-2 px-1">{p.summary}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Education -->
+    <div class="print:mb-0 mb-8">
+      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+        {lang === "de" ? "Ausbildung" : "Education"}
+      </h2>
+      <table class="w-full text-xs table-auto">
+        <thead class="border-b border-gray-300 text-gray-500 text-left">
+          <tr>
+            <th class="py-2 px-1">{lang === "de" ? "Beginn" : "start"}</th>
+            <th class="py-2 px-1">{lang === "de" ? "Ende" : "end"}</th>
+            <th class="py-2 px-1">institution</th>
+            <th class="py-2 px-1">degree</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            resume.education.map((e) => (
+              <tr class="border-b border-gray-200">
+                <td class="py-2 px-1">{e.startYear}</td>
+                <td class="py-2 px-1">{e.endYear}</td>
+                <td class="py-2 px-1">{e.institution}</td>
+                <td class="py-2 px-1">{e.degree}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  @media print {
+    html,
+    body {
+      overflow: visible !important;
+      width: auto !important;
+      height: auto !important;
+      position: static !important;
+    }
+    ::-webkit-scrollbar {
+      display: none !important;
+    }
+    * {
+      visibility: hidden;
+    }
+    #resume {
+      padding: 2rem !important;
+      visibility: visible;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 !important;
+      box-shadow: none !important;
+    }
+    #resume * {
+      visibility: visible;
+    }
+  }
+</style>
