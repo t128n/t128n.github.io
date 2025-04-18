@@ -1,0 +1,28 @@
+# t128n.github.io
+
+> Personal site of Torben Haack — IT Architect and Software & Automation Engineer based in Berlin. Features a professional CV, blog-style writings on software architecture and automation, and minimalist tools. Built with Astro, Tailwind CSS, and TypeScript.
+
+The site is intentionally minimal, optimized for fast access and clarity. It includes curated content relevant to CI/CD, platform design, automation engineering, and web tooling.
+
+## CV
+
+- [CV](https://t128n.github.io/cv): Resume detailing experience at Mercedes-Benz, including data platform architecture, CI/CD systems, and developer tooling.
+
+## Writings
+
+- [Writings](https://t128n.github.io/): A collection of concise essays on scalable software practices, DevOps automation, and minimalist engineering design.
+
+## Apps
+
+- [Scratchpad](https://t128n.github.io/apps/scratchpad): A minimalist text editor for focused writing, prototyped with Astro and Tailwind.
+
+## Site Info
+
+- [Homepage](https://t128n.github.io/): High-level summary and links to key content areas.
+
+## Optional
+
+- [Sitemap](https://t128n.github.io/sitemap-index.xml): Machine-readable index of site URLs.
+- [RSS Feed](https://t128n.github.io/rss.xml): Feed of the latest writings and updates.
+- [GitHub Profile](https://github.com/t128n): Source code and tools related to CI/CD, data workflows, and automation.
+- [LinkedIn](https://linkedin.com/in/torben-haack): Work history and role description at Mercedes-Benz.

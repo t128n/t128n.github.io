@@ -1,0 +1,18 @@
+/* TEAM */
+Developer: Torben Haack
+Nickname: t128n
+Location: Berlin, Germany
+Contact: t128n@ipv4.8shield.net
+GitHub: https://github.com/t128n
+LinkedIn: https://linkedin.com/in/torben-haack
+
+/* SITE */
+Project: t128n.github.io
+Description: Robust, minimalist software solutions for developer tooling, automation, and data platforms. Built with Astro, React, and Tailwind CSS.
+Stack: Astro, React, Tailwind CSS, TypeScript, GitHub Actions
+
+/* THANKS */
+Thanks: Open source community, family, friends
+
+/* LAST UPDATE */
+Last update: 2025-04-18
