@@ -5,7 +5,6 @@ import icon from 'astro-icon';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://t128n.github.io',
@@ -19,6 +18,13 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: 'vesper'
-    }
+    },
+    smartypants: false,
+    remarkPlugins: [
+      ["remark-smartypants", { 
+           openingQuotes: { double: '»', single: '›' },
+           closingQuotes: { double: '«', single: '‹' }
+      }]
+    ]
   }
 });
