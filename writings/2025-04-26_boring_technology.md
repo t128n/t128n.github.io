@@ -17,7 +17,7 @@ This is not engineering. It is hype-chasing disguised as progress.
 
 Real engineering demands reliability. It demands systems that survive team turnover, budget cuts, and shifting business priorities. "Boring technology" — mature, battle-tested, well-understood tools — is critical to that survival.
 
-Boring technologies are predictable. Their failure modes are known, their documentation is complete, and operational expertise is widespread. When problems occur, answers are a search away — not buried in obscure GitHub issues. Teams can hire and onboard faster. Systems behave consistently under stress. Customers experience stability, not chaos.
+Boring technologies are predictable. Their failure modes are known, their documentation is complete, and operational expertise is widespread. When problems occur, answers are a search away and not buried in obscure GitHub issues. Teams can hire and onboard faster. Systems behave consistently under stress. Customers experience stability, not chaos.
 
 Legacy code, often maligned, should be recognized for what it frequently represents: systems that delivered sustained value across years of organizational entropy. Good legacy systems evolved without sacrificing reliability. Bad legacy systems typically reveal organizational failure, not technological inertia.
 
