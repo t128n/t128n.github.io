@@ -7,24 +7,27 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://t128n.github.io',
+	site: "https://t128n.github.io",
 
-  vite: {
-    plugins: [tailwindcss()]
-  },
+	vite: {
+		plugins: [tailwindcss()],
+	},
 
-  integrations: [icon(), react(), sitemap()],
+	integrations: [icon(), react(), sitemap()],
 
-  markdown: {
-    shikiConfig: {
-      theme: 'vesper'
-    },
-    smartypants: false,
-    remarkPlugins: [
-      ["remark-smartypants", { 
-           openingQuotes: { double: '»', single: '›' },
-           closingQuotes: { double: '«', single: '‹' }
-      }]
-    ]
-  }
+	markdown: {
+		shikiConfig: {
+			theme: "vesper",
+		},
+		smartypants: false,
+		remarkPlugins: [
+			[
+				"remark-smartypants",
+				{
+					openingQuotes: { double: "»", single: "'" },
+					closingQuotes: { double: "«", single: "'" },
+				},
+			],
+		],
+	},
 });
