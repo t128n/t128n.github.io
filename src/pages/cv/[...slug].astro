@@ -26,7 +26,7 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
 
 <BaseLayout>
   <div
-    class="flex justify-between border-b border-black/30 text-xs text-black/50"
+    class="flex justify-between border-b border-black/30 dark:border-white/30 text-xs text-black/50 dark:text-white/50"
   >
     <a href={oppositeLang.href} class="hover:font-semibold">
       {oppositeLang.label}
@@ -58,7 +58,7 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
         />
         <div class="flex flex-col">
           <h1 class="text-2xl font-bold">{resume.basics.name}</h1>
-          <div class="flex items-center gap-2 text-black/50 text-sm">
+          <div class="flex items-center gap-2 text-black/50 dark:text-white/50 text-sm">
             <span>[{resume.basics.nickname}]</span>
             <span>·</span>
             <span
@@ -79,7 +79,7 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-1 text-black/70 text-xs"
+                class="flex items-center gap-1 text-black/70 dark:text-white/70 text-xs"
               >
                 <span>{p.url.replace(/^https?:\/\//, "")}</span>
               </a>
@@ -89,7 +89,7 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
         <li>
           <a
             href={`mailto:${resume.basics.email}`}
-            class="flex items-center gap-1 text-black/70 text-xs"
+            class="flex items-center gap-1 text-black/70 dark:text-white/70 text-xs"
           >
             <span>{resume.basics.email}</span>
           </a>
@@ -101,11 +101,11 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
 
     <!-- Experience -->
     <div>
-      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+      <h2 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
         {lang === "de" ? "Erfahrung" : "Experience"}
       </h2>
       <table class="w-full text-xs table-auto">
-        <thead class="border-b border-gray-300 text-gray-500 text-left">
+        <thead class="border-b border-gray-300 text-gray-500 dark:text-gray-300 dark:border-gray-200 text-left">
           <tr>
             <th class="py-2 px-1">{lang === "de" ? "start" : "start_date"}</th>
             <th class="py-2 px-1">{lang === "de" ? "ende" : "end_date"}</th>
@@ -136,11 +136,11 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
 
     <!-- Skills -->
     <div>
-      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+      <h2 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
         {lang === "de" ? "Fähigkeiten" : "Skills"}
       </h2>
       <table class="w-full text-xs table-auto">
-        <thead class="border-b border-gray-300 text-gray-500 text-left">
+        <thead class="border-b border-gray-300 text-gray-500 dark:text-gray-300 dark:border-gray-200 text-left">
           <tr>
             <th class="py-2 px-1">category</th>
             <th class="py-2 px-1">skills</th>
@@ -161,11 +161,11 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
 
     <!-- Projects -->
     <div>
-      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+      <h2 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
         {lang === "de" ? "Projekte" : "Projects"}
       </h2>
       <table class="w-full text-xs table-auto">
-        <thead class="border-b border-gray-300 text-gray-500 text-left">
+        <thead class="border-b border-gray-300 text-gray-500 dark:text-gray-300 dark:border-gray-200 text-left">
           <tr>
             <th class="py-2 px-1">year</th>
             <th class="py-2 px-1">name</th>
@@ -190,11 +190,11 @@ const pdfHref = lang === "de" ? "/cv/de.pdf" : "/cv/en.pdf";
 
     <!-- Education -->
     <div class="print:mb-0 mb-8">
-      <h2 class="text-lg font-semibold mb-2 text-gray-700">
+      <h2 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">
         {lang === "de" ? "Ausbildung" : "Education"}
       </h2>
       <table class="w-full text-xs table-auto">
-        <thead class="border-b border-gray-300 text-gray-500 text-left">
+        <thead class="border-b border-gray-300 text-gray-500 dark:text-gray-300 dark:border-gray-200 text-left">
           <tr>
             <th class="py-2 px-1">{lang === "de" ? "Beginn" : "start"}</th>
             <th class="py-2 px-1">{lang === "de" ? "Ende" : "end"}</th>

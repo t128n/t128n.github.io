@@ -18,12 +18,12 @@ const { Content } = await render(writing);
 <BaseLayout title={writing.data.title}>
     <article class="font-sans w-full">
         <header>
-            <time class="font-mono text-sm text-black/50" datetime={writing.data.published.toISOString()}>
+            <time class="font-mono text-sm text-black/50 dark:text-white/50" datetime={writing.data.published.toISOString()}>
                 {writing.data.published.toLocaleDateString()}
             </time>
             <h2 class="font-bold text-2xl">{writing.data.title}</h2>
         </header>
-        <div class="prose py-4 w-full">
+        <div class="prose prose-neutral dark:prose-invert py-4 w-full">
             <hr />
             <Content />
         </div>
