@@ -43,7 +43,7 @@ const externalLinks = ["http", "mailto"];
 <header
     class="flex flex-row justify-between items-center"
 >
-    <a href="/" class="flex items-center gap-2 hover:font-bold p-2">
+    <a href="/" class="flex items-center gap-2 hover:font-bold p-2" data-prefetch>
         <Image
             loading="eager"
             src={Avatar}
@@ -65,6 +65,7 @@ const externalLinks = ["http", "mailto"];
                         target={link.target ?? "_blank"}
                         rel="noopener noreferrer"
                         class="group block h-full w-full relative hover:bg-black/10 p-2"
+                        data-prefetch={!externalLinks.some((externalLink) => link.url.includes(externalLink))}
                     >
                         <Icon
                             name={`iconoir:${link.icon ?? link.name.toLowerCase()}`}
@@ -86,3 +87,29 @@ const externalLinks = ["http", "mailto"];
         }
     </ul>
 </header>
+
+<script>
+    // Prefetch links on hover
+    document.querySelectorAll('a[data-prefetch]').forEach(link => {
+        let prefetched = false;
+        
+        link.addEventListener('mouseenter', () => {
+            if (!prefetched) {
+                const href = link.getAttribute('href');
+                            
+                if (href) {
+                    if(href.startsWith('mailto')) {
+                        prefetched = true;
+                        return;
+                    };
+
+                    const prefetchLink = document.createElement('link');
+                    prefetchLink.rel = 'prefetch';
+                    prefetchLink.href = href;
+                    document.head.appendChild(prefetchLink);
+                    prefetched = true;
+                }
+            }
+        });
+    });
+</script>
