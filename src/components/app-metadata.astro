@@ -1,0 +1,21 @@
+---
+const { name, description } = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{name} [t128n]</title>
+<meta name="description" content={description} />
+<meta name="author" content="Torben Haack" />
+<meta name="robots" content="noindex, nofollow" />
+
+<meta property="og:title" content={`${name} [t128n]`} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={`https://t128n.github.io/apps/${Astro.params.slug}`} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={`${name} [t128n]`} />
+<meta name="twitter:description" content={description} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" /> 

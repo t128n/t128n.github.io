@@ -4,11 +4,16 @@ import PageLayout from "@/layouts/base.astro";
 ---
 
 <PageLayout>
-	<p>
-		I build internal platforms that remove friction from software development—CI/CD 
-        pipelines, test frameworks, deployment tooling, and reproducible docs. At Mercedes-Benz’s 
-        Digital Factory Campus in Berlin, I design developer infrastructure that scales: automating workflows, 
-        enforcing consistency, and supporting industrial systems through pragmatic architecture.
-	</p>
-	<ContentTable />
+	<article class="prose dark:prose-invert max-w-none">
+		<p class="text-lg leading-relaxed">
+			I build internal platforms that remove friction from software development—CI/CD 
+			pipelines, test frameworks, deployment tooling, and reproducible docs. At Mercedes-Benz's 
+			Digital Factory Campus in Berlin, I design developer infrastructure that scales: automating workflows, 
+			enforcing consistency, and supporting industrial systems through pragmatic architecture.
+		</p>
+	</article>
+	
+	<section>
+		<ContentTable />
+	</section>
 </PageLayout>

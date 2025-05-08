@@ -1,66 +1,47 @@
 ---
-import ContentTable from "@/components/content-table.astro";
 import PageLayout from "@/layouts/base.astro";
+import { apps } from "@/data/apps";
 ---
 
 <PageLayout>
-    <p>
-        These are some minimal, micro web applications I built for personal use. They are
-        designed to be simple and effective, focusing on the core functionality without any
-        unnecessary features. You can use them directly in your browser, and they will
-        work offline. I hope you find them useful!
-    </p>
-    <ul class="flex flex-col gap-4">
-        <li class="flex flex-col gap-2">
-            <span class="font-bold">Routr</span>
-            <div class="flex gap-2 justify-between">
-                <p>
-                    A simple, minimalistic search engine router. Like DuckDuckGo Bangs, but
-                    local. And fast.
-                </p>
-                <a
-                    href="https://t128n.github.io/routr/"
-                    class="hover:underline"
-                    >Open</a
-                >
-            </div>
-        </li>
-        <li class="flex flex-col gap-2">
-            <span class="font-bold">ASCII Visualizer</span>
-            <div class="flex gap-2 justify-between">
-                <p>
-                    Real-time ASCII text processing and visualization with statistics, color-coded highlights, and interactive tooltips.
-                </p>
-                <a
-                    href="/apps/ascii"
-                    class="hover:underline"
-                    >Open</a
-                >
-            </div>
-        </li>
-        <li class="flex flex-col gap-2">
-            <span class="font-bold">Scratchpad</span>
-            <div class="flex gap-2 justify-between">
-                <p>
-                    A minimal scratchpad for focused writing.
-                </p>
-                <a
-                    href="/apps/scratchpad"
-                    class="hover:underline"
-                    >Open</a
-                >
-            </div>
-        </li>
-        <li class="flex flex-col gap-2">
-            <span class="font-bold">Snippets</span>
-            <div class="flex gap-2 justify-between">
-                <p>A simple snippets manager.</p>
-                <a
-                    href="/apps/snippets"
-                    class="hover:underline"
-                    >Open</a
-                >
-            </div>
-        </li>
-    </ul>
+	<article class="prose dark:prose-invert max-w-none">
+		<h1 class="text-2xl font-bold mb-4">Web Applications</h1>
+		<p class="text-lg leading-relaxed mb-8">
+			These are some minimal, micro web applications I built for personal use. They are
+			designed to be simple and effective, focusing on the core functionality without any
+			unnecessary features. You can use them directly in your browser, and they will
+			work offline. I hope you find them useful!
+		</p>
+	</article>
+
+	<div class="grid gap-6">
+		{Object.entries(apps).map(([slug, app]) => (
+			<div class="group p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+				<div class="flex flex-col gap-3">
+					<div class="flex items-center justify-between">
+						<h2 class="text-xl font-bold">{app.name}</h2>
+						<a
+							href={'external' in app ? (app as { url: string }).url : `/apps/${slug}`}
+							class="inline-flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+							target={'external' in app ? "_blank" : undefined}
+							rel={'external' in app ? "noopener noreferrer" : undefined}
+						>
+							Open
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+								<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+							</svg>
+						</a>
+					</div>
+					<p class="text-gray-600 dark:text-gray-400">{app.description}</p>
+					<div class="flex flex-wrap gap-2">
+						{app.tags.map((tag) => (
+							<span class="px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+								{tag}
+							</span>
+						))}
+					</div>
+				</div>
+			</div>
+		))}
+	</div>
 </PageLayout>

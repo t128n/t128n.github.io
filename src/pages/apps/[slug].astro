@@ -1,0 +1,32 @@
+---
+import { AsciiApp } from "@/components/apps/ascii";
+import { ScratchpadApp } from "@/components/apps/scratchpad";
+import { SnippetsApp } from "@/components/apps/snippets";
+import { apps } from "@/data/apps";
+import AppLayout from "@/layouts/app.astro";
+
+// Generate static paths for all apps
+export async function getStaticPaths() {
+    return Object.keys(apps).map(slug => ({
+        params: { slug },
+        props: { 
+            app: apps[slug as keyof typeof apps],
+            name: apps[slug as keyof typeof apps].name,
+            description: apps[slug as keyof typeof apps].description
+        }
+    }));
+}
+
+const { app } = Astro.props;
+
+// Redirect external apps
+if ('external' in app && app.external) {
+    return Astro.redirect(app.url);
+}
+---
+
+<AppLayout name={app.name} description={app.description}>
+    {app.name === "ASCII Visualizer" && <AsciiApp client:only />}
+    {app.name === "Scratchpad" && <ScratchpadApp client:only />}
+    {app.name === "Snippets" && <SnippetsApp client:only />}
+</AppLayout> 

@@ -1,0 +1,16 @@
+---
+import "@/styles/global.css";
+import AppMetadata from "@/components/app-metadata.astro";
+
+const { name, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <AppMetadata name={name} description={description} />
+  </head>
+  <body class="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+    <slot />
+  </body>
+</html> 
