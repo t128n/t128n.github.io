@@ -10,8 +10,6 @@ tags:
 published: 2025-05-08
 ---
 
-# Simplifying Cursor Installation on Linux
-
 In the world of modern development tools, Linux support often feels like an afterthought. While tools like VS Code and JetBrains IDEs have excellent Linux integration, newer AI-powered editors frequently lag behind. This is particularly evident with Cursor, an AI-first code editor that's gaining traction in the developer community.
 
 ## The Problem
