@@ -2,6 +2,7 @@
 import { AsciiApp } from "@/components/apps/ascii";
 import { ScratchpadApp } from "@/components/apps/scratchpad";
 import { SnippetsApp } from "@/components/apps/snippets";
+import { NewsApp } from "@/components/apps/news";
 import { apps } from "@/data/apps";
 import AppLayout from "@/layouts/app.astro";
 
@@ -29,4 +30,5 @@ if ('external' in app && app.external) {
     {app.name === "ASCII Visualizer" && <AsciiApp client:only />}
     {app.name === "Scratchpad" && <ScratchpadApp client:only />}
     {app.name === "Snippets" && <SnippetsApp client:only />}
+    {app.name === "News" && <NewsApp client:only />}
 </AppLayout> 

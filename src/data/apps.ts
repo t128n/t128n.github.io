@@ -1,6 +1,7 @@
 import { AsciiApp } from "@/components/apps/ascii";
 import { ScratchpadApp } from "@/components/apps/scratchpad";
 import { SnippetsApp } from "@/components/apps/snippets";
+import { NewsApp } from "@/components/apps/news";
 
 type BaseApp = {
 	name: string;
@@ -9,7 +10,7 @@ type BaseApp = {
 };
 
 type InternalApp = BaseApp & {
-	component: typeof AsciiApp | typeof ScratchpadApp | typeof SnippetsApp;
+	component: typeof AsciiApp | typeof ScratchpadApp | typeof SnippetsApp | typeof NewsApp;
 };
 
 type ExternalApp = BaseApp & {
@@ -46,6 +47,12 @@ export const apps: Record<string, App> = {
 		description: "A simple snippets manager.",
 		component: SnippetsApp,
 		tags: ["code", "productivity"],
+	},
+	news: {
+		name: "News",
+		description: "A simple RSS feed reader with fuzzy search and local storage.",
+		component: NewsApp,
+		tags: ["news", "productivity"],
 	},
 } as const;
 
