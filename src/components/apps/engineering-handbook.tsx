@@ -235,7 +235,7 @@ function LandingPage({ insight }: LandingPageProps) {
         </div>
         <div className="text-center mt-8">
           <a
-            href="/apps/engineering"
+            href="/apps/engineering-handbook"
             className="text-stone-600 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 transition-colors"
           >
             View all insights →
