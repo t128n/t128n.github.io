@@ -2,6 +2,7 @@ import { AsciiApp } from "@/components/apps/ascii";
 import { ScratchpadApp } from "@/components/apps/scratchpad";
 import { SnippetsApp } from "@/components/apps/snippets";
 import { NewsApp } from "@/components/apps/news";
+import { EngineeringHandbookApp } from "@/components/apps/engineering-handbook";
 
 type BaseApp = {
 	name: string;
@@ -10,7 +11,7 @@ type BaseApp = {
 };
 
 type InternalApp = BaseApp & {
-	component: typeof AsciiApp | typeof ScratchpadApp | typeof SnippetsApp | typeof NewsApp;
+	component: typeof AsciiApp | typeof ScratchpadApp | typeof SnippetsApp | typeof NewsApp | typeof EngineeringHandbookApp;
 };
 
 type ExternalApp = BaseApp & {
@@ -53,6 +54,12 @@ export const apps: Record<string, App> = {
 		description: "A simple RSS feed reader with fuzzy search and local storage.",
 		component: NewsApp,
 		tags: ["news", "productivity"],
+	},
+	"engineering-handbook": {
+		name: "The Engineering Handbook",
+		description: "A collection of engineering insights, principles, and best practices with powerful search and filtering.",
+		component: EngineeringHandbookApp,
+		tags: ["engineering", "learning", "reference"],
 	},
 } as const;
 
