@@ -156,5 +156,27 @@ export const insights: Insight[] = [
     category: "Communication",
     tags: ["communication", "best-practices", "teamwork"],
     source: "dontasktoask.com"
+  },
+  {
+    id: "20",
+    title: "Faster Horses - Vision vs. Expectation",
+    content: "Ford said, 'If I had asked people, they would have said faster horses.' Sometimes users can't imagine radical change, so innovators must look beyond requests.",
+    category: "Innovation",
+    tags: ["innovation", "product", "vision"],
+    source: "Attributed to Henry Ford"
+  },
+  {
+    id: "21",
+    title: "Faster Horses - When Incremental Wins",
+    content: "Sometimes a 'faster horse' is exactly what's needed. Small improvements can be more practical than big leaps.",
+    category: "Product Development",
+    tags: ["incremental", "improvement", "product", "pragmatism"]
+  },
+  {
+    id: "22",
+    title: "Faster Horses - Find the Balance",
+    content: "Great solutions mix user feedback with vision. Sometimes it's a car, sometimes just a better horse.",
+    category: "Product Development",
+    tags: ["innovation", "user-feedback", "balance"]
   }
-]; 
+];
