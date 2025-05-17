@@ -26,7 +26,7 @@ const sortedWritings = filteredWritings.sort((a, b) => {
                 href={`/writings/${writing.id}`}
                 class="group flex hover:bg-black/10 border-b border-black/5 focus:bg-black/10 hover:dark:bg-white/10 dark:border-white/5 dark:focus:bg-white/10 focus:outline-none"
                 draggable="false"
-                data-prefetch
+                data-astro-prefetch
             >
                 <div class="py-2 px-2 w-1/4 group-focus:outline-none">
                     {new Date(writing.data.published)
@@ -45,23 +45,3 @@ const sortedWritings = filteredWritings.sort((a, b) => {
         </div>
     )}
 </div>
-
-<script>
-    // Prefetch links on hover
-    document.querySelectorAll('a[data-prefetch]').forEach(link => {
-        let prefetched = false;
-        
-        link.addEventListener('mouseenter', () => {
-            if (!prefetched) {
-                const href = link.getAttribute('href');
-                if (href) {
-                    const prefetchLink = document.createElement('link');
-                    prefetchLink.rel = 'prefetch';
-                    prefetchLink.href = href;
-                    document.head.appendChild(prefetchLink);
-                    prefetched = true;
-                }
-            }
-        });
-    });
-</script>
