@@ -2,6 +2,10 @@
 import avatar from "@/assets/avatar.svg";
 import ogImage from "@/assets/og-image.png";
 const { name, description } = Astro.props;
+const { site } = Astro;
+
+const ogUrl = new URL(`/apps/${Astro.params.slug}`, site).href;
+const ogImageUrl = new URL("og-image.png", site).href;
 ---
 
 <meta charset="UTF-8" />
@@ -14,8 +18,8 @@ const { name, description } = Astro.props;
 <meta property="og:title" content={`${name} [t128n]`} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={`https://t128n.github.io/apps/${Astro.params.slug}`} />
-<meta property="og:image" content={ogImage.src} />
+<meta property="og:url" content={ogUrl} />
+<meta property="og:image" content={ogImageUrl} />
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content={`${name} [t128n]`} />
