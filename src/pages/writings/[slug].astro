@@ -15,7 +15,14 @@ const { writing } = Astro.props;
 const { Content } = await render(writing);
 ---
 
-<BaseLayout title={writing.data.title}>
+<BaseLayout 
+  title={writing.data.title}
+  article={{
+    title: writing.data.title,
+    published: writing.data.published,
+    slug: Astro.params.slug
+  }}
+>
     <article class="font-sans w-full">
         <header>
             <time class="font-mono text-sm text-black/50 dark:text-white/50" datetime={writing.data.published.toISOString()}>

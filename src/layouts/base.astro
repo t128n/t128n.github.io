@@ -4,10 +4,11 @@ import Header from "@/components/header.astro";
 import avatar from "@/assets/avatar.svg";
 
 const {
-  title = "Torben Haack",
-  description = "Engineer of scalable, high-reliability software systems.",
-  ogUrl = "https://t128n.github.io",
-  showHeader = true,
+	title = "Torben Haack",
+	description = "Engineer of scalable, high-reliability software systems.",
+	ogUrl = "https://t128n.github.io",
+	showHeader = true,
+	article = null,
 } = Astro.props;
 ---
 
@@ -41,6 +42,58 @@ const {
 
     <!-- Google Verification -->
     <meta name="google-site-verification" content="1qFNw2cAYvmW_rOr36n3S7FReorahcQ9gc_Cjq44ivY" />
+
+    <script type="application/ld+json">
+      {{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Torben Haack",
+        "url": "https://t128n.github.io"
+      }}
+    </script>
+    <script type="application/ld+json">
+      {{
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Torben Haack",
+        "url": "https://t128n.github.io",
+        "sameAs": [
+          "https://github.com/t128n",
+          "https://www.linkedin.com/in/torben-haack/"
+        ],
+        "jobTitle": "Software Engineer"
+      }}
+    </script>
+    {article && (
+      <script type="application/ld+json">
+        {{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": article.title,
+          "datePublished": article.published.toISOString(),
+          "author": [
+            {{
+              "@type": "Person",
+              "name": "Torben Haack",
+              "url": "https://t128n.github.io"
+            }}
+          ],
+          "publisher": {{
+            "@type": "Organization",
+            "name": "t128n",
+            "logo": {{
+              "@type": "ImageObject",
+              "url": new URL(avatar.src, Astro.site).href
+            }}
+          }},
+          "mainEntityOfPage": {{
+            "@type": "WebPage",
+            "@id": new URL(`/writings/${article.slug}`, Astro.site).href
+          }},
+          "description": description
+        }}
+      </script>
+    )}
   </head>
 
   <body
@@ -59,7 +112,12 @@ const {
     </div>
 
     <script defer data-domain="t128n" src="https://analytics.128.api64.de/js/script.file-downloads.hash.outbound-links.js"></script>
-    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <script>
+      interface Window {
+        plausible: any[]; // You can be more specific with the type if you know it
+      }
+      window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+    </script>
   </body>
 </html>
 
