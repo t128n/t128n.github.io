@@ -5,7 +5,7 @@ import avatar from "@/assets/avatar.svg";
 
 const {
 	title = "Torben Haack",
-	description = "Engineer of scalable, high-reliability software systems.",
+	description = "A collection of concise essays on software engineering, automation, and architecture, a professional CV, and a suite of minimalist browser-based web apps—including a scratchpad, code snippets manager, RSS reader, and engineering handbook—focused on productivity, clarity, and offline access.",
 	ogUrl = "https://t128n.github.io",
 	showHeader = true,
 	article = null,
@@ -47,56 +47,61 @@ const ogImageUrl = new URL("og-image.png", site).href;
     <!-- Google Verification -->
     <meta name="google-site-verification" content="1qFNw2cAYvmW_rOr36n3S7FReorahcQ9gc_Cjq44ivY" />
 
-    <script type="application/ld+json">
-      {{
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Torben Haack",
-        "url": "https://t128n.github.io"
-      }}
-    </script>
-    <script type="application/ld+json">
-      {{
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Torben Haack",
-        "url": "https://t128n.github.io",
-        "sameAs": [
-          "https://github.com/t128n",
-          "https://www.linkedin.com/in/torben-haack/"
-        ],
-        "jobTitle": "Software Engineer"
-      }}
-    </script>
+    <link rel="canonical" href={ogUrl} />
+    <meta name="keywords" content="Torben Haack, Software Engineer, Scalable Systems, High Reliability, t128n, Engineering, Programming, Blog" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:site" content="@_t128n" />
+    <meta name="twitter:creator" content="@_t128n" />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Torben Haack",
+      "url": "https://t128n.github.io"
+    })}></script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Torben Haack",
+      "url": "https://t128n.github.io",
+      "sameAs": [
+        "https://github.com/t128n",
+        "https://www.linkedin.com/in/torben-haack/"
+      ],
+      "jobTitle": "Software Engineer"
+    })}></script>
     {article && (
-      <script type="application/ld+json">
-        {{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": article.title,
-          "datePublished": article.published.toISOString(),
-          "author": [
-            {{
-              "@type": "Person",
-              "name": "Torben Haack",
-              "url": "https://t128n.github.io"
-            }}
-          ],
-          "publisher": {{
-            "@type": "Organization",
-            "name": "t128n",
-            "logo": {{
-              "@type": "ImageObject",
-              "url": new URL(avatar.src, Astro.site).href
-            }}
-          }},
-          "mainEntityOfPage": {{
-            "@type": "WebPage",
-            "@id": new URL(`/writings/${article.slug}`, Astro.site).href
-          }},
-          "description": description
-        }}
-      </script>
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": article.title,
+        "datePublished": article.published.toISOString(),
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Torben Haack",
+            "url": "https://t128n.github.io"
+          }
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "name": "t128n",
+          "logo": {
+            "@type": "ImageObject",
+            "url": new URL(avatar.src, Astro.site).href
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": new URL(`/writings/${article.slug}`, Astro.site).href
+        },
+        "description": description
+      })}></script>
     )}
   </head>
 
