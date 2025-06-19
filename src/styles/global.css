@@ -1,3 +1,10 @@
+@theme {
+  --font-mono: 'Tabular', monospace;
+}
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
 @font-face {
   font-family: 'Tabular';
   src: url('/fonts/Tabular-Regular.woff2') format('woff2');
@@ -83,14 +90,3 @@
   font-weight: 300 700; /* Fallback for browsers that don't support font-variation-settings */
   font-style: italic;
 }
-
-@theme {
-  extend: {
-    fontFamily: {
-      mono: ['Tabular', 'monospace'],
-    },
-  },
-}
-
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
