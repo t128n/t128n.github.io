@@ -84,8 +84,12 @@
   font-style: italic;
 }
 
-:root {
-  --font-mono: 'Tabular', monospace; /* Add fallback */
+@theme {
+  extend: {
+    fontFamily: {
+      mono: ['Tabular', 'monospace'],
+    },
+  },
 }
 
 @import "tailwindcss";
