@@ -1,0 +1,90 @@
+---
+interface LegacyRoute {
+  oldSlug: string;
+  newSlug: string;
+}
+
+// Legacy Page Support
+export async function getStaticPaths() {
+  const legacyRoutes: LegacyRoute[] = [
+    {
+      oldSlug: "2025-04-12_git_spoofing",
+      newSlug: "gits-trust-model-is-broken-b671c",
+    },
+    {
+      oldSlug: "2025-04-15_prompting_the_right_way",
+      newSlug: "prompting-the-right-way-a2ed4",
+    },
+    {
+      oldSlug: "2025-04-17_data_over_vibes",
+      newSlug: "data-over-vibes-choosing-the-right-ai-tool-60519",
+    },
+    {
+      oldSlug: "2025-04-17_micro_apps",
+      newSlug: "micro-apps-as-workflow-scalpel-f9ab1",
+    },
+    {
+      oldSlug: "2025-04-26_boring_technology",
+      newSlug: "in-defense-of-boring-technology-0d6c7",
+    },
+    {
+      oldSlug: "2025-05-02_optimizing_search_performance",
+      newSlug: "client-side-search-routing-ai-b394d",
+    },
+    {
+      oldSlug: "2025-05-23_fidup_lernzettel_fachinformatiker",
+      newSlug: "ap2-lernzettel-fr-daten-und-prozessanalyse-18057",
+    },
+    {
+      oldSlug: "2025-05-08_simplifying_cursor_installation_on_linux",
+      newSlug: "simplifying-cursor-installation-on-linux-6b45d",
+    },
+  ];
+
+  return legacyRoutes.map((route) => ({
+    params: { slug: route.oldSlug },
+    props: { route },
+  }));
+}
+
+const { route } = Astro.props;
+---
+
+<!--
+Torben Haack [t128n] - Legacy Redirect Page
+
+This page exists to redirect legacy URLs to their new destinations.
+Please update your bookmarks!
+
+While you're here, enjoy this little cat resting in the sun.
+
+
+
+                                              |
+                                        \    |    /
+                                    `.   \   |   /   .'
+                                      `.  \  |  /  .'
+                                    `-.  `. \d8b/ .'  .-'
+                                      `-. do0o88b .-'
+                                    <~~~~ 8o0O0o888 ~~~~> 
+                                    <~~~~ 8o00o8888 ~~~~>
+                                      _-' qoo888p '-_   
+                                    ,-'  ,' /q8p\ `.  `-.   
+                                      ,'  /  |  \  `.
+                                    ,'   /   |   \   `.
+                                        /    |    \
+                                              |
+
+
+
+
+
+
+
+           __..--''``---....___   _..._    __
+ /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /
+///_.-' _..--.'_    \                    `( ) ) // //
+/ (_..-' // (< _     ;_..__               ; `' / ///
+ / // // //  `-._,_)' // / ``--...____..-' /// / //
+-->
+<meta http-equiv="refresh" content={`0; url=/blog/${route.newSlug}`} />
