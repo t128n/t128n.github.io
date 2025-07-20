@@ -1,0 +1,273 @@
+---
+import PageFooter from "@/components/page-footer.astro";
+import PageHeader from "@/components/page-header.astro";
+
+interface RootLayoutProps {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Torben Haack",
+  description = "Torben Haack's personal website",
+} = Astro.props as RootLayoutProps;
+
+const computedTitle = `${title} | [t128n]`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{computedTitle}</title>
+    <meta name="description" content={description} />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <PageHeader />
+    <main>
+      <slot />
+    </main>
+    <PageFooter />
+  </body>
+</html>
+
+<style is:global>
+  /** Reset CSS */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+    font-size: inherit;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+</style>
+
+<style is:global>
+  :root {
+    /** Base CSS Variables */
+    --color-black: #100f0f;
+    --color-base-950: #1c1b1a;
+    --color-base-900: #282726;
+    --color-base-850: #343331;
+    --color-base-800: #403e3c;
+    --color-base-750: #575653;
+    --color-base-600: #6f6e69;
+    --color-base-500: #878580;
+    --color-base-300: #b7b5ac;
+    --color-base-200: #cecdc3;
+    --color-base-150: #dad8ce;
+    --color-base-100: #e6e4d9;
+    --color-base-50: #f2f0e5;
+    --color-paper: #fffcf0;
+
+    /** Color Palette */
+    --color-re-600: #af3029;
+    --color-or-600: #bc5215;
+    --color-ye-600: #ad8301;
+    --color-gr-600: #66800b;
+    --color-cy-600: #24837b;
+    --color-bl-600: #205ea6;
+    --color-pu-600: #5e409d;
+    --color-ma-600: #a02f6f;
+    --color-re-400: #d14d41;
+    --color-or-400: #da702c;
+    --color-ye-400: #d0a215;
+    --color-gr-400: #879a39;
+    --color-cy-400: #3aa99f;
+    --color-bl-400: #4385be;
+    --color-pu-400: #8b7ec8;
+    --color-ma-400: #ce5d97;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* Light Mode Colors */
+      --color-tx: var(--color-black);
+      --color-tx-2: var(--color-base-600);
+      --color-tx-3: var(--color-base-300);
+      --color-ui-3: var(--color-base-200);
+      --color-ui-2: var(--color-base-150);
+      --color-ui: var(--color-base-100);
+      --color-bg-2: var(--color-base-50);
+      --color-bg: var(--color-paper);
+
+      /* Color Palette */
+      --color-re: var(--color-re-600);
+      --color-or: var(--color-or-600);
+      --color-ye: var(--color-ye-600);
+      --color-gr: var(--color-gr-600);
+      --color-cy: var(--color-cy-600);
+      --color-bl: var(--color-bl-600);
+      --color-pu: var(--color-pu-600);
+      --color-ma: var(--color-ma-600);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark Mode Colors */
+      --color-tx: var(--color-base-200);
+      --color-tx-2: var(--color-base-500);
+      --color-tx-3: var(--color-base-700);
+      --color-ui-3: var(--color-base-800);
+      --color-ui-2: var(--color-base-850);
+      --color-ui: var(--color-base-900);
+      --color-bg-2: var(--color-base-950);
+      --color-bg: var(--color-black);
+
+      /* Color Palette */
+      --color-re: var(--color-re-400);
+      --color-or: var(--color-or-400);
+      --color-ye: var(--color-ye-400);
+      --color-gr: var(--color-gr-400);
+      --color-cy: var(--color-cy-400);
+      --color-bl: var(--color-bl-400);
+      --color-pu: var(--color-pu-400);
+      --color-ma: var(--color-ma-400);
+    }
+  }
+
+  /* Semantic Colors */
+  :root {
+    --color-primary: var(--color-bl);
+    --color-secondary: var(--color-tx-2);
+    --color-muted: var(--color-tx-3);
+
+    --color-highlight: var(--color-ye);
+    --color-success: var(--color-gr);
+    --color-warning: var(--color-or);
+    --color-danger: var(--color-re);
+    --color-info: var(--color-cy);
+
+    --font-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+
+    --line-height: 1.5;
+    --letter-spacing: 0.01em;
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --container-max-width: 48rem;
+    --border-radius: 0.25rem;
+  }
+</style>
+
+<style is:global>
+  /** Global Styles */
+  *::selection {
+    background-color: var(--color-ui-2);
+    color: var(--color-tx);
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-tx);
+    background-color: var(--color-bg);
+
+    min-height: 100dvh;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    gap: var(--space-xl);
+  }
+  body > * {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    width: 100%;
+  }
+  body > main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: var(--color-tx);
+    text-decoration: none;
+    font-size: var(--text-base);
+    transition: all 0.2s ease-in-out;
+  }
+  a:hover,
+  a:focus {
+    color: var(--color-primary);
+    outline-style: none;
+    text-decoration: underline;
+    background-color: var(--color-ui);
+    padding: var(--space-xs);
+    margin: calc(-1 * var(--space-xs));
+  }
+</style>

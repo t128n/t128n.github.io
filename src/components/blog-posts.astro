@@ -1,0 +1,98 @@
+---
+import { getCollection } from "astro:content";
+import Badge from "@/components/badge.astro";
+
+interface BlogPostsProps {
+  /**
+   * Show draft posts (default: false)
+   */
+  showDrafts?: boolean;
+}
+
+const { showDrafts = false } = Astro.props as BlogPostsProps;
+
+const posts = await getCollection(
+  "blog",
+  ({ data }) => showDrafts || !data.draft,
+);
+
+posts.sort((a, b) => {
+  return (
+    new Date(b.data.publishDate).getTime() -
+    new Date(a.data.publishDate).getTime()
+  );
+});
+---
+
+<section>
+  <ul>
+    {
+      posts.map((post) => (
+        <li>
+          <a class="post" href={`/blog/${post.data.slug}`} tabindex="0">
+            <header>
+              <h3>{post.data.title}</h3>
+              <time datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toISOString().split("T")[0]}
+              </time>
+            </header>
+            <p>{post.data.description}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  a:hover {
+    padding: var(--space-sm) var(--space-md);
+    margin: calc(-1 * var(--space-sm)) calc(-1 * var(--space-md));
+  }
+  p {
+    max-width: 80%;
+    color: var(--color-tx-2);
+  }
+  time {
+    white-space: nowrap;
+  }
+
+  a.post {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  a.post header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  h3 {
+    font-family: var(--font-mono);
+    letter-spacing: var(--letter-spacing);
+  }
+
+  time {
+    font-family: var(--font-mono);
+    color: var(--color-tx-2);
+    font-size: var(--text-sm);
+  }
+</style>
