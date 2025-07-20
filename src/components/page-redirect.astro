@@ -1,0 +1,46 @@
+---
+interface PageRedirectProps {
+  route: string;
+}
+
+const { route } = Astro.props as PageRedirectProps;
+---
+
+<!--
+Torben Haack [t128n] - Legacy Redirect Page
+
+This page exists to redirect legacy URLs to their new destinations.
+Please update your bookmarks!
+
+While you're here, enjoy this little cat resting in the sun.
+
+
+
+                                              |
+                                        \    |    /
+                                    `.   \   |   /   .'
+                                      `.  \  |  /  .'
+                                    `-.  `. \d8b/ .'  .-'
+                                      `-. do0o88b .-'
+                                    <~~~~ 8o0O0o888 ~~~~> 
+                                    <~~~~ 8o00o8888 ~~~~>
+                                      _-' qoo888p '-_   
+                                    ,-'  ,' /q8p\ `.  `-.   
+                                      ,'  /  |  \  `.
+                                    ,'   /   |   \   `.
+                                        /    |    \
+                                              |
+
+
+
+
+
+
+
+           __..--''``---....___   _..._    __
+ /// //_.-'    .-/";  `        ``<._  ``.''_ `. / // /
+///_.-' _..--.'_    \                    `( ) ) // //
+/ (_..-' // (< _     ;_..__               ; `' / ///
+ / // // //  `-._,_)' // / ``--...____..-' /// / //
+-->
+<meta http-equiv="refresh" content={`0; url=${route}?ref=legacy`} />
