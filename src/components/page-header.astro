@@ -5,14 +5,14 @@ interface NavigationLink {
   label: string;
   href: string;
   external?: boolean;
-  icon?: string; // Iconify icon name, e.g. 'github', 'linkedin', etc.
+  icon?: string;
 }
 
 const navigationLinks: NavigationLink[] = [
   { label: "About", href: "/about", icon: "user" },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/torbenhaack/",
+    href: "https://www.linkedin.com/in/torben-haack/",
     external: true,
     icon: "suitcase",
   },
@@ -30,6 +30,11 @@ const navigationLinks: NavigationLink[] = [
   },
   { label: "RSS", href: "/rss.xml", icon: "radio-signal" },
 ];
+const isActive = (href: string) => {
+  return (
+    Astro.url.pathname === href || Astro.url.pathname.startsWith(`${href}/`)
+  );
+};
 ---
 
 <header>
@@ -50,7 +55,10 @@ const navigationLinks: NavigationLink[] = [
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
               tabindex="0"
-              data-nav-link
+              class:list={[
+                "nav-link",
+                { "nav-link--active": isActive(link.href) },
+              ]}
               aria-label={`Navigational link to ${link.label}`}
             >
               <span class="nav-link-inner">
@@ -107,7 +115,7 @@ const navigationLinks: NavigationLink[] = [
     text-transform: lowercase;
   }
 
-  header nav ul li a[data-nav-link] {
+  header nav ul li a.nav-link {
     display: flex;
     align-items: center;
     font-size: var(--text-sm);
@@ -126,5 +134,10 @@ const navigationLinks: NavigationLink[] = [
     margin-top: 0.1em;
     text-align: center;
     letter-spacing: 0.01em;
+  }
+
+  .nav-link--active {
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
   }
 </style>
