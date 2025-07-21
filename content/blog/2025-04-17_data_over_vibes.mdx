@@ -11,7 +11,7 @@ tags:
 - llm
 - systems-thinking
 publishDate: 2025-04-17
-updatedDate: 2025-07-20
+updatedDate: 2025-07-21
 ---
 
 Most software decisions get made on vibes. Feature lists, pricing pages, hype. But when tools affect your workflow, usage, and spend, you need to ask: *does this fit how I actually work?*
@@ -22,7 +22,7 @@ That question came up for me when my ChatGPT Plus subscription was set to expire
 
 It sounded like enough… but was it? Rather than guess, I ran the numbers.
 
-### Export Your Data, Don't Trust Your Gut
+## Export Your Data, Don't Trust Your Gut
 
 ChatGPT lets you export your full usage history as a `conversations.json` file. I wrote a small Python script to:
 
@@ -31,7 +31,7 @@ ChatGPT lets you export your full usage history as a `conversations.json` file. 
 - Compute a daily average
 - Forecast usage through **2025-04-26** with a 20% buffer
 
-Here’s what came back:
+Here's what came back:
 
 ```text
 --- FORECASTED USAGE (2025-03-20 → 2025-04-26) ---
@@ -43,21 +43,21 @@ Remaining days to forecast: 9
 Projected total usage by 2025-04-26: 2239 messages
 ```
 
-### What the Data Said
+## What the Data Said
 
-If I switched to T3.chat today, I’d exceed the message cap by **~49%**.
+If I switched to T3.chat today, I'd exceed the message cap by **~49%**.
 
-That doesn’t mean T3.chat is bad. It’s excellent for users with leaner, more intentional workflows. But for me, it would force a change:
+That doesn't mean T3.chat is bad. It's excellent for users with leaner, more intentional workflows. But for me, it would force a change:
 
 - Fewer iterative prompts
 - More scoped, complete instructions
 - Offload auxiliary tasks to GitHub Copilot or other tools
 
-The real takeaway? **This wasn’t a pricing question. It was a workflow question.**
+The real takeaway? **This wasn't a pricing question. It was a workflow question.**
 
-### How the Script Works (and Why It’s Simple)
+## How the Script Works (and Why It's Simple)
 
-You don’t need a data pipeline to get useful insights. Here's a simplified breakdown of how the Python script works:
+You don't need a data pipeline to get useful insights. Here's a simplified breakdown of how the Python script works:
 
 1. Load your `conversations.json` export:
 ```python
@@ -85,20 +85,29 @@ projected_msgs = total_msgs + (avg_per_day_buffered * remaining_days)
 
 Done. Fast, accurate, and actionable.
 
-### Why This Matters
+## Why This Matters
 
-Software trade-offs aren't theoretical. They’re real, lived constraints. And if you want to stay efficient, whether you’re a developer, writer, or analyst—your tool choices need to match your patterns.
+Software trade-offs aren't theoretical. They're real, lived constraints. And if you want to stay efficient, whether you're a developer, writer, or analyst—your tool choices need to match your patterns.
 
 > Good decisions come from data, not assumptions.
 
-This one Python script saved me from adopting a tool that didn’t align with how I work *today*. Maybe I’ll evolve toward it later. But now, I know exactly what that change would cost.
+This one Python script saved me from adopting a tool that didn't align with how I work *today*. Maybe I'll evolve toward it later. But now, I know exactly what that change would cost.
 
-### TL;DR
+## TL;DR
 
-If you’re evaluating alternatives to ChatGPT:
+If you're evaluating alternatives to ChatGPT:
 - Export your data
 - Analyze your real usage
 - Let that shape your choice
 
 No guesswork. No regret. Just data-backed clarity.
 
+
+## 2025-07-21 Update:
+Usage patterns evolve.
+What you see above was a snapshot. My habits have shifted dramatically since then.
+After Gemini 2.5 Pro consistently exceeded and ChatGPT low-balled my expectations, I switched to T3.
+Three months in, I've never hit the 1,500 message cap (as Theo's repeated praises on Twitter).
+The closest I've come is 1,200 messages, leaving a comfortable 300-message buffer.
+T3.chat fits my workflow perfectly now. So while the data-driven approach still stands,
+my choice has evolved with my needs.
