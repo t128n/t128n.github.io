@@ -77,8 +77,6 @@ const { Content, headings } = await render(post);
   }
 </style>
 
-<!-- ToDo: style has to be is:global. Use a className to scope those global styles -->
-<!-- .article .blog-post -->
 <style>
   /* Typography Tweaks */
   article {
@@ -88,27 +86,27 @@ const { Content, headings } = await render(post);
     gap: var(--space-md);
   }
 
-  article h1,
-  article h2,
-  article h3,
-  article h4,
-  article h5,
-  article h6 {
+  article :global(h1),
+  article :global(h2),
+  article :global(h3),
+  article :global(h4),
+  article :global(h5),
+  article :global(h6) {
     line-height: 1.2;
     margin-bottom: var(--space-sm);
     text-box: trim-both cap alphabetic;
     text-wrap: balance;
-    font-family: var(--font-mono) !important;
+    font-family: var(--font-mono);
   }
 
   article :global(h1) {
     font-size: var(--text-3xl);
   }
   article :global(h2) {
-    font-size: var(--text-2xl) !important;
+    font-size: var(--text-2xl);
   }
   article :global(h3) {
-    font-size: var(--text-xl) !important;
+    font-size: var(--text-xl);
   }
   article :global(h4) {
     font-size: var(--text-lg);
