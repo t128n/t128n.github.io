@@ -1,6 +1,6 @@
 ---
 title: "Client-Side Search Routing & AI"
-description: "How Service Workers and AI can eliminate DuckDuckGo Bangs latency. Analyzes the performance issues of server-side redirects, presents client-side solutions, and explains how AI enables intelligent, context-aware search routing. Includes a proof-of-concept (Routr) and outlook on personalized search."
+description: "How Service Workers and AI can eliminate DuckDuckGo Bangs latency. Analyzes the performance issues of server-side redirects, presents client-side solutions and explains how AI enables intelligent, context-aware search routing. Includes a proof-of-concept (Routr) and outlook on personalized search."
 publishDate: 2025-05-02
 updatedDate: 2025-07-20
 tags:
@@ -26,7 +26,7 @@ Understanding the standard HTTP request flow from a browser's search bar is key:
 With a DuckDuckGo Bang query, the flow introduces an extra step:
 1.  User types query with a bang (e.g., `react 19 release date !g`) into the browser search bar.
 2.  Browser sends a GET request to `duckduckgo.com/?q=react+19+release+date+!g`.
-3.  **DDG Server receives the request, identifies the `!g` bang, looks up the corresponding redirect URL (for Google), and responds with an HTTP 302 Redirect status code.**
+3.  **DDG Server receives the request, identifies the `!g` bang, looks up the corresponding redirect URL (for Google) and responds with an HTTP 302 Redirect status code.**
 4.  Browser receives the redirect response.
 5.  Browser initiates a *new* GET request to the target search engine URL (e.g., `google.com/search?q=react+19+release+date`).
 6.  The target search engine server processes the query and returns results.
@@ -44,7 +44,7 @@ This approach would not only improve user experience by reducing latency but cou
 
 Modern web technologies offer a solution: Service Workers. These are JavaScript scripts that a browser runs in the background, separate from the main page thread. One of their primary capabilities is acting as a network proxy for the pages they control. They can intercept network requests made by the page (including requests initiated from the browser's address bar if the page is the default search engine and the Service Worker is registered at the root scope).
 
-By registering a Service Worker from our search endpoint, we can intercept the initial request containing the bang query *within the browser*. The Service Worker can then parse the query string, identify the bang, determine the target URL using a local lookup table, and programmatically redirect the browser to the correct destination *without ever hitting the original search engine's server for a redirect*.
+By registering a Service Worker from our search endpoint, we can intercept the initial request containing the bang query *within the browser*. The Service Worker can then parse the query string, identify the bang, determine the target URL using a local lookup table and programmatically redirect the browser to the correct destination *without ever hitting the original search engine's server for a redirect*.
 
 The request flow would become:
 1.  User types query with a bang (e.g., `react 19 release date !g`) into the browser search bar.
@@ -79,7 +79,7 @@ This demonstrates the core principle: offloading the bang lookup and redirection
 
 Building upon the client-side interception mechanism, we can integrate more sophisticated features that require query pre-processing. One such feature, explored in Routr, is the "double-bang" (`!!` or `!!g`).
 
-This feature leverages the power of large language models (LLMs). When a query includes `!!` (followed by an optional bang like `g`), the Service Worker intercepts the request, extracts the query, and sends it to an AI processing endpoint (this part *would* likely require a server, but the *routing* logic remains client-side). The LLM can then analyze and potentially rephrase the query, add relevant search operators, or expand abbreviations based on the inferred user intent. The *modified* query is then used in the final redirect to the target search engine.
+This feature leverages the power of large language models (LLMs). When a query includes `!!` (followed by an optional bang like `g`), the Service Worker intercepts the request, extracts the query and sends it to an AI processing endpoint (this part *would* likely require a server, but the *routing* logic remains client-side). The LLM can then analyze and potentially rephrase the query, add relevant search operators, or expand abbreviations based on the inferred user intent. The *modified* query is then used in the final redirect to the target search engine.
 
 For example, `!! react service worker pwa` might be transformed by an LLM into something like `"react service worker" PWA (performance OR offline OR manifest)` before being sent to Google.
 
@@ -103,7 +103,7 @@ While DuckDuckGo's Bangs are a valuable feature, their server-side redirect arch
 
 Furthermore, building this client-side routing foundation opens the door to integrating powerful enhancements like AI-driven query processing (the double-bang) and potentially intelligent, context-aware routing that directs users not just based on syntax, but on the nature of their query and their personal information ecosystem.
 
-This approach demonstrates the potential to build faster, more flexible, and more intelligent search experiences directly in the browser.
+This approach demonstrates the potential to build faster, more flexible and more intelligent search experiences directly in the browser.
 
 You can explore the **Routr** proof-of-concept and try the basic client-side routing and double-bang feature here: [t128n.github.io/routr](https://t128n.github.io/routr/).
 

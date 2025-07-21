@@ -1,5 +1,5 @@
 ---
-description: Guidelines for crafting concise, persuasive, and technically-driven copy for a software engineer's personal website.
+description: Guidelines for crafting concise, persuasive and technically-driven copy for a software engineer's personal website.
 applyTo: '**/*.astro, **/*.mdx, **/*.md'
 ---
 

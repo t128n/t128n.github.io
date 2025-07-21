@@ -1,6 +1,6 @@
 ---
 title: "Prompting the Right Way"
-description: "A practical guide for software engineers to prompt LLMs effectively. Covers context, constraints, model selection, and iterative workflows to get better results and integrate AI into real engineering practice."
+description: "A practical guide for software engineers to prompt LLMs effectively. Covers context, constraints, model selection and iterative workflows to get better results and integrate AI into real engineering practice."
 tags:
 - prompt-engineering
 - llm
@@ -18,7 +18,7 @@ publishDate: 2025-04-15
 updatedDate: 2025-07-20
 ---
 
-LLMs are changing how software engineers build, debug, and design systems. But let's be honest - most engineers still prompt like casual users.
+LLMs are changing how software engineers build, debug and design systems. But let's be honest - most engineers still prompt like casual users.
 "Write a Python script that does X." Then they complain when the result is mediocre. That's not the model's fault. **It's yours**.
 
 You wouldn't give your intern vague directions and expect top-tier output. So why treat an LLM any differently?
@@ -29,9 +29,9 @@ The best way to think about prompting is this: **treat the LLM like your intern*
 That means:
 
 - Don't just ask for an implementation - **explain what you're trying to build**.
-- Provide **context, constraints, and goals**.
-- Guide with **function signatures**, types, and expectations.
-- Be iterative. The first answer won't be perfect, and that's fine. You're here to collaborate.
+- Provide **context, constraints and goals**.
+- Guide with **function signatures**, types and expectations.
+- Be iterative. The first answer won't be perfect and that's fine. You're here to collaborate.
 
 You wouldn't hand your intern a whiteboard and say "build our auth system" and walk off. So don't prompt "Build a user service in Go" and expect magic.
 
@@ -60,7 +60,7 @@ Write a microservice that handles user sign-up.
 
 ```plaintext
 Design a microservice in TypeScript for user registration.
-It should expose a POST `/register` endpoint that accepts name, email, and password.
+It should expose a POST `/register` endpoint that accepts name, email and password.
 Use Express. Validate input.
 Hash passwords using bcrypt.
 Assume a MongoDB backend.
@@ -68,7 +68,7 @@ Return success or validation errors in JSON format.
 I'll integrate it into an existing monorepo later.
 ```
 
-You gave it a **function signature**, data flow, constraints, and return format.
+You gave it a **function signature**, data flow, constraints and return format.
 Now you're actually engineering.
 
 ### Use the Right Model for the Right Job
@@ -91,9 +91,9 @@ Here's a better flow:
 ### Prompt Engineering ≠ Hype—It's Professional Discipline
 
 You don't need the title of “prompt engineer.” You need to engineer your prompts with the same precision and rigor you apply to code.
-Communicate with the model as you would with a junior engineer: offer explicit context, set clear expectations, and provide iterative, actionable feedback.
+Communicate with the model as you would with a junior engineer: offer explicit context, set clear expectations and provide iterative, actionable feedback.
 
-Leverage the LLM's own capabilities to elevate your prompts—draft, review, and refine them using the model itself.
+Leverage the LLM's own capabilities to elevate your prompts—draft, review and refine them using the model itself.
 There is no reason to limit LLMs to code generation alone; employ them to optimize your entire engineering workflow, including prompt design.
 
 Remember: **LLMs are collaborative interfaces, not ticketing systems.** Engage in a dialog, not a one-way transaction.
@@ -103,7 +103,7 @@ If the first draft misses the mark, say so—directly:
 “Add input validation with Zod.”
 “Split this into two functions.”
 
-Treat every session as a code review: iterate, critique, and demand clarity. That is how you extract real value.
+Treat every session as a code review: iterate, critique and demand clarity. That is how you extract real value.
 
 ### Closing Thoughts
 

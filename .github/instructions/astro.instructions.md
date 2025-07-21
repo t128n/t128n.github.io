@@ -1,5 +1,5 @@
 ---
-description: Astro project rules for strictness, semantics, and structure.
+description: Astro project rules for strictness, semantics and structure.
 applyTo: '**/*.astro'
 ---
 
