@@ -1,0 +1,197 @@
+---
+import Image from "astro/components/Image.astro";
+import AvatarSvg from "@/assets/avatar.svg";
+import RootLayout from "@/layouts/root-layout.astro";
+---
+
+<RootLayout title="About Torben Haack">
+  <header>
+    <hgroup>
+      <h1>Torben Haack</h1>
+      <p>Software Engineer | IT Specialist, Data & Process Analysis</p>
+    </hgroup>
+    <Image src={AvatarSvg} alt="Torben Haack" width={200} height={200} />
+  </header>
+  <main>
+    <section>
+      <p>
+        I build scalable, maintainable software for Mercedes-Benz Digital
+        Factory Campus. My focus: streamlining workflows, delivering robust
+        platforms, and driving technical excellence.
+      </p>
+    </section>
+    <section>
+      <h2>Experience</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>End</th>
+            <th>Company</th>
+            <th>Role & Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><time datetime="2025-01">2025-01</time></td>
+            <td><span>Present</span></td>
+            <td>Mercedes-Benz</td>
+            <td
+              >Engineering scalable platforms, data solutions, and developer
+              tooling for global teams</td
+            >
+          </tr>
+          <tr>
+            <td><time datetime="2022-09">2022-09</time></td>
+            <td><time datetime="2025-01">2025-01</time></td>
+            <td>Mercedes-Benz</td>
+            <td
+              >IT Specialist Apprenticeship (Data & Process Analysis) —
+              Graduated 6 months early; highest exam grade (1.4) in Berlin for
+              this profession in IHK Exam Winter 24/25</td
+            >
+          </tr>
+          <tr>
+            <td><time datetime="2021-07">2021-07</time></td>
+            <td><time datetime="2022-09">2022-09</time></td>
+            <td>&mdash;</td>
+            <td>
+              Transition period: relocated to Berlin and focused on independent
+              software projects, including Warp-Themes and a HAFAS station
+              monitor.
+            </td>
+          </tr>
+          <tr>
+            <td>&mdash;</td>
+            <td><time datetime="2021-07">2021-07</time></td>
+            <td>Secondary School</td>
+            <td>A-levels (Social Studies), Grade: 2.8</td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>
+          Mentored new apprentices and led workshops on development best
+          practices and Git.
+        </li>
+        <li>Delivered measurable value to multiple projects from day one.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Core Skills</h2>
+      <ul>
+        <li>Software architecture, design patterns, and maintainable code</li>
+        <li>Technical decision-making for long-term project success</li>
+        <li>
+          DevOps: CI/CD automation, version control, cloud-native strategies
+        </li>
+        <li>Proficient in TypeScript, Next.js, Python, Docker, Git, Azure</li>
+        <li>Continuous learning and rapid adaptation to new technologies</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Selected Projects</h2>
+      <ul>
+        <li>
+          <strong>MYP – Manage Your Printer (2025):</strong> Enterprise-grade printer
+          management system (Next.js, TypeScript). SSO, RBAC, analytics, Podman deployment.
+          Delivered insights and seamless integration for department-wide operations.
+        </li>
+        <li>
+          <strong>PromptLab (2024):</strong> Modular prompt engineering tool (React,
+          Radix UI, Tailwind CSS). Live previews, dynamic inputs, custom template
+          interpreter. Explored generative UI and modern web capabilities.
+        </li>
+        <li>
+          <strong>Warp-Themes (2022):</strong> Web-based theme builder for Warp Terminal
+          and VS Code. YAML-driven UI, VS Code extension, Bash scripting. Enabled
+          easy theme creation and cross-platform sync.
+        </li>
+        <li>
+          <strong>Early Projects:</strong> Minecraft plugin development (Java, PHP),
+          3D school exploration site (JavaScript, Canvas). Built foundational skills
+          and a passion for software engineering.
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Approach & Values</h2>
+      <ul>
+        <li>Results-driven: Deliver measurable impact and ROI</li>
+        <li>Collaboration: Mentor, lead, and empower teams</li>
+        <li>Curiosity: Embrace new challenges and continuous growth</li>
+      </ul>
+    </section>
+  </main>
+</RootLayout>
+
+<style>
+  hgroup h1 {
+    font-size: var(--text-4xl);
+    font-weight: 600;
+    font-family: var(--font-mono);
+    letter-spacing: var(--letter-spacing);
+  }
+  hgroup p {
+    font-size: var(--text-lg);
+    color: var(--color-tx-2);
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header img {
+    border-radius: 50%;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  main p:first-child {
+    max-width: 70%;
+    color: var(--color-tx-1);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-bg);
+    font-size: var(--text-base);
+    margin-top: var(--space-md);
+  }
+  thead th {
+    background: var(--color-ui);
+    color: var(--color-tx-2);
+    font-weight: var(--font-semibold);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 2px solid var(--color-ui-2);
+    text-align: left;
+    letter-spacing: var(--letter-spacing);
+    font-family: var(--font-mono);
+  }
+  tbody td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--color-ui-3);
+    color: var(--color-tx);
+    background: var(--color-bg);
+    vertical-align: top;
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  tbody tr {
+    transition: background 0.2s;
+  }
+  tbody tr:hover {
+    background: var(--color-ui-2);
+  }
+  time {
+    white-space: nowrap;
+  }
+</style>
