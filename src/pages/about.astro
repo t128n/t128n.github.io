@@ -123,28 +123,33 @@ import RootLayout from "@/layouts/root-layout.astro";
 </RootLayout>
 
 <style>
-  hgroup h1 {
+  article header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  article header h1 {
     font-size: var(--text-4xl);
     font-weight: 600;
     font-family: var(--font-mono);
     letter-spacing: var(--letter-spacing);
+    margin: 0;
   }
-  hgroup p {
+
+  article header p {
     font-size: var(--text-lg);
     color: var(--color-tx-2);
+    margin: 0;
   }
 
-  header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  header img {
+  article header img {
     border-radius: 50%;
+    display: block;
   }
-  main {
+
+  article main {
     line-height: 1.6;
     display: flex;
     flex-direction: column;
@@ -152,15 +157,11 @@ import RootLayout from "@/layouts/root-layout.astro";
   }
 
   article h2 {
+    font-size: var(--text-lg);
     line-height: 1.2;
-    margin-top: var(--space-md);
-    margin-bottom: var(--space-md);
+    margin-block: var(--space-md);
     text-box: trim-both cap alphabetic;
     text-wrap: balance;
     font-family: var(--font-mono) !important;
-  }
-
-  article h2 {
-    font-size: var(--text-lg);
   }
 </style>
