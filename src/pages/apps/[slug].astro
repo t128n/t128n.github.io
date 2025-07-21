@@ -1,0 +1,43 @@
+---
+import PageRedirect from "@/components/page-redirect.astro";
+
+interface LegacyRoute {
+  oldSlug: string;
+  newSlug: string;
+}
+
+// Legacy Page Support
+export async function getStaticPaths() {
+  const legacyRoutes: LegacyRoute[] = [
+    {
+      oldSlug: "ascii",
+      newSlug: "rebooting-t128n-github-io-fd1b5",
+    },
+    {
+      oldSlug: "scratchpad",
+      newSlug: "rebooting-t128n-github-io-fd1b5",
+    },
+    {
+      oldSlug: "snippets",
+      newSlug: "rebooting-t128n-github-io-fd1b5",
+    },
+    {
+      oldSlug: "news",
+      newSlug: "rebooting-t128n-github-io-fd1b5",
+    },
+    {
+      oldSlug: "engineering-handbook",
+      newSlug: "rebooting-t128n-github-io-fd1b5",
+    },
+  ];
+
+  return legacyRoutes.map((route) => ({
+    params: { slug: route.oldSlug },
+    props: { route },
+  }));
+}
+
+const { route } = Astro.props;
+---
+
+<PageRedirect route={`/blog/${route.newSlug}`} />

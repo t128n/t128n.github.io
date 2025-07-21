@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import RootLayout from "@/layouts/root-layout.astro";
+import title from "@/lib/title";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -11,10 +12,119 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+/**
+ * TODO: Add an outline component OUTSIDE of the RootLayout.
+ * The `render(post)` function exposes an array of headings that can be used
+ * to generate an outline for the page.
+ * We deliberately access, but do not use the `headings` variable here to keep
+ * it as a reminder for future development.
+ */
 ---
 
 <RootLayout>
-  <h2>{post.data.title}</h2>
-  <Content />
+  <article class="">
+    <header>
+      <hgroup>
+        <h1>{title(post.data.title)}</h1>
+        <p>
+          {post.data.description}
+        </p>
+      </hgroup>
+
+      <time datetime={post.data.publishDate.toISOString()}>
+        {post.data.publishDate.toISOString().split("T")[0]}
+      </time>
+    </header>
+
+    <Content />
+  </article>
 </RootLayout>
+
+<style>
+  /* Page & Layout Styles */
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+    line-height: 1.2;
+  }
+
+  hgroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  hgroup h1 {
+    font-size: var(--text-3xl);
+    font-family: var(--font-mono);
+    letter-spacing: var(--letter-spacing);
+    display: inline-block;
+  }
+  header hgroup p {
+    font-size: var(--text-base);
+    color: var(--color-tx-2);
+    font-family: var(--font-mono);
+  }
+  header time {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-tx-2);
+    white-space: nowrap;
+  }
+</style>
+
+<!-- ToDo: style has to be is:global. Use a className to scope those global styles -->
+<!-- .article .blog-post -->
+<style>
+  /* Typography Tweaks */
+  article {
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  article h1,
+  article h2,
+  article h3,
+  article h4,
+  article h5,
+  article h6 {
+    line-height: 1.2;
+    margin-bottom: var(--space-sm);
+    text-box: trim-both cap alphabetic;
+    text-wrap: balance;
+    font-family: var(--font-mono) !important;
+  }
+
+  article :global(h1) {
+    font-size: var(--text-3xl);
+  }
+  article :global(h2) {
+    font-size: var(--text-2xl) !important;
+  }
+  article :global(h3) {
+    font-size: var(--text-xl) !important;
+  }
+  article :global(h4) {
+    font-size: var(--text-lg);
+  }
+  article :global(h5) {
+    font-size: var(--text-base);
+  }
+  article :global(h6) {
+    font-size: var(--text-sm);
+  }
+
+  article :global(pre) {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--space-xs);
+  }
+</style>
