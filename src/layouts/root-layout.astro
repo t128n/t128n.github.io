@@ -8,7 +8,7 @@ interface RootLayoutProps {
 }
 const {
   title = "Torben Haack",
-  description = "Torben Haack's personal website",
+  description = "Torben Haack ~ Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
 } = Astro.props as RootLayoutProps;
 
 const computedTitle = `${title} | [t128n]`;
@@ -23,6 +23,14 @@ const computedTitle = `${title} | [t128n]`;
 
     <title>{computedTitle}</title>
     <meta name="description" content={description} />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Torben Haack [t128n]"
+      href={new URL("rss.xml", Astro.site)}
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <slot name="head" />
   </head>
