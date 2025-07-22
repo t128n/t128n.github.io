@@ -95,32 +95,3 @@ c) Article / BlogPosting (for blog posts)
   "description": "Brief summary of the article."
 }
 ```
-
-d) FAQPage (for Q&A sections)  
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is your return policy?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can return items within 30 days…"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you ship internationally?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes — we ship to over 50 countries…"
-      }
-    }
-  ]
-}
-```
-
-e) Optional extras (if relevant):  
-• Event, Product, LocalBusiness, HowTo, VideoObject, Recipe  
