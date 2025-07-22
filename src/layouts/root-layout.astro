@@ -1,6 +1,7 @@
 ---
 import PageFooter from "@/components/page-footer.astro";
 import PageHeader from "@/components/page-header.astro";
+import { getOgImageUrl } from "@/lib/og";
 
 interface RootLayoutProps {
   title?: string;
@@ -8,7 +9,7 @@ interface RootLayoutProps {
 }
 const {
   title = "Torben Haack",
-  description = "Torben Haack ~ Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
+  description = "Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
 } = Astro.props as RootLayoutProps;
 
 const computedTitle = `${title} | [t128n]`;
@@ -23,6 +24,41 @@ const computedTitle = `${title} | [t128n]`;
 
     <title>{computedTitle}</title>
     <meta name="description" content={description} />
+
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fffcf0"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#100f0f"
+    />
+
+    <link rel="canonical" href={Astro.site} />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content={computedTitle} />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content={getOgImageUrl(Astro.site, Astro.url.pathname)}
+    />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="t128n" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@_t128n" />
+    <meta name="twitter:title" content={computedTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content={getOgImageUrl(Astro.site, Astro.url.pathname)}
+    />
 
     <link
       rel="alternate"
@@ -264,6 +300,7 @@ const computedTitle = `${title} | [t128n]`;
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: var(--space-lg);
   }
 
   a {

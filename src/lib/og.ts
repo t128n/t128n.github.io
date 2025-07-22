@@ -141,3 +141,41 @@ export async function generateOgImageResponse(
 		},
 	});
 }
+
+/**
+ * Generates a valid Open Graph image URL for a given site and pathname.
+ * Ensures no double slashes, and uses /index/og-image.png for the root path.
+ *
+ * @param {string | URL | undefined} site - The base site URL (with or without trailing slash). Can be a string, URL, or undefined.
+ * @param {string} pathname - The pathname of the current route (should start with '/').
+ * @returns {string} The absolute URL to the og-image.png for the given route.
+ *
+ * @example
+ * getOgImageUrl('https://t128n.github.io/', '/') // 'https://t128n.github.io/index/og-image.png'
+ * getOgImageUrl('https://t128n.github.io/', '/about/') // 'https://t128n.github.io/about/og-image.png'
+ * getOgImageUrl(new URL('https://t128n.github.io/'), '/blog/') // 'https://t128n.github.io/blog/og-image.png'
+ */
+export function getOgImageUrl(
+	site: string | URL | undefined,
+	pathname: string,
+): string {
+	// Return empty string if no site is provided
+	if (!site) return "";
+
+	// Remove trailing slash from the site URL (string or URL)
+	const base =
+		typeof site === "string"
+			? site.replace(/\/$/, "")
+			: site.href.replace(/\/$/, "");
+
+	// Remove trailing slash from the pathname (except for root)
+	const cleanPath = pathname.replace(/\/$/, "");
+
+	// Special case: root path should use /index/og-image.png
+	if (pathname === "/") {
+		return `${base}/index/og-image.png`;
+	}
+
+	// All other paths: /{path}/og-image.png
+	return `${base}${cleanPath}/og-image.png`;
+}
