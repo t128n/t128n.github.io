@@ -15,7 +15,11 @@ const STATIC_PAGES: Record<string, StaticPageMeta> = {
 	index: {
 		title: "Torben Haack",
 		description:
-			"Torben Haack ~ Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
+			"Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
+	},
+	search: {
+		title: "Search",
+		description: "Search through my blog posts and resources.",
 	},
 };
 

@@ -1,0 +1,48 @@
+---
+import { Icon } from "astro-icon/components";
+import RootLayout from "@/layouts/root-layout.astro";
+---
+
+<RootLayout>
+  <h1>Search Results</h1>
+  <form action="/search" method="get">
+    <input id="search" type="text" name="q" placeholder="Search..." />
+    <button>
+      <Icon name="pixelarticons:search" />
+    </button>
+  </form>
+</RootLayout>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-2);
+    border: 1px solid var(--color-ui);
+  }
+  form:focus-within {
+    border: 1px solid var(--color-primary);
+    border-radius: var(--border-radius);
+  }
+  input {
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    font-size: var(--text-base);
+    background-color: transparent;
+    flex: 1;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm) var(--space-md);
+  }
+  button:hover {
+    color: var(--color-primary);
+  }
+</style>
