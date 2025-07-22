@@ -1,10 +1,6 @@
 ---
-import { getCollection } from "astro:content";
 import BlogPosts from "@/components/blog-posts.astro";
 import RootLayout from "@/layouts/root-layout.astro";
-
-const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-console.log("Blog posts:", blogPosts);
 ---
 
 <RootLayout>

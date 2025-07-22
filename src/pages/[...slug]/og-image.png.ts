@@ -31,7 +31,6 @@ export async function getStaticPaths() {
 
 export async function GET(context: APIContext) {
 	const slugArr = context.props.slug as string[];
-	console.log(slugArr);
 	const slug = slugArr.join("/");
 
 	// Blog post: /blog/[slug]
