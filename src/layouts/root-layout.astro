@@ -1,4 +1,5 @@
 ---
+import { Schema } from "astro-seo-schema";
 import PageFooter from "@/components/page-footer.astro";
 import PageHeader from "@/components/page-header.astro";
 import { getOgImageUrl } from "@/lib/og";
@@ -18,14 +19,21 @@ const computedTitle = `${title} | [t128n]`;
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Charset & Viewport -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Basic Meta Tags -->
     <title>{computedTitle}</title>
     <meta name="description" content={description} />
 
+    <!-- Allow search engines to index the page -->
     <meta name="robots" content="index, follow" />
+
+    <!-- Set Theme Color for Light Mode -->
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
@@ -37,7 +45,8 @@ const computedTitle = `${title} | [t128n]`;
       content="#100f0f"
     />
 
-    <link rel="canonical" href={Astro.site} />
+    <!-- Set Canonical URL of current path -->
+    <link rel="canonical" href={`${Astro.url}`} />
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content={computedTitle} />
@@ -60,6 +69,7 @@ const computedTitle = `${title} | [t128n]`;
       content={getOgImageUrl(Astro.site, Astro.url.pathname)}
     />
 
+    <!-- Sitemap and RSS Feed -->
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -68,6 +78,16 @@ const computedTitle = `${title} | [t128n]`;
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <!-- JSON+LD Schemas -->
+    <Schema
+      item={{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: computedTitle,
+        url: Astro.site?.toString(),
+        description: description,
+      }}
+    />
     <slot name="head" />
   </head>
   <body>
