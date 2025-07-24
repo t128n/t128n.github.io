@@ -1,0 +1,44 @@
+---
+import RootLayout from "@/layouts/root-layout.astro";
+---
+
+<RootLayout>
+  <div>
+    <hgroup>
+      <h2>404</h2>
+      <p>Page Not Found</p>
+    </hgroup>
+    <p><a href="/">Go back to the homepage</a></p>
+  </div>
+</RootLayout>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: var(--space-xl);
+    gap: var(--space-lg);
+  }
+
+  hgroup h2 {
+    font-size: calc(var(--text-4xl) * 2);
+    font-family: var(--font-mono);
+  }
+  hgroup p {
+    font-size: var(--text-lg);
+    color: var(--color-tx-2);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  a {
+    color: var(--color-primary);
+    font-size: var(--text-base);
+    text-decoration: underline;
+    font-style: italic;
+    font-family: var(--font-mono);
+  }
+</style>
