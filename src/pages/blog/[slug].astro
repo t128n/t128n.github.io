@@ -22,8 +22,53 @@ const { Content, headings } = await render(post);
  */
 ---
 
-<RootLayout>
-  <article class="">
+<RootLayout title={title(post.data.title)} description={post.data.description}>
+  <head slot="head">
+    <meta name="keywords" content={post.data.tags?.join(", ")} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: Astro.site,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: post.data.title,
+            item: Astro.url,
+          },
+        ],
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": `${Astro.url}/#blogposting`,
+        mainEntityOfPage: Astro.url,
+        headline: post.data.title,
+        description: post.data.description,
+        datePublished: post.data.publishDate.toISOString(),
+        dateModified: post.data.updatedDate?.toISOString(),
+        author: {
+          "@id": `${Astro.site}/#person`,
+        },
+        publisher: {
+          "@id": `${Astro.site}/#person`,
+        },
+        keywords: post.data.tags,
+        articleSection: "Blog",
+      })}
+    />
+  </head>
+  <article>
     <header>
       <hgroup>
         <h1>{title(post.data.title)}</h1>

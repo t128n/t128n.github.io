@@ -83,11 +83,38 @@ const computedTitle = `${title} [t128n]`;
       set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": `${Astro.site}/#website`,
+        url: Astro.site,
         name: computedTitle,
-        url: Astro.site?.toString(),
-        description: description,
+        description,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${Astro.site}/search?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
       })}
     />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": `${Astro.site}/#person`,
+        name: "Torben Haack",
+        url: Astro.site,
+        description,
+        sameAs: [
+          "https://twitter.com/_t128n",
+          "https://github.com/t128n",
+          "https://www.linkedin.com/in/torben-haack/",
+        ],
+      })}
+    />
+
     <slot name="head" />
   </head>
   <body>
