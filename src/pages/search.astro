@@ -9,7 +9,6 @@ const entries = blogEntries.map((entry) => ({
   title: entry.data.title,
   description: entry.data.description ?? "",
 }));
-const entriesJson = JSON.stringify(entries);
 const initialQuery =
   new URLSearchParams(Astro.request.url.split("?")[1] || "").get("q") || "";
 ---
