@@ -31,7 +31,7 @@ posts.sort((a, b) => {
         <li>
           <a class="post" href={`/blog/${post.data.slug}`} tabindex="0">
             <header>
-              <h3>{title(post.data.title)}</h3>
+              <h2>{title(post.data.title)}</h2>
               <time datetime={post.data.publishDate.toISOString()}>
                 {post.data.publishDate.toISOString().split("T")[0]}
               </time>
@@ -85,7 +85,7 @@ posts.sort((a, b) => {
     gap: var(--space-lg);
   }
 
-  h3 {
+  h2 {
     font-family: var(--font-mono);
     letter-spacing: var(--letter-spacing);
   }

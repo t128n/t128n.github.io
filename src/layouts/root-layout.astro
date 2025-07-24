@@ -9,10 +9,10 @@ interface RootLayoutProps {
 }
 const {
   title = "Torben Haack",
-  description = "Software engineer focused on building reliable platforms, sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals.",
+  description = "Software engineer building sharing practical knowledge and mentoring developers. Real-world projects, open-source tools and insights for tech professionals",
 } = Astro.props as RootLayoutProps;
 
-const computedTitle = `${title} | [t128n]`;
+const computedTitle = `${title} [t128n]`;
 ---
 
 <!doctype html>
@@ -78,15 +78,16 @@ const computedTitle = `${title} | [t128n]`;
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- JSON-LD Schemas -->
-    <script type="application/ld+json">
-      {JSON.stringify({
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: computedTitle,
         url: Astro.site?.toString(),
         description: description,
       })}
-    </script>
+    />
     <slot name="head" />
   </head>
   <body>
