@@ -8,26 +8,27 @@ interface LegacyRoute {
 
 // Legacy Page Support
 export async function getStaticPaths() {
+  const fallbackUrl = "rebooting-t128n-github-io-adcee";
   const legacyRoutes: LegacyRoute[] = [
     {
       oldSlug: "ascii",
-      newSlug: "rebooting-t128n-github-io-fd1b5",
+      newSlug: fallbackUrl,
     },
     {
       oldSlug: "scratchpad",
-      newSlug: "rebooting-t128n-github-io-fd1b5",
+      newSlug: fallbackUrl,
     },
     {
       oldSlug: "snippets",
-      newSlug: "rebooting-t128n-github-io-fd1b5",
+      newSlug: fallbackUrl,
     },
     {
       oldSlug: "news",
-      newSlug: "rebooting-t128n-github-io-fd1b5",
+      newSlug: fallbackUrl,
     },
     {
       oldSlug: "engineering-handbook",
-      newSlug: "rebooting-t128n-github-io-fd1b5",
+      newSlug: fallbackUrl,
     },
   ];
 
