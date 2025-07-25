@@ -23,7 +23,7 @@ const { Content, headings } = await render(post);
 ---
 
 <RootLayout title={title(post.data.title)} description={post.data.description}>
-  <head slot="head">
+  <Fragment slot="head">
     <meta name="keywords" content={post.data.tags?.join(", ")} />
     <script
       type="application/ld+json"
@@ -67,8 +67,8 @@ const { Content, headings } = await render(post);
         articleSection: "Blog",
       })}
     />
-  </head>
-  <article>
+  </Fragment>
+  <article slot="default">
     <header>
       <hgroup>
         <h1>{title(post.data.title)}</h1>
