@@ -1,0 +1,41 @@
+name: "Bug Report"
+description: "Report a problem with the blog or site."
+title: "[Bug] <short description>"
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Please provide as much detail as possible.
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: Where did you encounter the bug? (Paste the full URL)
+      placeholder: "https://t128n.github.io/path"
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen.
+      placeholder: "A clear and concise description of the problem."
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the issue?
+      placeholder: "1. Go to ...\n2. Click ...\n3. See error ..."
+    validations:
+      required: false
+  - type: textarea
+    id: browser
+    attributes:
+      label: Browser/Device
+      description: What browser/device were you using?
+      placeholder: "e.g. Safari on macOS, Chrome on Android, etc."
+    validations:
+      required: false

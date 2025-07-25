@@ -1,0 +1,25 @@
+name: "Content Suggestion"
+description: "Suggest a topic or improvement for the blog."
+title: "[Content] <suggestion title>"
+labels: [content]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for a post or improvement? Let me know!
+  - type: input
+    id: topic
+    attributes:
+      label: Topic or Idea
+      description: What would you like to see covered or improved?
+      placeholder: "Describe your suggestion"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Any additional context, background, or links?
+      placeholder: "Share more details or references here."
+    validations:
+      required: false

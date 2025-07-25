@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import BlogComments from "@/components/blog-comments.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import title from "@/lib/title";
 
@@ -84,6 +85,7 @@ const { Content, headings } = await render(post);
 
     <Content />
   </article>
+  <BlogComments />
 </RootLayout>
 
 <style>
