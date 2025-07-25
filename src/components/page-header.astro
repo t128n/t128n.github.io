@@ -91,7 +91,6 @@ const isActive = (href: string) => {
     padding: var(--space-md) 0;
     border-bottom: 1px solid var(--color-ui-2);
   }
-
   header section a {
     display: flex;
     flex-direction: row;
@@ -139,5 +138,19 @@ const isActive = (href: string) => {
   .nav-link--active {
     color: var(--color-primary);
     font-weight: var(--font-semibold);
+  }
+
+  @media (max-width: 40rem) {
+    header {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    header nav {
+      width: 100%;
+    }
+    header nav ul {
+      justify-content: space-between;
+    }
   }
 </style>
