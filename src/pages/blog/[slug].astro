@@ -84,7 +84,6 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post);
         <time datetime={post.data.publishDate.toISOString()}>
           {post.data.publishDate.toISOString().split("T")[0]}
         </time>
-
         <p aria-label="Estimated reading time" title="Estimated reading time">
           {remarkPluginFrontmatter.minutesRead}
         </p>
