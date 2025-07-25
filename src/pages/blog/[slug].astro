@@ -178,4 +178,16 @@ const { Content, headings } = await render(post);
     padding: var(--space-md) var(--space-lg);
     border-radius: var(--space-xs);
   }
+
+  article :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-ui);
+    margin: var(--space-lg) 0;
+  }
+
+  article :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
 </style>
