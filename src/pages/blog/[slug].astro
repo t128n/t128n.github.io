@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BlogComments from "@/components/blog-comments.astro";
+import BlogSharing from "@/components/blog-sharing.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import title from "@/lib/title";
 
@@ -85,6 +86,11 @@ const { Content, headings } = await render(post);
 
     <Content />
   </article>
+  <BlogSharing
+    title={post.data.title}
+    description={post.data.description}
+    url={Astro.url}
+  />
   <BlogComments />
 </RootLayout>
 

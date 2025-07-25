@@ -1,0 +1,90 @@
+---
+interface BlogSharingProps {
+  title: string;
+  description: string;
+  url: string;
+}
+const { title, description, url } = Astro.props as BlogSharingProps;
+
+type SupportedPlatforms = "twitter" | "linkedin" | "reddit" | "whatsapp";
+/**
+ * Generates sharing content and URLs for supported social platforms.
+ * Only includes logic and data actually used by the component.
+ *
+ * @param platform - The platform to generate sharing info for.
+ * @returns An object containing the share message and the share URL.
+ */
+function generateShareLinks(platform: SupportedPlatforms) {
+  const encoded = {
+    title: encodeURIComponent(title),
+    url: encodeURIComponent(url),
+  };
+
+  const maxDescriptionLength = 100;
+  const truncatedDescription =
+    description.length > maxDescriptionLength
+      ? `${description.slice(0, maxDescriptionLength - 1)}…`
+      : description;
+
+  const shareMessage = `Check out » ${title} «\n\n${truncatedDescription}\n\n${url}`;
+
+  const shareUrlMap: Record<SupportedPlatforms, string> = {
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}&via=_t128n`,
+    linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encoded.url}`,
+    reddit: `https://reddit.com/submit?url=${encoded.url}&title=${encoded.title}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(shareMessage)}`,
+  };
+
+  return shareUrlMap[platform];
+}
+---
+
+<ul>
+  {
+    ["twitter", "linkedin", "reddit", "whatsapp"].map((platform) => {
+      const shareUrl = generateShareLinks(platform as SupportedPlatforms);
+      return (
+        <li>
+          <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+            Share on {platform.charAt(0).toUpperCase() + platform.slice(1)}
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: var(--font-mono);
+
+    border-top: 1px solid var(--color-ui);
+    border-bottom: 1px solid var(--color-ui);
+
+    width: 100%;
+    padding: var(--space-md) 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color-secondary);
+    transition: color 0.3s ease;
+    font-size: var(--text-sm);
+  }
+
+  a:hover {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 40rem) {
+    ul {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
