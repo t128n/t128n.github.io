@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content, headings } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 /**
  * TODO: Add an outline component OUTSIDE of the RootLayout.
  * The `render(post)` function exposes an array of headings that can be used
@@ -79,9 +79,15 @@ const { Content, headings } = await render(post);
         </p>
       </hgroup>
 
-      <time datetime={post.data.publishDate.toISOString()}>
-        {post.data.publishDate.toISOString().split("T")[0]}
-      </time>
+      <div>
+        <time datetime={post.data.publishDate.toISOString()}>
+          {post.data.publishDate.toISOString().split("T")[0]}
+        </time>
+
+        <p aria-label="Estimated reading time" title="Estimated reading time">
+          {remarkPluginFrontmatter.minutesRead}
+        </p>
+      </div>
     </header>
 
     <Content />
@@ -104,6 +110,17 @@ const { Content, headings } = await render(post);
     gap: var(--space-xs);
     margin-bottom: var(--space-lg);
     line-height: 1.2;
+  }
+  header div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  header div p {
+    font-size: var(--text-xs);
+    color: var(--color-tx-2);
+    font-family: var(--font-mono);
+    text-align: right;
   }
 
   hgroup {

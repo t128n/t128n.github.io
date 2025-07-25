@@ -5,6 +5,7 @@ import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import icon from "astro-icon";
 import mcp from "astro-mcp";
+import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
 
 const productionMode = process.env.NODE_ENV === "production";
 const astroSite = productionMode
@@ -19,6 +20,7 @@ export default defineConfig({
 		shikiConfig: {
 			theme: "vitesse-dark",
 		},
+		remarkPlugins: [remarkReadingTime],
 	},
 	vite: {
 		css: {
