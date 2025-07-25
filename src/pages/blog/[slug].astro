@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BlogComments from "@/components/blog-comments.astro";
+import BlogOutline from "@/components/blog-outline.astro";
 import BlogSharing from "@/components/blog-sharing.astro";
 import RootLayout from "@/layouts/root-layout.astro";
 import title from "@/lib/title";
@@ -89,6 +90,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post);
         </p>
       </div>
     </header>
+    {headings.length > 0 && <BlogOutline headings={headings} />}
 
     <Content />
   </article>

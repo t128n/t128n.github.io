@@ -1,0 +1,79 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface OutlineProps {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props as OutlineProps;
+---
+
+<nav>
+  <h2>Table of Contents</h2>
+  <ul>
+    {
+      headings.map((heading) => (
+        <li style={`--depth: ${heading.depth - 1}`}>
+          <a href={`#${heading.slug}`}>{heading.text}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  nav {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    line-height: var(--line-height);
+    border-left: 1px solid var(--color-ui);
+    background: var(--color-bg-2);
+    padding: var(--space-md) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0;
+    padding-left: calc(1rem + var(--depth) * 1rem);
+    position: relative;
+  }
+
+  li::before {
+    content: "├─";
+    position: absolute;
+    left: calc(0.25rem + var(--depth) * 1rem);
+    color: #9ca3af;
+    user-select: none;
+  }
+
+  li:last-child::before {
+    content: "└─";
+  }
+
+  a {
+    color: var(--color-tx);
+    text-decoration: none;
+    padding: 0.125rem 0.5rem;
+    display: block;
+    transition: all 0.15s ease;
+  }
+
+  nav a:hover {
+    color: var(--color-primary);
+    background: var(--color-ui);
+    padding: 0.125rem 0.5rem;
+    margin: 0;
+  }
+
+  a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+</style>
