@@ -6,7 +6,7 @@ const getOpenSearchXML = (site: URL | undefined) => `\
   <ShortName>t128n Blog Search</ShortName>
   <Description>Search the t128n blog posts</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Url type="text/html" method="get" template="https://${site}search?q={searchTerms}"/>
+  <Url type="text/html" method="get" template="https://${site}search/?q={searchTerms}"/>
   <Image height="16" width="16" type="image/svg+xml">https://${site}favicon.svg</Image>
   <Developer>Torben Haack</Developer>
   <Attribution>${site}</Attribution>

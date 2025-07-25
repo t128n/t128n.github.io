@@ -72,6 +72,14 @@ const initialQuery =
     }
   }
 
+  // On page load, set input value from URL param and render results accordingly
+  const params = new URLSearchParams(window.location.search);
+  const urlQuery = params.get("q") || "";
+  if (input.value !== urlQuery) {
+    input.value = urlQuery;
+  }
+  renderResults(input.value);
+
   input.addEventListener("input", () => {
     renderResults(input.value);
     const params = new URLSearchParams(window.location.search);
@@ -82,9 +90,6 @@ const initialQuery =
       `${window.location.pathname}?${params}`,
     );
   });
-
-  // Always render results on load, even if input is empty or only whitespace (including ?q=)
-  renderResults(input.value);
 </script>
 <script
   id="search-entries-data"
