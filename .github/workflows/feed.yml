@@ -9,6 +9,7 @@ env:
   FEED_DIR: 'content/feed'
   GITHUB_BOT_NAME: 'github-actions[bot]'
   GITHUB_BOT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   validate-and-process:
