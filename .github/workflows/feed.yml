@@ -7,7 +7,7 @@ on:
 jobs:
   create-or-update-feed:
     if: |
-      github.event.issue.user.login == 't128n' &&
+      github.event.issue.user.login == github.repository_owner &&
       contains(github.event.issue.labels.*.name, 'feed') &&
       (
         github.event.action == 'opened' ||
@@ -79,7 +79,7 @@ jobs:
 
   delete-feed-entry:
     if: |
-      github.event.issue.user.login == 't128n' &&
+      github.event.issue.user.login == github.repository_owner &&
       github.event.action == 'unlabeled' &&
       github.event.label.name == 'feed'
     runs-on: ubuntu-latest
@@ -125,3 +125,15 @@ jobs:
           git commit -m \
             "chore(feed): delete feed entry for issue #${{ github.event.issue.number }}"
           git push
+          
+  close-if-not-repo-owner:
+    if: github.event.issue.user.login != github.repository_owner
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close issue if not repo owner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue close "${{ github.event.issue.number }}" --comment "Feed entries can only be created by the repository owner."

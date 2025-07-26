@@ -1,0 +1,12 @@
+---
+name: "Feed Post"
+description: "Create a new feed entry (will be published to /feed)"
+title: "[Feed] <short summary>"
+labels: [feed]
+assignees: [t128n]
+---
+
+## Feed Content
+
+<!-- Write your feed post below. This will be published as-is to the public feed. Use Markdown for formatting. -->
+
