@@ -76,6 +76,7 @@ jobs:
             gh issue comment "$NUM" \
               --body "Feed entry updated: [$FN]($URL)"
           fi
+          gh api repos/${{ github.repository }}/dispatches -f event_type=create_feed_entry
 
   delete-feed-entry:
     if: |
@@ -125,7 +126,8 @@ jobs:
           git commit -m \
             "chore(feed): delete feed entry for issue #${{ github.event.issue.number }}"
           git push
-          
+          gh api repos/${{ github.repository }}/dispatches -f event_type=create_feed_entry
+
   close-if-not-repo-owner:
     if: github.event.issue.user.login != github.repository_owner
     runs-on: ubuntu-latest

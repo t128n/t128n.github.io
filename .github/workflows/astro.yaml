@@ -11,6 +11,8 @@ on:
       - "bun.lockb"               # Bun’s lockfile for dependency version tracking
       - ".github/workflows/**"    # In case workflow changes affect the build
   workflow_dispatch:
+  repository_dispatch:
+    types: [create_feed_entry]
 
 permissions:
   contents: read
