@@ -50,19 +50,46 @@ const renderedFeed = await Promise.all(
 </RootLayout>
 
 <script type="module">
-  const timeElements = document.querySelectorAll("time");
-  timeElements.forEach((time) => {
-    const datetime = time.getAttribute("datetime");
-    if (!datetime) return;
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-clipboard]");
+    if (!link) return;
 
-    const date = new Date(datetime);
+    const url = link.getAttribute("data-clipboard");
+    const label =
+      link.querySelector("[data-label]") || link.querySelector("span");
+    if (!url || !label) return;
+
+    const updateLabel = (text, revertText, ms = 2000) => {
+      label.textContent = text;
+      setTimeout(() => {
+        label.textContent = revertText;
+      }, ms);
+    };
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        updateLabel("Link copied to clipboard!", "Copy Link");
+        link.setAttribute("aria-live", "polite");
+        link.setAttribute("aria-label", "Link copied to clipboard!");
+        setTimeout(() => {
+          link.removeAttribute("aria-label");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy link: ", err);
+        updateLabel("Failed to copy link", "Copy Link");
+      });
+  });
+</script>
+
+<script type="module">
+  function getRelativeTimeString(dateString) {
+    const date = new Date(dateString);
     const now = new Date();
-    const diffInMilliseconds = now.getTime() - date.getTime();
+    const diff = now.getTime() - date.getTime();
 
     const rtf = new Intl.RelativeTimeFormat("en", { style: "short" });
-
-    let value;
-    let unit;
 
     const minute = 60 * 1000;
     const hour = 60 * minute;
@@ -71,57 +98,50 @@ const renderedFeed = await Promise.all(
     const month = 30 * day;
     const year = 365 * day;
 
-    if (diffInMilliseconds < minute) {
-      value = Math.round(diffInMilliseconds / 1000);
+    let value;
+    let unit;
+
+    if (diff < minute) {
+      value = Math.round(diff / 1000);
       unit = "second";
-    } else if (diffInMilliseconds < hour) {
-      value = Math.round(diffInMilliseconds / minute);
+    } else if (diff < hour) {
+      value = Math.round(diff / minute);
       unit = "minute";
-    } else if (diffInMilliseconds < day) {
-      value = Math.round(diffInMilliseconds / hour);
+    } else if (diff < day) {
+      value = Math.round(diff / hour);
       unit = "hour";
-    } else if (diffInMilliseconds < week) {
-      value = Math.round(diffInMilliseconds / day);
+    } else if (diff < week) {
+      value = Math.round(diff / day);
       unit = "day";
-    } else if (diffInMilliseconds < month) {
-      value = Math.round(diffInMilliseconds / week);
+    } else if (diff < month) {
+      value = Math.round(diff / week);
       unit = "week";
-    } else if (diffInMilliseconds < year) {
-      value = Math.round(diffInMilliseconds / month);
+    } else if (diff < year) {
+      value = Math.round(diff / month);
       unit = "month";
     } else {
-      value = Math.round(diffInMilliseconds / year);
+      value = Math.round(diff / year);
       unit = "year";
     }
 
-    time.textContent = rtf.format(-value, unit);
-  });
-</script>
+    return rtf.format(-value, unit);
+  }
 
-<script type="module">
-  const clipboardLinks = document.querySelectorAll("[data-clipboard]");
-  clipboardLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const url = link.getAttribute("data-clipboard");
-      const span = link.querySelector("span");
-      if (!url) return;
-      navigator.clipboard
-        .writeText(url)
-        .then(() => {
-          span.textContent = "Link copied to clipboard!";
-          setTimeout(() => {
-            span.textContent = "Copy Link to Clipboard";
-          }, 2000);
-        })
-        .catch((err) => {
-          console.error("Failed to copy link: ", err);
-          span.textContent = "Failed to copy link";
-          setTimeout(() => {
-            span.textContent = "Copy Link to Clipboard";
-          }, 2000);
-        });
+  function updateAllTimeElements() {
+    const timeElements = document.querySelectorAll("time");
+    timeElements.forEach((time) => {
+      const datetime = time.getAttribute("datetime");
+      if (datetime) {
+        time.textContent = getRelativeTimeString(datetime);
+      }
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateAllTimeElements);
+  } else {
+    updateAllTimeElements();
+  }
 </script>
 
 <style>
@@ -164,6 +184,9 @@ const renderedFeed = await Promise.all(
     color: var(--color-tx-2);
     font-size: var(--text-sm);
   }
+  li header a:hover {
+    color: var(--color-primary);
+  }
 
   ul :global(code) {
     font-family: var(--font-mono);
@@ -176,7 +199,7 @@ const renderedFeed = await Promise.all(
 
   ul li time {
     font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--color-tx-2);
     white-space: nowrap;
   }
