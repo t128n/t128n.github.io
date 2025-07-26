@@ -29,20 +29,29 @@ const renderedFeed = await Promise.all(
   title="Feed"
   description="A collection of my latest thoughts and updates."
 >
+  <h2>Feed</h2>
+  <p>
+    This is a collection of my latest thoughts and updates. It's a great way to
+    stay up to date with what I'm working on, what I'm reading, and what I'm
+    thinking about.
+  </p>
   <ul>
     {
       renderedFeed.map(({ post, Content }) => (
         <li id={post.id}>
           <header>
-            <a href={`#${post.id}`} data-clipboard={`${Astro.url}#${post.id}`}>
-              <Icon name="pixelarticons:paperclip" />
-              <span>Copy Link to Clipboard</span>
-            </a>
+            <span>#{post.id}</span>
             <time datetime={idToDate(post.id).toISOString()}>
               {idToDate(post.id).toISOString()}
             </time>
           </header>
-          <Content />
+          <article>
+            <Content />
+          </article>
+          <a href={`#${post.id}`} data-clipboard={`${Astro.url}#${post.id}`}>
+            <Icon name="pixelarticons:paperclip" />
+            <span>Copy Link</span>
+          </a>
         </li>
       ))
     }
@@ -152,6 +161,8 @@ const renderedFeed = await Promise.all(
 
     display: flex;
     flex-direction: column;
+
+    gap: var(--space-xl);
   }
 
   li {
@@ -159,17 +170,11 @@ const renderedFeed = await Promise.all(
     flex-direction: column;
     gap: var(--space-sm);
     scroll-margin-top: var(--space-lg);
-  }
 
-  li::after {
-    content: "";
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid var(--color-ui-2);
-    margin: var(--space-xl) 0;
-  }
-  li:last-child::after {
-    display: none;
+    background: var(--color-ui);
+    border: 1px solid var(--color-ui-2);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
   }
 
   li header {
@@ -177,24 +182,20 @@ const renderedFeed = await Promise.all(
     align-items: center;
     justify-content: space-between;
   }
-  li header a {
+  li header span {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-tx-2);
+  }
+  a[data-clipboard] {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
     color: var(--color-tx-2);
     font-size: var(--text-sm);
   }
-  li header a:hover {
+  a[data-clipboard]:hover {
     color: var(--color-primary);
-  }
-
-  ul :global(code) {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    border-radius: var(--space-xs);
-    font-weight: 600;
-    background: var(--color-ui);
-    padding: var(--space-xs) var(--space-sm);
   }
 
   ul li time {
@@ -202,5 +203,22 @@ const renderedFeed = await Promise.all(
     font-size: var(--text-xs);
     color: var(--color-tx-2);
     white-space: nowrap;
+  }
+</style>
+
+<style>
+  article :global(code) {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    border-radius: var(--space-xs);
+    font-weight: 600;
+    background: var(--color-ui-3);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  article :global(a) {
+    color: var(--color-primary);
+  }
+  article :global(a:hover) {
+    text-decoration: underline;
   }
 </style>
