@@ -21,6 +21,10 @@ const STATIC_PAGES: Record<string, StaticPageMeta> = {
 		title: "Search",
 		description: "Search through my blog posts and resources.",
 	},
+	feed: {
+		title: "Feed",
+		description: "A collection of my latest thoughts and updates.",
+	},
 };
 
 export async function getStaticPaths() {

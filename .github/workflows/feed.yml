@@ -1,0 +1,127 @@
+name: Manage Feed from Issues
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+
+jobs:
+  create-or-update-feed:
+    if: |
+      github.event.issue.user.login == 't128n' &&
+      contains(github.event.issue.labels.*.name, 'feed') &&
+      (
+        github.event.action == 'opened' ||
+        github.event.action == 'edited' ||
+        (
+          github.event.action == 'labeled' &&
+          github.event.label.name == 'feed'
+        )
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine filename from issue timestamp
+        id: filename_from_timestamp
+        run: |
+          TIMESTAMP=$(date -u -d \
+            "${{ github.event.issue.created_at }}" +'%Y%m%d%H%M')
+          FILENAME="${TIMESTAMP}.md"
+          echo "FILENAME=$FILENAME" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update markdown file
+        id: file_operation
+        run: |
+          mkdir -p content/feed
+          echo "${{ github.event.issue.body }}" > \
+            content/feed/${{ steps.filename_from_timestamp.outputs.FILENAME }}
+          echo "OPERATED_FILENAME=${{ steps.filename_from_timestamp.outputs.FILENAME }}" \
+            >> "$GITHUB_OUTPUT"
+
+      - name: Commit & push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add content/feed/${{ steps.file_operation.outputs.OPERATED_FILENAME }}
+          git commit -m \
+            "chore(feed): ${{ github.event.action }} feed entry for issue #${{ github.event.issue.number }}"
+          git push
+
+      - name: Comment & (maybe) close
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO="${{ github.repository }}"
+          NUM="${{ github.event.issue.number }}"
+          FN="${{ steps.file_operation.outputs.OPERATED_FILENAME }}"
+          URL="https://github.com/$REPO/blob/main/content/feed/$FN"
+
+          if [ "${{ github.event.action }}" = "opened" ] || \
+             [ "${{ github.event.action }}" = "labeled" ]; then
+            gh issue comment "$NUM" \
+              --body "Feed entry created: [$FN]($URL)"
+            gh issue close "$NUM" \
+              --comment "Feed entry processed and closed."
+          else
+            gh issue comment "$NUM" \
+              --body "Feed entry updated: [$FN]($URL)"
+          fi
+
+  delete-feed-entry:
+    if: |
+      github.event.issue.user.login == 't128n' &&
+      github.event.action == 'unlabeled' &&
+      github.event.label.name == 'feed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine filename from timestamp
+        id: filename_from_timestamp_delete
+        run: |
+          TIMESTAMP=$(date -u -d \
+            "${{ github.event.issue.created_at }}" +'%Y%m%d%H%M')
+          FILENAME="${TIMESTAMP}.md"
+          echo "FILENAME=$FILENAME" >> "$GITHUB_OUTPUT"
+
+      - name: Delete markdown file
+        id: delete_file
+        run: |
+          FILE="content/feed/${{ steps.filename_from_timestamp_delete.outputs.FILENAME }}"
+          if [ -f "$FILE" ]; then
+            rm "$FILE"
+            echo "DELETED=true" >> "$GITHUB_OUTPUT"
+            echo "DELETED_FILE=${{ steps.filename_from_timestamp_delete.outputs.FILENAME }}" \
+              >> "$GITHUB_OUTPUT"
+          else
+            echo "DELETED=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push deletion
+        if: steps.delete_file.outputs.DELETED == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git rm content/feed/${{ steps.delete_file.outputs.DELETED_FILE }}
+          git commit -m \
+            "chore(feed): delete feed entry for issue #${{ github.event.issue.number }}"
+          git push

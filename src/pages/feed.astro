@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from "astro:content";
+import { Icon } from "astro-icon/components";
+import RootLayout from "@/layouts/root-layout.astro";
+
+const feed = await getCollection("feed");
+
+function idToDate(id: string): Date {
+	const year = parseInt(id.slice(0, 4), 10);
+	const month = parseInt(id.slice(4, 6), 10) - 1; // month is 0-indexed in JavaScript
+	const day = parseInt(id.slice(6, 8), 10);
+	const hours = parseInt(id.slice(8, 10), 10);
+	const minutes = parseInt(id.slice(10, 12), 10);
+	return new Date(year, month, day, hours, minutes);
+}
+
+const sortedFeed = feed.sort(
+	(a, b) => idToDate(b.id).getTime() - idToDate(a.id).getTime(),
+);
+const renderedFeed = await Promise.all(
+	sortedFeed.map(async (post) => {
+		const { Content } = await render(post);
+		return { post, Content };
+	}),
+);
+---
+
+<RootLayout title="Feed" description="A collection of my latest thoughts and updates.">
+  <ul>
+    {renderedFeed.map(({ post, Content }) => (
+      <li id={post.id}>
+        <header>
+          <a href={`#${post.id}`} data-clipboard={`${Astro.url}#${post.id}`}>
+            <Icon name="pixelarticons:paperclip" />
+            <span>Copy Link to Clipboard</span>
+          </a>
+            <time datetime={idToDate(post.id).toISOString()}>
+              {idToDate(post.id).toISOString()}
+            </time>
+        </header>
+        <Content />
+      </li>
+    ))}
+  </ul>
+</RootLayout>
+
+<script type="module">
+  const timeElements = document.querySelectorAll("time");
+  timeElements.forEach((time) => {
+    const datetime = time.getAttribute("datetime");
+    if (!datetime) return;
+
+    const date = new Date(datetime);
+    const now = new Date();
+    const diffInMilliseconds = now.getTime() - date.getTime();
+
+    const rtf = new Intl.RelativeTimeFormat("en", { style: "short" });
+
+    let value;
+    let unit;
+
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const week = 7 * day;
+    const month = 30 * day; 
+    const year = 365 * day; 
+
+    if (diffInMilliseconds < minute) {
+      value = Math.round(diffInMilliseconds / 1000);
+      unit = "second";
+    } else if (diffInMilliseconds < hour) {
+      value = Math.round(diffInMilliseconds / minute);
+      unit = "minute";
+    } else if (diffInMilliseconds < day) {
+      value = Math.round(diffInMilliseconds / hour);
+      unit = "hour";
+    } else if (diffInMilliseconds < week) {
+      value = Math.round(diffInMilliseconds / day);
+      unit = "day";
+    } else if (diffInMilliseconds < month) {
+      value = Math.round(diffInMilliseconds / week);
+      unit = "week";
+    } else if (diffInMilliseconds < year) {
+      value = Math.round(diffInMilliseconds / month);
+      unit = "month";
+    } else {
+      value = Math.round(diffInMilliseconds / year);
+      unit = "year";
+    }
+
+    time.textContent = rtf.format(-value, unit);
+  });
+</script>
+
+<script type="module">
+  const clipboardLinks = document.querySelectorAll("[data-clipboard]");
+  clipboardLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const url = link.getAttribute("data-clipboard");
+      const span = link.querySelector("span");
+      if (!url) return;
+      navigator.clipboard.writeText(url).then(() => {
+        span.textContent = "Link copied to clipboard!";
+        setTimeout(() => {
+          span.textContent = "Copy Link to Clipboard";
+        }, 2000);
+      }).catch((err) => {
+        console.error("Failed to copy link: ", err);
+        span.textContent = "Failed to copy link";
+        setTimeout(() => {
+          span.textContent = "Copy Link to Clipboard";
+        }, 2000);
+      });
+    });
+  });
+</script>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    scroll-margin-top: var(--space-lg);
+  }
+
+  li::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid var(--color-ui-2);
+    margin: var(--space-xl) 0;
+  }
+  li:last-child::after {
+    display: none;
+  }
+
+  li header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  li header a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-tx-2);
+    font-size: var(--text-sm);
+  }
+
+  ul :global(code) {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    border-radius: var(--space-xs);
+    font-weight: 600;
+    background: var(--color-ui);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  ul li time {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-tx-2);
+    white-space: nowrap;
+  }
+</style>
