@@ -1,12 +1,18 @@
----
 name: "Feed Post"
-description: "Create a new feed entry (will be published to /feed)"
-title: "[Feed] <short summary>"
+description: "Publish a quick update or thought to /feed."
+title: "[Feed] <short description>"
 labels: [feed]
-assignees: [t128n]
----
-
-## Feed Content
-
-<!-- Write your feed post below. This will be published as-is to the public feed. Use Markdown for formatting. -->
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write your feed post below. This will be published as-is to the public feed. Use Markdown for formatting.
+  - type: textarea
+    id: feed-content
+    attributes:
+      label: Feed Content
+      description: The content of your feed post (Markdown supported).
+      placeholder: "Share your update, link, or thought here."
+    validations:
+      required: true
 
