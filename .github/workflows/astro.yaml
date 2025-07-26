@@ -12,7 +12,7 @@ on:
       - ".github/workflows/**"    # In case workflow changes affect the build
   workflow_dispatch:
   repository_dispatch:
-    types: [create_feed_entry]
+    types: [rebuild_site]
 
 permissions:
   contents: read

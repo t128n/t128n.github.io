@@ -4,138 +4,120 @@ on:
   issues:
     types: [opened, edited, labeled, unlabeled]
 
+env:
+  FEED_LABEL: 'feed'
+  FEED_DIR: 'content/feed'
+  GITHUB_BOT_NAME: 'github-actions[bot]'
+  GITHUB_BOT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+
 jobs:
-  create-or-update-feed:
+  validate-and-process:
     if: |
       github.event.issue.user.login == github.repository_owner &&
-      contains(github.event.issue.labels.*.name, 'feed') &&
       (
-        github.event.action == 'opened' ||
-        github.event.action == 'edited' ||
-        (
-          github.event.action == 'labeled' &&
-          github.event.label.name == 'feed'
-        )
+        (contains(github.event.issue.labels.*.name, 'feed') && 
+         (github.event.action == 'opened' || 
+          github.event.action == 'edited' || 
+          (github.event.action == 'labeled' && github.event.label.name == 'feed'))) ||
+        (github.event.action == 'unlabeled' && github.event.label.name == 'feed')
       )
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       issues: write
       contents: write
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Git author
+      - name: Setup Git configuration
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ env.GITHUB_BOT_NAME }}"
+          git config user.email "${{ env.GITHUB_BOT_EMAIL }}"
 
-      - name: Determine filename from issue timestamp
-        id: filename_from_timestamp
-        run: |
-          TIMESTAMP=$(date -u -d \
-            "${{ github.event.issue.created_at }}" +'%Y%m%d%H%M')
-          FILENAME="${TIMESTAMP}.md"
-          echo "FILENAME=$FILENAME" >> "$GITHUB_OUTPUT"
+      - name: Process feed entry
+        id: feed-process
+        uses: ./.github/actions/feed-utils
+        with:
+          issue-body: ${{ github.event.issue.body }}
+          issue-created-at: ${{ github.event.issue.created_at }}
+          action: ${{ github.event.action }}
+          feed-dir: ${{ env.FEED_DIR }}
 
-      - name: Create or update markdown file
-        id: file_operation
+      - name: Handle validation errors
+        if: steps.feed-process.outputs.error != ''
         run: |
-          mkdir -p content/feed
-          echo "${{ github.event.issue.body }}" > \
-            content/feed/${{ steps.filename_from_timestamp.outputs.FILENAME }}
-          echo "OPERATED_FILENAME=${{ steps.filename_from_timestamp.outputs.FILENAME }}" \
-            >> "$GITHUB_OUTPUT"
+          gh issue comment "${{ github.event.issue.number }}" \
+            --body "❌ **Validation Error**: ${{ steps.feed-process.outputs.error }}"
+          exit 1
 
-      - name: Commit & push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        if: steps.feed-process.outputs.operation != 'noop'
         run: |
-          git add content/feed/${{ steps.file_operation.outputs.OPERATED_FILENAME }}
-          git commit -m \
-            "chore(feed): ${{ github.event.action }} feed entry for issue #${{ github.event.issue.number }}"
-          git push
+          OPERATION="${{ steps.feed-process.outputs.operation }}"
+          ISSUE_NUM="${{ github.event.issue.number }}"
+          FILE_PATH="${{ steps.feed-process.outputs.file-path }}"
+          
+          if [ "$OPERATION" = "deleted" ]; then
+            git rm "$FILE_PATH"
+            COMMIT_MSG="chore(feed): delete feed entry for issue #$ISSUE_NUM"
+          else
+            git add "$FILE_PATH"
+            COMMIT_MSG="chore(feed): $OPERATION feed entry for issue #$ISSUE_NUM"
+          fi
+          
+          # Only commit if there are changes
+          if ! git diff --staged --quiet; then
+            git commit -m "$COMMIT_MSG"
+            git push
+          fi
 
-      - name: Comment & (maybe) close
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update issue with results
         run: |
+          OPERATION="${{ steps.feed-process.outputs.operation }}"
+          ISSUE_NUM="${{ github.event.issue.number }}"
+          FILENAME="${{ steps.feed-process.outputs.filename }}"
           REPO="${{ github.repository }}"
-          NUM="${{ github.event.issue.number }}"
-          FN="${{ steps.file_operation.outputs.OPERATED_FILENAME }}"
-          URL="https://github.com/$REPO/blob/main/content/feed/$FN"
-
-          if [ "${{ github.event.action }}" = "opened" ] || \
-             [ "${{ github.event.action }}" = "labeled" ]; then
-            gh issue comment "$NUM" \
-              --body "Feed entry created: [$FN]($URL)"
-            gh issue close "$NUM" \
-              --comment "Feed entry processed and closed."
+          
+          if [ "$OPERATION" = "noop" ]; then
+            gh issue comment "$ISSUE_NUM" \
+              --body "⚠️ **No action taken**: File not found, nothing to delete"
           else
-            gh issue comment "$NUM" \
-              --body "Feed entry updated: [$FN]($URL)"
-          fi
-          gh api repos/${{ github.repository }}/dispatches -f event_type=create_feed_entry
-
-  delete-feed-entry:
-    if: |
-      github.event.issue.user.login == github.repository_owner &&
-      github.event.action == 'unlabeled' &&
-      github.event.label.name == 'feed'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Git author
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Determine filename from timestamp
-        id: filename_from_timestamp_delete
-        run: |
-          TIMESTAMP=$(date -u -d \
-            "${{ github.event.issue.created_at }}" +'%Y%m%d%H%M')
-          FILENAME="${TIMESTAMP}.md"
-          echo "FILENAME=$FILENAME" >> "$GITHUB_OUTPUT"
-
-      - name: Delete markdown file
-        id: delete_file
-        run: |
-          FILE="content/feed/${{ steps.filename_from_timestamp_delete.outputs.FILENAME }}"
-          if [ -f "$FILE" ]; then
-            rm "$FILE"
-            echo "DELETED=true" >> "$GITHUB_OUTPUT"
-            echo "DELETED_FILE=${{ steps.filename_from_timestamp_delete.outputs.FILENAME }}" \
-              >> "$GITHUB_OUTPUT"
-          else
-            echo "DELETED=false" >> "$GITHUB_OUTPUT"
+            FILE_URL="https://github.com/$REPO/blob/main/${{ env.FEED_DIR }}/$FILENAME"
+            
+            if [ "$OPERATION" = "deleted" ]; then
+              MESSAGE="🗑️ **Feed entry deleted**: $FILENAME"
+            elif [ "$OPERATION" = "created" ]; then
+              MESSAGE="✅ **Feed entry created**: [$FILENAME]($FILE_URL)"
+            else
+              MESSAGE="📝 **Feed entry updated**: [$FILENAME]($FILE_URL)"
+            fi
+            
+            gh issue comment "$ISSUE_NUM" --body "$MESSAGE"
+            
+            # Close issue for new entries
+            if [ "$OPERATION" = "created" ]; then
+              gh issue close "$ISSUE_NUM" \
+                --comment "Feed entry processed and closed automatically."
+            fi
           fi
 
-      - name: Commit & push deletion
-        if: steps.delete_file.outputs.DELETED == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger rebuild
+        if: steps.feed-process.outputs.operation != 'noop'
         run: |
-          git rm content/feed/${{ steps.delete_file.outputs.DELETED_FILE }}
-          git commit -m \
-            "chore(feed): delete feed entry for issue #${{ github.event.issue.number }}"
-          git push
-          gh api repos/${{ github.repository }}/dispatches -f event_type=create_feed_entry
+          gh api repos/${{ github.repository }}/dispatches \
+            -f event_type=rebuild_site
 
-  close-if-not-repo-owner:
+  close-unauthorized-issues:
     if: github.event.issue.user.login != github.repository_owner
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       issues: write
     steps:
-      - name: Close issue if not repo owner
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Close unauthorized issue
         run: |
-          gh issue close "${{ github.event.issue.number }}" --comment "Feed entries can only be created by the repository owner."
+          gh issue close "${{ github.event.issue.number }}" \
+            --comment "❌ **Access denied**: Feed entries can only be created by the repository owner. This issue has been closed automatically."

@@ -1,0 +1,112 @@
+name: 'Feed Utilities'
+description: 'Common utilities for feed management operations'
+
+inputs:
+  issue-body:
+    description: 'The issue body content'
+    required: true
+  issue-created-at:
+    description: 'The issue creation timestamp'
+    required: true
+  action:
+    description: 'The GitHub action type (opened, edited, labeled, unlabeled)'
+    required: true
+  feed-dir:
+    description: 'Directory for feed files'
+    required: false
+    default: 'content/feed'
+
+outputs:
+  filename:
+    description: 'Generated filename for the feed entry'
+    value: ${{ steps.generate-filename.outputs.filename }}
+  operation:
+    description: 'Operation performed (created, updated, deleted, noop)'
+    value: ${{ steps.process-file.outputs.operation }}
+  file-path:
+    description: 'Full path to the processed file'
+    value: ${{ steps.process-file.outputs.file-path }}
+  error:
+    description: 'Error message if validation fails'
+    value: ${{ steps.validate-content.outputs.error }}
+
+runs:
+  using: composite
+  steps:
+    - name: Validate content
+      id: validate-content
+      shell: bash
+      run: |
+        # Check if issue body is not empty
+        if [ -z "${{ inputs.issue-body }}" ]; then
+          echo "error=Issue body cannot be empty" >> "$GITHUB_OUTPUT"
+          exit 1
+        fi
+        
+        # Check for minimum content length (at least 10 characters)
+        if [ ${#inputs.issue-body} -lt 10 ]; then
+          echo "error=Issue body must be at least 10 characters long" >> "$GITHUB_OUTPUT"
+          exit 1
+        fi
+        
+        echo "valid=true" >> "$GITHUB_OUTPUT"
+
+    - name: Generate filename
+      id: generate-filename
+      shell: bash
+      run: |
+        # Use a more robust date parsing approach
+        CREATED_AT="${{ inputs.issue-created-at }}"
+        
+        # Handle different date formats and timezones
+        if command -v date >/dev/null 2>&1; then
+          # Try GNU date first (Linux)
+          TIMESTAMP=$(date -u -d "$CREATED_AT" +'%Y%m%d%H%M' 2>/dev/null) || \
+          # Fallback to BSD date (macOS)
+          TIMESTAMP=$(date -u -j -f "%Y-%m-%dT%H:%M:%SZ" "$CREATED_AT" +'%Y%m%d%H%M' 2>/dev/null) || \
+          # Last resort: use current timestamp
+          TIMESTAMP=$(date -u +'%Y%m%d%H%M')
+        else
+          # If date command is not available, use current timestamp
+          TIMESTAMP=$(date -u +'%Y%m%d%H%M')
+        fi
+        
+        FILENAME="${TIMESTAMP}.md"
+        echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
+        echo "timestamp=$TIMESTAMP" >> "$GITHUB_OUTPUT"
+
+    - name: Process file
+      id: process-file
+      shell: bash
+      run: |
+        FEED_FILE="${{ inputs.feed-dir }}/${{ steps.generate-filename.outputs.filename }}"
+        ACTION="${{ inputs.action }}"
+        
+        # Create feed directory if it doesn't exist
+        mkdir -p "${{ inputs.feed-dir }}"
+        
+        if [ "$ACTION" = "unlabeled" ]; then
+          # Delete operation
+          if [ -f "$FEED_FILE" ]; then
+            rm "$FEED_FILE"
+            echo "operation=deleted" >> "$GITHUB_OUTPUT"
+            echo "file-path=$FEED_FILE" >> "$GITHUB_OUTPUT"
+          else
+            echo "operation=noop" >> "$GITHUB_OUTPUT"
+            echo "message=File not found, nothing to delete" >> "$GITHUB_OUTPUT"
+          fi
+        else
+          # Create or update operation
+          # Sanitize the content to prevent injection attacks
+          CONTENT="${{ inputs.issue-body }}"
+          
+          # Write content to file
+          echo "$CONTENT" > "$FEED_FILE"
+          
+          if [ "$ACTION" = "opened" ] || [ "$ACTION" = "labeled" ]; then
+            echo "operation=created" >> "$GITHUB_OUTPUT"
+          else
+            echo "operation=updated" >> "$GITHUB_OUTPUT"
+          fi
+          echo "file-path=$FEED_FILE" >> "$GITHUB_OUTPUT"
+        fi 

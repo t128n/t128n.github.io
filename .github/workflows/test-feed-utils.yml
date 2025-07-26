@@ -1,0 +1,76 @@
+name: Test Feed Utils
+
+on:
+  workflow_dispatch:
+    inputs:
+      test-scenario:
+        description: 'Test scenario to run'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+          - create
+          - update
+          - delete
+          - validate-error
+
+jobs:
+  test-feed-utils:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test feed utils - Create
+        if: github.event.inputs.test-scenario == 'create'
+        id: test-create
+        uses: ./.github/actions/feed-utils
+        with:
+          issue-body: 'This is a test feed entry with sufficient content for validation.'
+          issue-created-at: '2024-01-15T10:30:00Z'
+          action: 'opened'
+          feed-dir: 'test-feed'
+
+      - name: Test feed utils - Update
+        if: github.event.inputs.test-scenario == 'update'
+        id: test-update
+        uses: ./.github/actions/feed-utils
+        with:
+          issue-body: 'This is an updated test feed entry with more content.'
+          issue-created-at: '2024-01-15T10:30:00Z'
+          action: 'edited'
+          feed-dir: 'test-feed'
+
+      - name: Test feed utils - Delete
+        if: github.event.inputs.test-scenario == 'delete'
+        id: test-delete
+        uses: ./.github/actions/feed-utils
+        with:
+          issue-body: 'This content will be ignored for delete operation.'
+          issue-created-at: '2024-01-15T10:30:00Z'
+          action: 'unlabeled'
+          feed-dir: 'test-feed'
+
+      - name: Test feed utils - Validation Error
+        if: github.event.inputs.test-scenario == 'validate-error'
+        id: test-error
+        uses: ./.github/actions/feed-utils
+        with:
+          issue-body: 'Short'
+          issue-created-at: '2024-01-15T10:30:00Z'
+          action: 'opened'
+          feed-dir: 'test-feed'
+
+      - name: Display results
+        run: |
+          echo "Test scenario: ${{ github.event.inputs.test-scenario }}"
+          echo "Operation: ${{ steps.test-create.outputs.operation || steps.test-update.outputs.operation || steps.test-delete.outputs.operation || steps.test-error.outputs.operation }}"
+          echo "Filename: ${{ steps.test-create.outputs.filename || steps.test-update.outputs.filename || steps.test-delete.outputs.filename || steps.test-error.outputs.filename }}"
+          echo "File path: ${{ steps.test-create.outputs.file-path || steps.test-update.outputs.file-path || steps.test-delete.outputs.file-path || steps.test-error.outputs.file-path }}"
+          echo "Error: ${{ steps.test-create.outputs.error || steps.test-update.outputs.error || steps.test-delete.outputs.error || steps.test-error.outputs.error }}"
+
+      - name: Cleanup test files
+        if: always()
+        run: |
+          rm -rf test-feed/ 
