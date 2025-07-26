@@ -9,7 +9,7 @@ inputs:
     description: 'The issue creation timestamp'
     required: true
   action:
-    description: 'The GitHub action type (opened, edited, labeled, unlabeled)'
+    description: 'The GitHub action type (opened, edited, labeled, unlabeled, closed, reopened)'
     required: true
   feed-dir:
     description: 'Directory for feed files'
@@ -37,6 +37,12 @@ runs:
       id: validate-content
       shell: bash
       run: |
+        # Skip validation for delete operations (closed, unlabeled)
+        if [ "${{ inputs.action }}" = "closed" ] || [ "${{ inputs.action }}" = "unlabeled" ]; then
+          echo "valid=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        
         # Check if issue body is not empty
         if [ -z "${{ inputs.issue-body }}" ]; then
           echo "error=Issue body cannot be empty" >> "$GITHUB_OUTPUT"
@@ -86,7 +92,7 @@ runs:
         # Create feed directory if it doesn't exist
         mkdir -p "${{ inputs.feed-dir }}"
         
-        if [ "$ACTION" = "unlabeled" ]; then
+        if [ "$ACTION" = "unlabeled" ] || [ "$ACTION" = "closed" ]; then
           # Delete operation
           if [ -f "$FEED_FILE" ]; then
             rm "$FEED_FILE"
@@ -104,7 +110,7 @@ runs:
           # Write content to file
           echo "$CONTENT" > "$FEED_FILE"
           
-          if [ "$ACTION" = "opened" ] || [ "$ACTION" = "labeled" ]; then
+          if [ "$ACTION" = "opened" ] || [ "$ACTION" = "labeled" ] || [ "$ACTION" = "reopened" ]; then
             echo "operation=created" >> "$GITHUB_OUTPUT"
           else
             echo "operation=updated" >> "$GITHUB_OUTPUT"

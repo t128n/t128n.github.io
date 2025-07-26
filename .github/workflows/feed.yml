@@ -2,7 +2,7 @@ name: Manage Feed from Issues
 
 on:
   issues:
-    types: [opened, edited, labeled, unlabeled]
+    types: [opened, edited, labeled, unlabeled, closed, reopened]
 
 env:
   FEED_LABEL: 'feed'
@@ -19,8 +19,10 @@ jobs:
         (contains(github.event.issue.labels.*.name, 'feed') && 
          (github.event.action == 'opened' || 
           github.event.action == 'edited' || 
+          github.event.action == 'reopened' ||
           (github.event.action == 'labeled' && github.event.label.name == 'feed'))) ||
-        (github.event.action == 'unlabeled' && github.event.label.name == 'feed')
+        (github.event.action == 'unlabeled' && github.event.label.name == 'feed') ||
+        (github.event.action == 'closed' && contains(github.event.issue.labels.*.name, 'feed'))
       )
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -97,12 +99,6 @@ jobs:
             fi
             
             gh issue comment "$ISSUE_NUM" --body "$MESSAGE"
-            
-            # Close issue for new entries
-            if [ "$OPERATION" = "created" ]; then
-              gh issue close "$ISSUE_NUM" \
-                --comment "Feed entry processed and closed automatically."
-            fi
           fi
 
       - name: Update issue title to feed URL
