@@ -29,12 +29,10 @@ const renderedFeed = await Promise.all(
   title="Feed"
   description="A collection of my latest thoughts and updates."
 >
-  <h2>Feed</h2>
-  <p>
-    This is a collection of my latest thoughts and updates. It's a great way to
-    stay up to date with what I'm working on, what I'm reading, and what I'm
-    thinking about.
-  </p>
+  <hgroup>
+    <h2>Feed</h2>
+    <p>This is a collection of my latest thoughts and updates.</p>
+  </hgroup>
   <ul>
     {
       renderedFeed.map(({ post, Content }) => (
@@ -163,6 +161,21 @@ const renderedFeed = await Promise.all(
     flex-direction: column;
 
     gap: var(--space-xl);
+  }
+
+  hgroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  hgroup h2 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+  hgroup p {
+    font-size: var(--text-sm);
+    color: var(--color-tx-2);
   }
 
   li {
