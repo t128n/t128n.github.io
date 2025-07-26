@@ -32,8 +32,8 @@ const footerLinks: FooterLink[] = [
               {link.icon && (
                 <Icon
                   name={`pixelarticons:${link.icon}`}
-                  width="1em"
-                  height="1em"
+                  width="1rem"
+                  height="1rem"
                   aria-hidden="true"
                 />
               )}
@@ -80,6 +80,10 @@ const footerLinks: FooterLink[] = [
     color: var(--color-tx-2);
     text-decoration: none;
     transition: color 0.2s ease;
+  }
+
+  footer nav ul li a span {
+    font-size: var(--text-sm);
   }
 
   footer nav ul li a:hover,
