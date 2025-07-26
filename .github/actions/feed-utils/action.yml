@@ -44,7 +44,8 @@ runs:
         fi
         
         # Check for minimum content length (at least 10 characters)
-        if [ ${#inputs.issue-body} -lt 10 ]; then
+        ISSUE_BODY="${{ inputs.issue-body }}"
+        if [ ${#ISSUE_BODY} -lt 10 ]; then
           echo "error=Issue body must be at least 10 characters long" >> "$GITHUB_OUTPUT"
           exit 1
         fi
