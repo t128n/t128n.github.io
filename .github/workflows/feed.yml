@@ -104,6 +104,16 @@ jobs:
             fi
           fi
 
+      - name: Update issue title to feed URL
+        if: steps.feed-process.outputs.operation != 'noop'
+        run: |
+          ISSUE_NUM="${{ github.event.issue.number }}"
+          FILENAME="${{ steps.feed-process.outputs.filename }}"
+          FEED_ID="${FILENAME%.md}"
+          FEED_URL="https://t128n.github.io/feed/#$FEED_ID"
+          NEW_TITLE="[Feed] $FEED_URL"
+          gh issue edit "$ISSUE_NUM" --title "$NEW_TITLE"
+
       - name: Trigger rebuild
         if: steps.feed-process.outputs.operation != 'noop'
         run: |
