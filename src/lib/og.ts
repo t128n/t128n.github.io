@@ -9,9 +9,9 @@ async function generateMarkup(
 	path: string,
 ) {
 	const styles = {
-		background: "rgb(255, 252, 240)",
-		color: "rgb(16, 15, 15)",
-		colorSecondary: "rgb(111, 110, 105)",
+		background: "#fff",
+		color: "#000",
+		colorSecondary: "#656565",
 		fontBold: "700",
 		fontMono: "'SF Mono', monospace",
 		fontSans: "'Inter', sans-serif",
