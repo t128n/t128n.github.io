@@ -3,6 +3,9 @@ import PageFooter from "@/components/page-footer.astro";
 import PageHeader from "@/components/page-header.astro";
 import { getOgImageUrl } from "@/lib/og";
 
+import "@fontsource-variable/work-sans";
+import "@fontsource/space-mono";
+
 interface RootLayoutProps {
   title?: string;
   description?: string;
@@ -285,8 +288,11 @@ const computedTitle = `${title} [t128n]`;
     --color-danger: var(--color-re);
     --color-info: var(--color-cy);
 
-    --font-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-    --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+      "Noto Color Emoji";
+    --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, "Liberation Mono", "Courier New", monospace;
 
     --font-light: 300;
     --font-normal: 400;

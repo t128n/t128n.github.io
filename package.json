@@ -1,40 +1,13 @@
 {
 	"name": "t128n",
-	"type": "module",
 	"version": "0.0.1",
-	"description": "Personal website and blog of Torben Haack - Software Engineer and technical writer",
 	"author": {
 		"name": "Torben Haack",
 		"url": "https://t128n.github.io"
 	},
-	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/t128n/t128n.github.io.git"
-	},
-	"homepage": "https://t128n.github.io",
-	"keywords": [
-		"astro",
-		"blog",
-		"personal-website",
-		"mdx",
-		"static-site"
-	],
-	"engines": {
-		"node": ">=18.0.0",
-		"bun": ">=1.0.0"
-	},
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro",
-		"format": "biome format --write .",
-		"lint": "biome lint .",
-		"check": "biome check --write .",
-		"type-check": "tsc --noEmit",
-		"clean": "rm -rf dist",
-		"start": "astro preview"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.1",
@@ -57,5 +30,36 @@
 		"title": "^4.0.1",
 		"typescript": "^5.0.0"
 	},
-	"packageManager": "bun@1.0.0"
+	"description": "Personal website and blog of Torben Haack - Software Engineer and technical writer",
+	"engines": {
+		"node": ">=18.0.0",
+		"bun": ">=1.0.0"
+	},
+	"homepage": "https://t128n.github.io",
+	"keywords": [
+		"astro",
+		"blog",
+		"personal-website",
+		"mdx",
+		"static-site"
+	],
+	"license": "MIT",
+	"packageManager": "bun@1.0.0",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write .",
+		"type-check": "tsc --noEmit",
+		"clean": "rm -rf dist",
+		"start": "astro preview"
+	},
+	"type": "module",
+	"dependencies": {
+		"@fontsource-variable/work-sans": "^5.2.6",
+		"@fontsource/space-mono": "^5.2.8"
+	}
 }
