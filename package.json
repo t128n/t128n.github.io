@@ -60,6 +60,8 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/work-sans": "^5.2.6",
-		"@fontsource/google-sans-code": "^5.2.1"
+		"@fontsource/google-sans-code": "^5.2.1",
+		"@fontsource/inter": "^5.2.6",
+		"@fontsource/jetbrains-mono": "^5.2.6"
 	}
 }

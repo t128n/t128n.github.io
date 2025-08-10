@@ -18,7 +18,10 @@ export default defineConfig({
 	integrations: [mcp(), mdx(), icon(), sitemap(), compress()],
 	markdown: {
 		shikiConfig: {
-			theme: "vitesse-dark",
+			themes: {
+				light: "github-light",
+				dark: "github-dark",
+			},
 		},
 		remarkPlugins: [remarkReadingTime],
 	},

@@ -4,5 +4,30 @@ import RootLayout from "@/layouts/root-layout.astro";
 ---
 
 <RootLayout>
-	<BlogPosts />
+  <main>
+    <section aria-labelledby="blog-heading">
+      <h1 id="blog-heading" class="sr-only">Latest Blog Posts</h1>
+      <BlogPosts />
+    </section>
+  </main>
 </RootLayout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

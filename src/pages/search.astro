@@ -13,22 +13,29 @@ const initialQuery =
   new URLSearchParams(Astro.request.url.split("?")[1] || "").get("q") || "";
 ---
 
-<RootLayout>
-  <head slot="head">
+<RootLayout title="Search">
+  <Fragment slot="head">
     <link
       rel="search"
       type="application/opensearchdescription+xml"
       title="t128n Blog Search"
       href="/opensearch.xml"
     />
-  </head>
-  <form
-    id="search-form"
-    autocomplete="off"
-    role="search"
-    aria-label="Site search"
-    on:submit|preventDefault
-  >
+  </Fragment>
+  
+  <main>
+    <header>
+      <h1>Search</h1>
+      <p>Search through technical articles, tutorials, and insights on software engineering.</p>
+    </header>
+    
+    <form
+      id="search-form"
+      autocomplete="off"
+      role="search"
+      aria-label="Site search"
+      on:submit|preventDefault
+    >
     <input
       id="search"
       type="text"
@@ -40,8 +47,9 @@ const initialQuery =
     <button type="submit" aria-label="Submit search">
       <Icon name="pixelarticons:search" />
     </button>
-  </form>
-  <ul id="results" aria-live="polite"></ul>
+    </form>
+    <ul id="results" aria-live="polite"></ul>
+  </main>
 </RootLayout>
 
 <script type="module">
@@ -98,43 +106,106 @@ const initialQuery =
 />
 
 <style>
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  header h1 {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    margin: 0;
+    font-family: var(--font-sans);
+  }
+
+  header p {
+    color: var(--color-text-secondary);
+    margin: var(--space-2) 0 0 0;
+    font-family: var(--font-sans);
+  }
+
   ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-4);
   }
+  
   form {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--color-bg-2);
-    border: 1px solid var(--color-ui);
+    background-color: var(--color-background-secondary);
+    border: var(--border-width) var(--border-style) var(--color-border);
+    border-radius: 4px;
   }
+  
   form:focus-within {
-    border: 1px solid var(--color-primary);
-    border-radius: var(--border-radius);
+    border-color: var(--color-accent);
   }
+  
   input {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-3) var(--space-4);
     border: none;
     font-size: var(--text-base);
     background-color: transparent;
     flex: 1;
+    color: var(--color-text);
+    font-family: var(--font-sans);
   }
+  
   input:focus {
     outline: none;
-    border-color: var(--color-primary);
   }
+  
+  input::placeholder {
+    color: var(--color-text-secondary);
+  }
+  
   button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-3);
+    color: var(--color-text-secondary);
   }
+  
   button:hover {
-    color: var(--color-primary);
+    color: var(--color-accent);
+  }
+
+  #results li {
+    border-bottom: var(--border-width) var(--border-style) var(--color-border);
+    padding-bottom: var(--space-3);
+  }
+
+  #results li:last-child {
+    border-bottom: none;
+  }
+
+  #results a {
+    display: block;
+    text-decoration: none;
+    color: var(--color-text);
+    padding: var(--space-2);
+    border-radius: 4px;
+  }
+
+  #results a:hover {
+    background-color: var(--color-background-secondary);
+  }
+
+  #results strong {
+    font-weight: 500;
+    font-family: var(--font-sans);
+  }
+
+  #results span {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-family: var(--font-sans);
   }
 </style>

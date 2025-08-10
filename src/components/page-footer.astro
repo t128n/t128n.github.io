@@ -16,85 +16,54 @@ const footerLinks: FooterLink[] = [
 ---
 
 <footer>
-  <p>&copy; 2025 Torben Haack [t128n]</p>
-  <nav aria-label="Footer navigation">
-    <ul>
+  <span>&copy; 2025 torben haack [t128n]</span>
+  <nav>
+    <span>
       {
-        footerLinks.map((link) => (
-          <li>
+        footerLinks.map((link, index) => (
+          <span>
+            {index > 0 && " | "}
             <a
               href={link.href}
               {...(link.external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              aria-label={`Footer link to ${link.label}`}
             >
-              {link.icon && (
-                <Icon
-                  name={`pixelarticons:${link.icon}`}
-                  width="1rem"
-                  height="1rem"
-                  aria-hidden="true"
-                />
-              )}
-              <span>{link.label}</span>
+              {link.label.toLowerCase()}
             </a>
-          </li>
+          </span>
         ))
       }
-    </ul>
+    </span>
   </nav>
 </footer>
 
 <style>
   footer {
-    padding: var(--space-md) 0;
-    border-top: 1px solid var(--color-ui-2);
+    margin-top: var(--space-8);
+    padding: var(--space-4) 0;
+    border-top: var(--border-width) var(--border-style) var(--color-border);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  footer > p {
-    font-family: var(--font-mono);
+    justify-content: space-between;
+    align-items: baseline;
     font-size: var(--text-sm);
-    color: var(--color-tx-2);
-    margin: 0;
+    color: var(--color-text-secondary);
   }
 
-  footer nav ul {
-    display: flex;
-    gap: var(--space-lg);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-  }
-
-  footer nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 0.25em;
-    color: var(--color-tx-2);
+  footer nav a {
+    color: var(--color-text-secondary);
     text-decoration: none;
-    transition: color 0.2s ease;
+  }
+  
+  footer nav a:hover {
+    color: var(--color-accent);
   }
 
-  footer nav ul li a span {
-    font-size: var(--text-sm);
-  }
-
-  footer nav ul li a:hover,
-  footer nav ul li a:focus {
-    color: var(--color-primary);
-  }
-
-  @media (min-width: 40rem) {
+  @media (max-width: 640px) {
     footer {
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: var(--space-2);
+      align-items: flex-start;
     }
   }
 </style>

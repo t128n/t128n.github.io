@@ -38,16 +38,17 @@ const isActive = (href: string) => {
 
 <header>
   <section>
-    <a href="/" aria-label="Navigational link to Homepage" tabindex="0">
-      <h1 aria-label="Legal Name">Torben Haack</h1>
-      <span aria-label="Username">[t128n]</span>
+    <a href="/" tabindex="0">
+      <span>torben haack</span>
+      <span>[t128n]</span>
     </a>
   </section>
-  <nav aria-label="Main navigation">
-    <ul>
+  <nav>
+    <span>
       {
-        navigationLinks.map((link) => (
-          <li>
+        navigationLinks.map((link, index) => (
+          <span>
+            {index > 0 && " | "}
             <a
               href={link.href}
               {...(link.external
@@ -55,101 +56,71 @@ const isActive = (href: string) => {
                 : {})}
               tabindex="0"
               class:list={[
-                "nav-link",
-                { "nav-link--active": isActive(link.href) },
+                { "active": isActive(link.href) },
               ]}
-              aria-label={`Navigational link to ${link.label}`}
             >
-              <span class="nav-link-inner">
-                {link.icon && (
-                  <Icon
-                    name={`pixelarticons:${link.icon}`}
-                    width="1.5em"
-                    height="1.5em"
-                    aria-hidden="true"
-                    style="display: block; margin: 0 auto;"
-                  />
-                )}
-                <span class="nav-link-label">{link.label}</span>
-              </span>
+              {link.label.toLowerCase()}
             </a>
-          </li>
+          </span>
         ))
       }
-    </ul>
+    </span>
   </nav>
 </header>
 
 <style>
   header {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: space-between;
-    font-family: var(--font-mono);
-    padding: var(--space-md) 0;
-    border-bottom: 1px solid var(--color-ui-2);
+    align-items: baseline;
+    padding: var(--space-4) 0;
+    border-bottom: var(--border-width) var(--border-style) var(--color-border);
+    margin-bottom: var(--space-6);
   }
+  
   header section a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-xs);
-  }
-  header section a h1 {
-    font-weight: var(--font-semibold);
-  }
-  header section a span {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-  }
-
-  header nav ul {
-    display: flex;
-    gap: var(--space-md);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-transform: lowercase;
-  }
-
-  header nav ul li a.nav-link {
-    display: flex;
-    align-items: center;
-    font-size: var(--text-sm);
     text-decoration: none;
+    color: var(--color-text);
+  }
+  
+  header section a:hover {
+    color: var(--color-accent);
+  }
+  
+  header section a span:first-child {
+    font-weight: 500;
+  }
+  
+  header section a span:last-child {
+    color: var(--color-text-secondary);
+    margin-left: var(--space-2);
   }
 
-  .nav-link-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.15em;
+  header nav span {
+    font-size: var(--text-sm);
   }
 
-  .nav-link-label {
-    font-size: 0.85em;
-    margin-top: 0.1em;
-    text-align: center;
-    letter-spacing: 0.01em;
+  header nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+  }
+  
+  header nav a:hover,
+  header nav a.active {
+    color: var(--color-accent);
   }
 
-  .nav-link--active {
-    color: var(--color-primary);
-    font-weight: var(--font-semibold);
-  }
-
-  @media (max-width: 40rem) {
+  @media (max-width: 640px) {
     header {
       flex-direction: column;
-      align-items: center;
-      gap: var(--space-lg);
+      gap: var(--space-3);
+      align-items: flex-start;
     }
-    header nav {
-      width: 100%;
-    }
-    header nav ul {
-      justify-content: space-between;
+    
+    header nav span {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
     }
   }
 </style>

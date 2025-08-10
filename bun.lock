@@ -6,7 +6,8 @@
       "dependencies": {
         "@fontsource-variable/work-sans": "^5.2.6",
         "@fontsource/google-sans-code": "^5.2.1",
-        "@fontsource/space-mono": "^5.2.8",
+        "@fontsource/inter": "^5.2.6",
+        "@fontsource/jetbrains-mono": "^5.2.6",
       },
       "devDependencies": {
         "@astrojs/mdx": "4.3.2",
@@ -138,7 +139,9 @@
 
     "@fontsource/google-sans-code": ["@fontsource/google-sans-code@5.2.1", "", {}, "sha512-zG46Krc6qWpYMTzyGq8v4eQsyOY4FmgZed4NTVhqUheriI5V+lhHd9Duhae7XeiYulmgoKQVbBp9kj61cn2K/g=="],
 
-    "@fontsource/space-mono": ["@fontsource/space-mono@5.2.8", "", {}, "sha512-25X0fg1+kxxLes9/c6AozhrrAuBW1uLaOL584IRg4DZxVxNOMzcS3mHS1UtmsyTwtU2HpiIt9Kv23Q+7xQO+hg=="],
+    "@fontsource/inter": ["@fontsource/inter@5.2.6", "", {}, "sha512-CZs9S1CrjD0jPwsNy9W6j0BhsmRSQrgwlTNkgQXTsAeDRM42LBRLo3eo9gCzfH4GvV7zpyf78Ozfl773826csw=="],
+
+    "@fontsource/jetbrains-mono": ["@fontsource/jetbrains-mono@5.2.6", "", {}, "sha512-nz//dBr99hXZmHp10wgNI00qThWImkzRR5PQjvRM+rpmuHO5rYBJCqPPWufidCvmkkryXx/GOP/lgqsM3R3Org=="],
 
     "@iconify-json/pixelarticons": ["@iconify-json/pixelarticons@1.2.2", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-BAAzqfT0XKUc/a8MgTxOH1aSm44InW9abUIQ1qu5dBntKlYuJP/dN0JfK4WEpUS78T/7HP8w9v1nSQjENLyjFg=="],
 

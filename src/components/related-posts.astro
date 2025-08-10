@@ -1,0 +1,204 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  currentPost: CollectionEntry<"blog">;
+  maxRelated?: number;
+}
+
+const { currentPost, maxRelated = 3 } = Astro.props;
+
+// Get all blog posts
+const allPosts = await getCollection("blog");
+
+// Filter out the current post and draft posts
+const otherPosts = allPosts.filter(
+  (post) => post.data.slug !== currentPost.data.slug && !post.data.draft
+);
+
+// Find related posts by tags
+const relatedPosts = [];
+
+// First, try to find posts with explicit related posts array
+if (currentPost.data.relatedPosts && currentPost.data.relatedPosts.length > 0) {
+  for (const relatedSlug of currentPost.data.relatedPosts) {
+    const found = otherPosts.find((post) => post.data.slug === relatedSlug);
+    if (found) {
+      relatedPosts.push(found);
+    }
+  }
+}
+
+// If we still need more related posts, find by shared tags
+if (relatedPosts.length < maxRelated && currentPost.data.tags) {
+  const currentTags = currentPost.data.tags;
+  
+  const taggedPosts = otherPosts
+    .filter((post) => {
+      if (!post.data.tags) return false;
+      // Check if any tags match
+      return post.data.tags.some((tag) => currentTags.includes(tag));
+    })
+    .map((post) => {
+      // Calculate relevance score based on shared tags
+      const sharedTags = post.data.tags!.filter((tag) => currentTags.includes(tag));
+      return {
+        post,
+        relevance: sharedTags.length,
+        sharedTags,
+      };
+    })
+    .sort((a, b) => b.relevance - a.relevance)
+    .slice(0, maxRelated - relatedPosts.length)
+    .map((item) => item.post);
+  
+  relatedPosts.push(...taggedPosts);
+}
+
+// If we still need more, get the most recent posts
+if (relatedPosts.length < maxRelated) {
+  const recentPosts = otherPosts
+    .filter((post) => !relatedPosts.includes(post))
+    .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+    .slice(0, maxRelated - relatedPosts.length);
+  
+  relatedPosts.push(...recentPosts);
+}
+
+// Limit to maxRelated
+const finalRelatedPosts = relatedPosts.slice(0, maxRelated);
+---
+
+{finalRelatedPosts.length > 0 && (
+  <section class="related-posts">
+    <h3>Related Articles</h3>
+    <ul>
+      {finalRelatedPosts.map((post) => (
+        <li>
+          <article>
+            <h4>
+              <a href={`/blog/${post.data.slug}`}>
+                {post.data.title}
+              </a>
+            </h4>
+            {post.data.description && (
+              <p>{post.data.description}</p>
+            )}
+            <div class="meta">
+              <time datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toISOString().split("T")[0]}
+              </time>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.slice(0, 3).map(tag => (
+                    <span class="tag">#{tag}</span>
+                  ))}
+                  {post.data.tags.length > 3 && (
+                    <span class="tag more">...</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-posts {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: var(--border-width) var(--border-style) var(--color-border);
+  }
+
+  .related-posts h3 {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    margin: 0 0 var(--space-4) 0;
+    font-family: var(--font-sans);
+  }
+
+  .related-posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .related-posts li {
+    margin: 0;
+  }
+
+  .related-posts article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .related-posts h4 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: var(--line-height-tight);
+  }
+
+  .related-posts h4 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .related-posts h4 a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .related-posts p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    font-family: var(--font-sans);
+  }
+
+  .related-posts .meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    flex-wrap: wrap;
+  }
+
+  .related-posts .meta time {
+    font-family: var(--font-mono);
+  }
+
+  .related-posts .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .related-posts .tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .related-posts .tag.more {
+    color: var(--color-text-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .related-posts ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-4);
+    }
+  }
+</style>

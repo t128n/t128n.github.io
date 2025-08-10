@@ -1,0 +1,48 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: "eager" | "lazy";
+  class?: string;
+  title?: string;
+  sizes?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  loading = "lazy", 
+  class: className,
+  title,
+  sizes 
+} = Astro.props;
+
+// Generate responsive image attributes
+const isExternal = src.startsWith('http');
+---
+
+<img 
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  class={className}
+  title={title}
+  sizes={sizes}
+  decoding="async"
+  {...(!isExternal && { 
+    fetchpriority: loading === "eager" ? "high" : "auto" 
+  })}
+/>
+
+<style>
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+</style>

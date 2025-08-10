@@ -9,25 +9,23 @@ async function generateMarkup(
 	path: string,
 ) {
 	const styles = {
-		background: "#fff",
-		color: "#000",
-		colorSecondary: "#656565",
+		background: "#ffffff",
+		color: "#000000",
+		colorSecondary: "#606060",
+		fontRegular: "400",
 		fontBold: "700",
-		fontMono: "'SF Mono', monospace",
-		fontSans: "'Inter', sans-serif",
-		textSm: "24px",
-		textBase: "32px",
-		textLg: "48px",
+		fontMono: "'JetBrains Mono', monospace",
+		textSm: "22px",
+		textBase: "28px",
+		textLg: "42px",
+		textXl: "52px",
 		contentWidth: "2172px",
-		readableLineLength: "960px",
-		contentPadding: "48px 64px",
+		readableLineLength: "1080px",
+		contentPadding: "64px",
+		border: "1px solid #000000",
 		lineClamp: (maxLines: number) =>
 			`overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: ${maxLines}; -webkit-box-orient: vertical;`,
 	};
-
-	// Favicon URL as base64
-	const faviconPath = `${process.cwd()}/public/favicon.svg`;
-	const faviconBase64 = await readFile(faviconPath, "base64");
 
 	const markup = html`
   <div
@@ -38,42 +36,49 @@ async function generateMarkup(
     color: ${styles.color};
     padding: ${styles.contentPadding};
     font-family: ${styles.fontMono};
+    font-weight: ${styles.fontRegular};
     "
   >
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start;">
-    <img src="data:image/svg+xml;base64,${faviconBase64}" alt="[t128n] Logo" style="width: 128px; height: 128px; border-radius: 50%;" />
-    <span style="font-size: ${styles.textBase}; color: ${styles.colorSecondary}; font-weight: ${styles.fontBold};">
-      Torben Haack [t128n]
-    </span>
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <span style="font-size: ${styles.textLg}; font-weight: ${styles.fontBold};">[t128n]</span>
+      </div>
+      <span style="font-size: ${styles.textSm}; color: ${styles.colorSecondary};">
+        Torben Haack
+      </span>
     </div>
+    
     <div style="
-    display: flex; flex-direction: column;
-    max-width: ${styles.readableLineLength};
+      display: flex; flex-direction: column;
+      max-width: ${styles.readableLineLength};
     ">
-    <h2 style="
-      padding: 0; margin: 0; 
-      font-size: ${styles.textLg};
-      ${styles.lineClamp(2)}
-    ">
-      ${title}
-    </h2>
-    <p style="
-      color: ${styles.colorSecondary};
-      font-size: ${styles.textBase};
-      font-family: ${styles.fontSans};
-      ${styles.lineClamp(3)}
-    ">
-      ${description}
-    </p>
+      <h1 style="
+        padding: 0; margin: 0; 
+        font-size: ${styles.textLg};
+        font-weight: ${styles.fontBold};
+        line-height: 1.2;
+      ">
+        ${title}
+      </h1>
+      <p style="
+        color: ${styles.colorSecondary};
+        font-size: ${styles.textBase};
+        font-weight: ${styles.fontRegular};
+        line-height: 1.4;
+        margin-top: 16px;
+      ">
+        ${description}
+      </p>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
-    <span style="
-      font-size: ${styles.textSm}; font-weight: ${styles.fontBold}; color: ${styles.colorSecondary};
-      max-width: ${styles.contentWidth};
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    ">
-      t128n.github.io/${path}
-    </span>
+    
+    <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+      <span style="
+        font-size: ${styles.textSm}; 
+        color: ${styles.colorSecondary};
+        font-weight: ${styles.fontRegular};
+      ">
+        t128n.github.io${path === "index" ? "" : "/" + path}
+      </span>
     </div>
   </div>`;
 
@@ -86,16 +91,13 @@ export async function renderSvgOgImage(
 	path: string,
 ) {
 	const fontPaths = {
-		sfMonoRegular: `${process.cwd()}/public/fonts/LigaSFMonoNerdFont-Regular.otf`,
-		sfMonoBold: `${process.cwd()}/public/fonts/LigaSFMonoNerdFont-Bold.otf`,
-		interRegular: `${process.cwd()}/public/fonts/Inter-Regular.otf`,
+		jetbrainsMonoRegular: `${process.cwd()}/public/fonts/JetBrainsMono-Regular.ttf`,
+		jetbrainsMonoBold: `${process.cwd()}/public/fonts/JetBrainsMono-Bold.ttf`,
 	};
-	const [sfMonoregularFontFile, sfMonoboldFontFile, interRegularFontFile] =
-		await Promise.all([
-			readFile(fontPaths.sfMonoRegular),
-			readFile(fontPaths.sfMonoBold),
-			readFile(fontPaths.interRegular),
-		]);
+	const [jetbrainsMonoRegularFile, jetbrainsMonoBoldFile] = await Promise.all([
+		readFile(fontPaths.jetbrainsMonoRegular),
+		readFile(fontPaths.jetbrainsMonoBold),
+	]);
 
 	const markup = await generateMarkup(title, description, path);
 	const svg = await satori(markup, {
@@ -103,22 +105,16 @@ export async function renderSvgOgImage(
 		height: 630,
 		fonts: [
 			{
-				name: "SF Mono",
-				data: sfMonoregularFontFile,
+				name: "JetBrains Mono",
+				data: jetbrainsMonoRegularFile,
 				style: "normal",
 				weight: 400,
 			},
 			{
-				name: "SF Mono",
-				data: sfMonoboldFontFile,
+				name: "JetBrains Mono",
+				data: jetbrainsMonoBoldFile,
 				style: "normal",
 				weight: 700,
-			},
-			{
-				name: "Inter",
-				data: interRegularFontFile,
-				style: "normal",
-				weight: 400,
 			},
 		],
 	});
